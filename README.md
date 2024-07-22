@@ -44,6 +44,7 @@ void loop() {
 ```
 Serial Port Output
 ```
+Program Starting......
 PROGRAM:\>
 PROGRAM:\> help
 
