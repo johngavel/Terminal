@@ -3,6 +3,60 @@ Terminal for Serial Ports and other Streams. Processing, Parsing, Executing, and
 The Terminal handles backspace and up/down arrows from history. All commands typed into the Terminal a space delimited.
 
 Written by John J. Gavel
+
+## Simple Example
+I have set this example up on a Rasberry Pi Pico and connected Pins 1 and 2 for the serial port. This is a basic TTY cable connected to PUTTY on my main computer.
+```
+/*
+  HelloWorldPicoTerminal.ino - Pico Serial Terminal Example
+  Copyright (c) 2024 John J. Gavel.  All right reserved.
+*/
+#include <Terminal.h>
+
+// Actual Terminal Initialized with the Serial Stream
+Terminal terminal(&Serial1);
+
+
+// Simple Hello World Example Command
+void hello(Terminal* terminal) {
+  terminal->println(INFO, "Hello World!");
+  terminal->prompt();
+}
+
+void setup() {
+  Serial1.begin(115200); // Setup your serial line
+  terminal.setup(); // Setup the Terminal
+  addStandardTerminalCommands(); 
+  // addCmd parameters are as follows:
+  // 1st = String that is the command to be parsed and executed from the command line
+  // 2nd = String that is a listing of all parameters in this command, only listed in help
+  // 3rd = String that is a description of the command, only listed in help
+  // 4th = function to be called when command is received on the Stream.
+  TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
+  terminal.prompt();
+}
+
+void loop() {
+  // Process the terminal
+  terminal.loop();
+  delay(10);
+}
+```
+Serial Port Output
+```
+PROGRAM:\>
+PROGRAM:\> help
+
+Program Starting......
+?        - Print Help
+help     - Print Help
+history  - Command History
+hello    - Prints Hello World!
+
+PROGRAM:\> hello
+Hello World!
+PROGRAM:\>
+```
 ## Classes
 The Terminal library provides 2 classes. A Terminal Class for Processing, Parsing, Executing, and Output Control. And the TerminalCommand class for handling and storing the terminal commands.
 
