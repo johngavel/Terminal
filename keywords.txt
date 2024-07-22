@@ -1,0 +1,47 @@
+#######################################
+# Syntax Coloring Map For Terminal
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Terminal	KEYWORD1
+PRINT_TYPES	KEYWORD1
+COLOR	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+addStandardTerminalCommands	KEYWORD2
+addCmd	KEYWORD2
+setStream	KEYWORD2
+getInput	KEYWORD2
+getOutput	KEYWORD2
+setup	KEYWORD2
+loop	KEYWORD2
+println	KEYWORD2
+print	KEYWORD2
+hexdump	KEYWORD2
+banner	KEYWORD2
+prompt	KEYWORD2
+readParameter	KEYWORD2
+invalidParameter	KEYWORD2
+setEcho	KEYWORD2
+useColor	KEYWORD2
+useBS	KEYWORD2
+useDel	KEYWORD2
+usePrompt	KEYWORD2
+setPrompt	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+TERM_CMD	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
