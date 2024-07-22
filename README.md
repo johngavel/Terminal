@@ -192,5 +192,21 @@ Enter '?' or 'help' for a list of commands.
 [ FAILED ] Slow Count Complete
 promgram:/>
 ```
-
-
+## Batch File Command
+One of the neat things that the Terminal Command Class can do is create a batch file command. This command assumes that you have setup a littlefs file system and have some other terminal setup.
+```
+void runCommand(Terminal* terminal) {
+  char* value;
+  value = terminal->readParameter();
+  if (value != NULL) {
+    File file = LittleFS.open(value, "r");
+    Terminal runTerminal(&file, terminal->getOutput());
+    runTerminal.usePrompt(false);
+    while (file.available()) runTerminal.loop();
+  } else {
+    terminal->invalidParameter();
+  }
+  terminal->prompt();
+}
+```
+This is a basic way of storing commands in a file and then having the Terminal code execute and still output the results to the main terminal.
