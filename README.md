@@ -1,5 +1,5 @@
 # Terminal
-Terminal for Serial Ports and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
+Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 The Terminal handles backspace and up/down arrows from history. All commands typed into the Terminal a space delimited.
 
 Written by John J. Gavel
@@ -132,6 +132,7 @@ void readPin3(Terminal* terminal) {
 ```
 > [!NOTE]
 > You should prompt the user when you are done processing the commands. Some commands might kick off something, like connect to Wifi. So your prompt would be later in a different section of code.
+
 In the setup section where you are setting up your Terminal you would add this command to the Terminal Command class.
 ```
 TERM_CMD->addCmd("read3", "", "Reads Pin 3 of the device.", readPin3);
