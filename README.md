@@ -198,6 +198,8 @@ void runCommand(Terminal* terminal) {
   if (value != NULL) {
     File file = LittleFS.open(value, "r");
     Terminal runTerminal(&file, terminal->getOutput());
+    runTerminal.configure(terminal);
+    runTerminal.setup();
     runTerminal.usePrompt(false);
     while (file.available()) runTerminal.loop();
   } else {
