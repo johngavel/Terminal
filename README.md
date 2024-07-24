@@ -200,6 +200,7 @@ void runCommand(Terminal* terminal) {
     Terminal runTerminal(&file, terminal->getOutput());
     runTerminal.configure(terminal);
     runTerminal.setup();
+    runTerminal.setEcho(false);
     runTerminal.usePrompt(false);
     while (file.available()) runTerminal.loop();
   } else {
