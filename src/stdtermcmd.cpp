@@ -38,7 +38,7 @@ void help(Terminal* terminal) {
 
 void helpHist(Terminal* terminal) {
   terminal->println(INFO, "Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i+1) + ". ", (char*) terminal->lastBuffer.get(i));
+  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->lastBuffer.get(i));
   terminal->println(PASSED, "Command History");
   terminal->prompt();
 }

@@ -4,10 +4,9 @@
   Copyright (c) 2024 John J. Gavel.  All right reserved.
 */
 
-#include "terminalclass.h"
-
 #include "stdtermcmd.h"
 #include "termcmd.h"
+#include "terminalclass.h"
 
 #include <Arduino.h>
 
@@ -19,8 +18,8 @@
 
 void Terminal::banner() {
   if (bannerFunction == nullptr) {
-  println();
-  println(PROMPT, "Program Starting......");
+    println();
+    println(PROMPT, "Program Starting......");
   } else {
     (*bannerFunction)(this);
   }
@@ -199,6 +198,26 @@ void Terminal::invalidParameter() {
   println(INFO, "Enter \'?\' or \'help\' for a list of commands.");
 }
 
+void Terminal::configure(Terminal* terminal) {
+  echo = terminal->echo;
+  usecolor = terminal->usecolor;
+  usebackspace= terminal->usebackspace;
+  usedelete= terminal->usedelete;
+  useprompt= terminal->useprompt;
+  promptString= terminal->promptString;
+  bannerFunction= terminal->bannerFunction;
+}
+
+void Terminal::useBS(bool __usebackspace) { 
+  usebackspace = __usebackspace; 
+  if (usebackspace) usedelete = false;
+};
+
+void Terminal::useDel(bool __usedelete) { 
+  usedelete = __usedelete; 
+  if (usedelete) usebackspace = false;
+};
+
 void Terminal::setup() {
   memset(cmdBuffer, 0, MAX_INPUT_LINE);
   memset(parameterParsing, 0, MAX_INPUT_LINE);
@@ -211,7 +230,7 @@ ReadLineReturn Terminal::callFunction() {
     functionCalled = ERROR_NO_CMD_FOUND;
     if (lastBuffer.size() >= HISTORY) { lastBuffer.pop(); }
     lastBuffer.push(cmdBuffer);
-    historyIndex = lastBuffer.size() - 1;
+    historyIndex = lastBuffer.size();
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memcpy(parameterParsing, cmdBuffer, MAX_INPUT_LINE);
     memset(cmdBuffer, 0, MAX_INPUT_LINE);
@@ -265,40 +284,45 @@ ReadLineReturn Terminal::readline() {
         cmdBuffer[cmdBufferIndex] = 0;
         __print(" ");
         __print(BS_CHAR);
-      }
+      } else
+        __print(" ");
     } else if (readChar[0] == ESC_CHAR) {
       while (inputStream->available() < 2)
         ;
       inputStream->readBytes(&readChar[0], 2);
       if (readChar[0] == '[') {
         if (readChar[1] == 'A') { // UP Arrow
-          if (usedelete)
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(DEL_CHAR);
-          if (usebackspace) {
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(' ');
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
+          if (lastBuffer.size() > 0) {
+            if (usedelete)
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(DEL_CHAR);
+            if (usebackspace) {
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(' ');
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
+            }
+            memset(cmdBuffer, 0, MAX_INPUT_LINE);
+            cmdBufferIndex = 0;
+            if (historyIndex > 0) historyIndex--;
+            lastBuffer.get(historyIndex, cmdBuffer);
+            cmdBufferIndex = strlen(cmdBuffer);
+            __print(cmdBuffer);
           }
-          memset(cmdBuffer, 0, MAX_INPUT_LINE);
-          cmdBufferIndex = 0;
-          lastBuffer.get(historyIndex, cmdBuffer);
-          if (historyIndex > 0) historyIndex--;
-          cmdBufferIndex = strlen(cmdBuffer);
-          __print(cmdBuffer);
         } else if (readChar[1] == 'B') { // Down Arrow
-          if (usedelete)
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(DEL_CHAR);
-          if (usebackspace) {
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(' ');
-            for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
+          if (lastBuffer.size() > 0) {
+            if (usedelete)
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(DEL_CHAR);
+            if (usebackspace) {
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(' ');
+              for (unsigned long i = 0; i < cmdBufferIndex; i++) __print(BS_CHAR);
+            }
+            memset(cmdBuffer, 0, MAX_INPUT_LINE);
+            cmdBufferIndex = 0;
+            if (historyIndex < (lastBuffer.size() - 1)) historyIndex++;
+            lastBuffer.get(historyIndex, cmdBuffer);
+            cmdBufferIndex = strlen(cmdBuffer);
+            __print(cmdBuffer);
           }
-          memset(cmdBuffer, 0, MAX_INPUT_LINE);
-          cmdBufferIndex = 0;
-          if (historyIndex < (lastBuffer.size() - 1)) historyIndex++;
-          lastBuffer.get(historyIndex, cmdBuffer);
-          cmdBufferIndex = strlen(cmdBuffer);
-          __print(cmdBuffer);
         }
       }
     }

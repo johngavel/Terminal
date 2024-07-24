@@ -10,6 +10,7 @@
 #define HISTORY 10
 
 #include "utility/queue.h"
+
 #include <Stream.h>
 
 typedef enum { TRACE, INFO, WARNING, ERROR, HELP, PASSED, FAILED, PROMPT } PRINT_TYPES;
@@ -22,6 +23,7 @@ class Terminal {
 public:
   Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream){};
   Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream){};
+  void configure(Terminal* terminal);
   void setStream(Stream* __stream) {
     inputStream = __stream;
     outputStream = __stream;
@@ -47,8 +49,8 @@ public:
   void invalidParameter();
   void setEcho(bool __echo) { echo = __echo; };
   void useColor(bool __usecolor) { usecolor = __usecolor; };
-  void useBS(bool __usebackspace) { usebackspace = __usebackspace; };
-  void useDel(bool __usedelete) { usedelete = __usedelete; };
+  void useBS(bool __usebackspace);
+  void useDel(bool __usedelete);
   void usePrompt(bool __useprompt) { useprompt = __useprompt; };
   void setPrompt(String __prompt) { promptString = __prompt; };
   void setBannerFunction(void function(Terminal*)) { bannerFunction = function; };
