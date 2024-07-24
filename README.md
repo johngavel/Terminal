@@ -61,13 +61,14 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * Terminal - Constructor, this is initialized with a pointer to a Stream. Some common Stream classes are Serial, Serial1, EthernetClient, WiFiClient, and File.
 * setup - Initialize the Terminal Classes, call this in the setup function of the Arduino code.
 * setPrompt - Sets the prompt in the Terminal that will be displayed to the user
-* setBanner - The banner can be displayed and show whatever information you desire.
+* setBannerFunction - The banner can be displayed and show whatever information you desire.
 ### Execution
 * loop - call this function in the loop function of the Arduino.
 ### Terminal Configuration
+* configure - This uses another terminal setup and configuration for itself.
 * setEcho - This configures the terminal class to echo the incoming data. 
-* setColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
-* useBs - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
+* useColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
+* useBS - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
 * useDel - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
 * usePrompt - Allows you to supress all prompts to the user.
 ### Terminal Output
