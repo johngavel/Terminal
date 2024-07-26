@@ -7,7 +7,7 @@
 #ifndef __TERMINAL_COMMAND
 #define __TERMINAL_COMMAND
 
-#define MAX_TERM_CMD 30
+#define MAX_TERM_CMD 50
 
 #include "terminalclass.h"
 

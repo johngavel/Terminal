@@ -19,14 +19,14 @@
 void Terminal::banner() {
   if (bannerFunction == nullptr) {
     println();
-    println(PROMPT, "Program Starting......");
+    println(PROMPT, "Arduino Program");
   } else {
     (*bannerFunction)(this);
   }
 }
 
 void Terminal::prompt() {
-  if (useprompt) print(PROMPT, promptString);
+  if (useprompt) print(PROMPT, promptString + " ");
 }
 
 void Terminal::__print(String line) {

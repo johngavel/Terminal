@@ -77,7 +77,7 @@ void setup() {
   Serial1.begin(115200); // Setup your serial line
   terminal.setup(); // Setup the Terminal
   terminal.useColor(true); // Output color to the Terminal
-  terminal.setPrompt("example://> ");
+  terminal.setPrompt("example://>");
   terminal.setBannerFunction(banner);
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
