@@ -39,11 +39,11 @@ void loop() {
 ```
 Serial Port Output
 ```
-Program Starting......
+Arduino Program
 PROGRAM:\>
 PROGRAM:\> help
 
-Program Starting......
+Arduino Program
 ?        - Print Help
 help     - Print Help
 history  - Command History
