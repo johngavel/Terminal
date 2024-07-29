@@ -28,6 +28,7 @@ void setup() {
   terminal.setup(); // Setup the Terminal
   addStandardTerminalCommands(); 
   TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
+  terminal.banner();
   terminal.prompt();
 }
 
