@@ -48,6 +48,7 @@ public:
   char* readParameter();
   void invalidParameter();
   void setEcho(bool __echo) { echo = __echo; };
+  bool getEcho() { return echo; };
   void useColor(bool __usecolor) { usecolor = __usecolor; };
   void useBS(bool __usebackspace);
   void useDel(bool __usedelete);

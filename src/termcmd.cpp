@@ -25,13 +25,15 @@ TerminalCommand* TerminalCommand::get() {
 
 int TerminalCommand::addCmd(String command, String parameterDesc, String description, void function(Terminal*)) {
   int returnInt = -1;
-  if (countCmd < MAX_TERM_CMD) {
-    list[countCmd].command = command;
-    list[countCmd].parameter = parameterDesc;
-    list[countCmd].description = description;
-    list[countCmd].function = (void*) function;
-    returnInt = countCmd;
-    countCmd++;
+  if (findCmd(command) == -1) {
+    if (countCmd < MAX_TERM_CMD) {
+      list[countCmd].command = command;
+      list[countCmd].parameter = parameterDesc;
+      list[countCmd].description = description;
+      list[countCmd].function = (void*) function;
+      returnInt = countCmd;
+      countCmd++;
+    }
   }
   return returnInt;
 }

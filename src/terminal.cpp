@@ -201,20 +201,20 @@ void Terminal::invalidParameter() {
 void Terminal::configure(Terminal* terminal) {
   echo = terminal->echo;
   usecolor = terminal->usecolor;
-  usebackspace= terminal->usebackspace;
-  usedelete= terminal->usedelete;
-  useprompt= terminal->useprompt;
-  promptString= terminal->promptString;
-  bannerFunction= terminal->bannerFunction;
+  usebackspace = terminal->usebackspace;
+  usedelete = terminal->usedelete;
+  useprompt = terminal->useprompt;
+  promptString = terminal->promptString;
+  bannerFunction = terminal->bannerFunction;
 }
 
-void Terminal::useBS(bool __usebackspace) { 
-  usebackspace = __usebackspace; 
+void Terminal::useBS(bool __usebackspace) {
+  usebackspace = __usebackspace;
   if (usebackspace) usedelete = false;
 };
 
-void Terminal::useDel(bool __usedelete) { 
-  usedelete = __usedelete; 
+void Terminal::useDel(bool __usedelete) {
+  usedelete = __usedelete;
   if (usedelete) usebackspace = false;
 };
 
