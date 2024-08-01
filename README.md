@@ -1,4 +1,4 @@
-# Terminal v. 1.0.2
+# Terminal v. 1.0.3
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 The Terminal handles backspace and up/down arrows from history. All commands typed into the Terminal a space delimited.
 
@@ -67,7 +67,8 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * loop - call this function in the loop function of the Arduino.
 ### Terminal Configuration
 * configure - This uses another terminal setup and configuration for itself.
-* setEcho - This configures the terminal class to echo the incoming data. 
+* setEcho - This configures the terminal class to echo the incoming data.
+* getEcho - Returns the echo setting for the terminal.
 * useColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
 * useBS - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
 * useDel - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
