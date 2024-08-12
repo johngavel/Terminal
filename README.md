@@ -191,7 +191,39 @@ Enter '?' or 'help' for a list of commands.
 [ FAILED ] Slow Count Complete
 promgram:/>
 ```
-## Batch File Command
+## Sample Commands
+### Arduino Reboot Command
+Reboot the Arduino Device from the Command Line
+```
+// Reboot the Adruino from the Terminal
+void(* resetFunc) (void) = 0;//declare reset function at address 0
+void reboot(Terminal* terminal) {
+  terminal->println(WARNING, "Arduino Uno Rebooting.....");
+  delay(100);
+  resetFunc();
+}
+```
+### Raspberry Pi Pico Reboot Command
+Reboot the Raspberry Pico from the Command Line
+```
+// Reboot the Adruino from the Terminal
+void reboot(Terminal* terminal) {
+  terminal->println(WARNING, "Pico Rebooting.....");
+  delay(100);
+  rp2040.reboot();
+}
+```
+### Raspberry Pi Pico Upload Command
+Reboot the Raspberry Pico from the Command Line into the Upload state, prevents you from having to do the double button press or holding the button when powering on.
+```
+// Reboots the Pico into Upload Code Mode
+void uploadPico(Terminal* terminal) {
+  terminal->println(WARNING, "Rebooting in USB Mode....");
+  delay(100);
+  rp2040.rebootToBootloader();
+}
+```
+### Batch File Command
 One of the neat things that the Terminal Command Class can do is create a batch file command. This command assumes that you have setup a littlefs file system and have some other terminal setup.
 ```
 void runCommand(Terminal* terminal) {
