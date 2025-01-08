@@ -4,6 +4,8 @@ The Terminal handles backspace and up/down arrows from history. All commands typ
 
 Some simple commands that I have implemented, include rebooting the device, setting the device to Upload Mode (For the Raspberry Pi Pico, type in the command and you don't have to push any buttons or reset the device), simple status commands of the code in progress. You can read parameters for the command line for turning on and off gpio lines.
 
+Please see the Telnet Example for how to setup a Telent "like" session using this Terminal.
+
 If you have any ideas, suggestions, or problems; please let me know in the Discussions page!
 
 Written by John J. Gavel
