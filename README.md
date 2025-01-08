@@ -7,16 +7,16 @@ If you have any ideas, suggestions, or problems; please let me know in the Discu
 Written by John J. Gavel
 
 ## Simple Example
-I have set this example up on a Rasberry Pi Pico and connected Pins 1 and 2 for the serial port. This is a basic TTY cable connected to PUTTY on my main computer.
+I have set this example up on a Rasberry Pi Pico and set the USB to connect to the PC as a Serial Device. 
 ```
 /*
-  HelloWorldPicoTerminal.ino - Pico Serial Terminal Example
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  USBSerialExample.ino - Pico Serial Terminal Example
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 #include <Terminal.h>
 
 // Actual Terminal Initialized with the Serial Stream
-Terminal terminal(&Serial1);
+Terminal terminal(&Serial);
 
 
 // Simple Hello World Example Command
@@ -26,7 +26,7 @@ void hello(Terminal* terminal) {
 }
 
 void setup() {
-  Serial1.begin(115200); // Setup your serial line
+  Serial.begin(); // Setup your serial line
   terminal.setup(); // Setup the Terminal
   addStandardTerminalCommands(); 
   TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
@@ -42,7 +42,6 @@ void loop() {
 ```
 Serial Port Output
 ```
-Arduino Program
 PROGRAM:\>
 PROGRAM:\> help
 
