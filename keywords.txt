@@ -29,6 +29,7 @@ prompt	KEYWORD2
 readParameter	KEYWORD2
 invalidParameter	KEYWORD2
 setEcho	KEYWORD2
+getEcho	KEYWORD2
 useColor	KEYWORD2
 useBS	KEYWORD2
 useDel	KEYWORD2
