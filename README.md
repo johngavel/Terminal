@@ -94,6 +94,8 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
   * PROMPT - This changes the Color of the output. Normally associated with the input prompt.
 * println - Outputs and Carriage Return and Newline to the Terminal.
 * println(PRINT_TYPES, String) - Pre-defined output print types that all output must conform to.
+* clearScreen - Sends Escape Commands to Clear the Terminal Screen
+* clearHistory - Clears the command history from the terminal
 ### Terminal Input
 Since the Terminal Class is processing and parsing all of the Inputs, these functions are only supposed to be called from within a called command.
 * readParamter - Returns the parameter for the command that was typed in. Return NULL if no paramter was typed in. It is up to the user to convert the String paramter to a type for error checking.
@@ -113,6 +115,8 @@ Two commands are already available to the you. A "help"/"?" and "history" comman
 * addStandardTerminalCommands()
 Help - This can be accessed by typing "help" or "?" at the command line. This will print out to the user a formated listing of all commands available. These commands will described when you added them to the TerminalCommand class.
 History - This can be accessed by typing "history" at the command line. This will print out to the user the last ten commands entered on this terminal.
+Clear Screen - This can be accessed by typing "clear" at the command line. This will print out escape commands that will clear the terminal screen.
+Reset Terminal - This can be accessed by typing "reset" at the command line. This will clear the screen and delete the command history.
 
 ## Writing your own Commands
 I have provided in the examples some basic commands.
