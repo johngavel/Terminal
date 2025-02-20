@@ -1,7 +1,7 @@
 /*
   termcmd.cpp - Terminal Commands - Provides a Singular Class that holds
   all of the commands to be executed by any terminal.
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 
 #include "termcmd.h"

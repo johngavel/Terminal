@@ -1,7 +1,7 @@
 /*
   terminalclass.h - Terminal - Processing, Parsing, Executing, and Output Control
   For Terminals.
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 #ifndef __TERMINAL_CLASS
 #define __TERMINAL_CLASS
@@ -55,6 +55,8 @@ public:
   void usePrompt(bool __useprompt) { useprompt = __useprompt; };
   void setPrompt(String __prompt) { promptString = __prompt; };
   void setBannerFunction(void function(Terminal*)) { bannerFunction = function; };
+  void clearScreen();
+  void clearHistory();
   Queue lastBuffer = Queue(HISTORY, MAX_INPUT_LINE);
 
 private:

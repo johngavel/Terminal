@@ -1,7 +1,7 @@
 /*
   terminal.cpp - Terminal - Processing, Parsing, Executing, and Output Control
   For Terminals.
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 
 #include "stdtermcmd.h"
@@ -339,4 +339,18 @@ void Terminal::helpHist(Terminal* terminal) {
   for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i) + ". ", (char*) terminal->lastBuffer.get(i));
   terminal->println(PASSED, "Command History");
   terminal->prompt();
+}
+
+void Terminal::clearScreen() {
+  if (usecolor) {
+    __print("\x1B[2J");
+    __print("\x1B[0;0H");
+  } else {
+    println(ERROR, "Command not implemeneted for this terminal.");
+  }
+}
+
+void Terminal::clearHistory() {
+  lastBuffer.clear();
+  historyIndex = 0;
 }

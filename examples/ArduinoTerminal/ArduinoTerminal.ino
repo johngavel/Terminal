@@ -1,6 +1,6 @@
 /*
   ArduinoTerminal.ino - Arduino Serial Terminal Example
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 
   This program is too big to fit on an Arduino Uno!
 */

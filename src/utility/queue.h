@@ -1,6 +1,6 @@
 /*
   queue.h - Utility Library - Provides a classic queue
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 
 #ifndef __QUEUE

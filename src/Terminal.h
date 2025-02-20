@@ -1,7 +1,7 @@
 /*
   terminal.h - Terminal - Processing, Parsing, Executing, and Output Control
   For Terminals.
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 
 #ifndef __TERMINAL

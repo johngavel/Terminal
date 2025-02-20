@@ -1,11 +1,16 @@
 /*
   TelnetTerminal.ino - PicoW Telnet Terminal Example
   Modified from the WiFiServer.ino Example Placed in the public domain by Earle F. Philhower, III, 2022
-  Copyright (c) 2024 John J. Gavel.  All right reserved.
+  Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
+
+/* This program will open a serial terminal on the usb port of the PicoW */
+/* It will open a socket for the telnet program to access on the wifi.*/
+
 #include <Terminal.h>
 #include <WiFi.h>
 
+// Replace the following with your network
 #ifndef STASSID
 #define STASSID "your-ssid"
 #define STAPSK "your-password"
@@ -21,14 +26,33 @@ WiFiClient client;
 Terminal telnet(&client);
 bool isTelnetConnected = false;
 
+// Serial Port Terminal Initialized with the Serial Stream
+Terminal terminal(&Serial);
 
-// Actual Terminal Initialized with the Serial Stream
-Terminal terminal(&Serial1);
+/******* Terminal Commands ***************/
 
-// Four Commands added to the Terminal
-// exit, reboot, upload, and slowCount
+// Five Commands added to the Terminal
+// ipconfig, exit, reboot, upload, and slowCount
 // Functions must be in the form of:
 // void functionName(Terminal* terminal)
+
+void wifiIFConfig(Terminal* terminal) {
+  IPAddress ipAddress = WiFi.localIP();
+  bool linked = WiFi.isConnected();
+  terminal->println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
+  terminal->println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
+                              String(ipAddress[3]));
+  ipAddress = WiFi.subnetMask();
+  terminal->println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
+                              String(ipAddress[3]));
+  ipAddress = WiFi.gatewayIP();
+  terminal->println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
+                              String(ipAddress[3]));
+  ipAddress = WiFi.dnsIP();
+  terminal->println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
+                              String(ipAddress[3]));
+  terminal->prompt();
+}
 
 // Reboot the Adruino from the Terminal
 void reboot(Terminal* terminal) {
@@ -65,10 +89,10 @@ static const char* macToString(uint8_t mac[6]) {
 
 static const char* encToString(uint8_t enc) {
   switch (enc) {
-    case ENC_TYPE_NONE: return "NONE";
-    case ENC_TYPE_TKIP: return "WPA";
-    case ENC_TYPE_CCMP: return "WPA2";
-    case ENC_TYPE_AUTO: return "AUTO";
+  case ENC_TYPE_NONE: return "NONE";
+  case ENC_TYPE_TKIP: return "WPA";
+  case ENC_TYPE_CCMP: return "WPA2";
+  case ENC_TYPE_AUTO: return "AUTO";
   }
   return "UNKN";
 }
@@ -98,23 +122,25 @@ void wifiScan(Terminal* terminal) {
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
 void slowCount(Terminal* terminal) {
   bool passed = false;
-  String value = terminal->readParameter();  // Read the Parameter from the command line
+  String value = terminal->readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
-        terminal->print(INFO, String(i + 1) + " ");  // Output to the terminal
+        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
         delay(1000);
       }
     } else {
-      terminal->println(ERROR, "Parameter " + String(count) + " is not between 1 and 60!");  // Error Output to the Terminal
+      terminal->println(ERROR, "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
-  } else terminal->invalidParameter();
+  } else
+    terminal->invalidParameter();
   terminal->println();
-  terminal->println((passed) ? PASSED : FAILED, "Slow Count Complete");  // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt();                                                    // Prompt the user for the next command
+  terminal->println((passed) ? PASSED : FAILED, "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+  terminal->prompt();                                                   // Prompt the user for the next command
 }
+/******* End Terminal Commands ***************/
 
 // Custom Banner - Added to the start of the Terminal and Help Command
 void banner(Terminal* terminal) {
@@ -140,16 +166,28 @@ void banner(Terminal* terminal) {
   terminal->println(INFO, "°F.");
 }
 
-
-void setup() {
+void setupSerialPort() {
   // Setup of the Serial Terminal
-  Serial1.begin(115200);    // Setup your serial line
-  terminal.setup();         // Setup the Terminal
-  terminal.useColor(true);  // Output color to the Terminal
+  Serial.begin(115200);    // Setup your serial line
+  terminal.setup();        // Setup the Terminal
+  terminal.useColor(true); // Output color to the Terminal
   terminal.setPrompt("example://>");
   terminal.setBannerFunction(banner);
   terminal.banner();
 
+  terminal.println();
+  terminal.println(INFO, "Connected to WiFi");
+  terminal.println();
+  terminal.println(INFO, "Connect to server at " + WiFi.localIP().toString() + ":" + String(port));
+  // Print the banner for Startup - This banner can be overridden with "setBannerFunction"
+  // for a custom banner
+  terminal.banner();
+  // Setup is complete - print a prompt for the user to get started.
+  terminal.println(PASSED, "Setup Complete");
+  terminal.prompt();
+}
+
+void setupTelnet() {
   // Setup the Telnet Terminal
   telnet.setup();
   telnet.useColor(true);
@@ -158,8 +196,13 @@ void setup() {
   telnet.setEcho(false);
   telnet.useDel(false);
   telnet.useBS(true);
+}
 
-  // Setup of the Telnet Terminal
+void setup() {
+  delay(10000);
+  setupTelnet();
+
+  // Setup of the Wifi
   WiFi.mode(WIFI_STA);
   WiFi.setHostname("PicoW2");
   terminal.println(INFO, "Connecting to '" + String(ssid) + "' with '" + String(password) + "'");
@@ -169,11 +212,6 @@ void setup() {
     delay(100);
   }
   server.begin();
-  terminal.println();
-  terminal.println(INFO, "Connected to WiFi");
-  terminal.println();
-  terminal.println(INFO, "Connect to server at " + WiFi.localIP().toString() + ":" + String(port));
-
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
   // "help" and "?" - Help, listing of all the commands added to the Terminal
@@ -187,18 +225,14 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
+  TERM_CMD->addCmd("ifconfig", "", "IP Configuration", wifiIFConfig);
   TERM_CMD->addCmd("reboot", "", "Restarts the Pico", reboot);
   TERM_CMD->addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
   TERM_CMD->addCmd("exit", "", "Close the Terminal", exitTelnet);
   TERM_CMD->addCmd("wifiscan", "", "Scans the Wifi for Networks", wifiScan);
   TERM_CMD->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
-  // Print the banner for Startup - This banner can be overridden with "setBannerFunction"
-  // for a custom banner
-  terminal.banner();
-  // Setup is complete - print a prompt for the user to get started.
-  terminal.println(PASSED, "Setup Complete");
-  terminal.prompt();
+  setupSerialPort();
 }
 
 void loop() {

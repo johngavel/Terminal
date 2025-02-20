@@ -1,4 +1,4 @@
-# Terminal v. 1.0.4
+# Terminal v. 1.0.5
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 The Terminal handles backspace and up/down arrows from history. All commands typed into the Terminal a space delimited.
 
