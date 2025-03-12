@@ -21,8 +21,12 @@ typedef enum { NO_PROCESSING, HELP_FUNCTION_CALLED, EMPTY_STRING, ERROR_NO_CMD_F
 
 class Terminal {
 public:
-  Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream){};
-  Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream){};
+  Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
+  Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) { initialize(); };
+  void initialize() {
+    memset(cmdBuffer, 0, MAX_INPUT_LINE);
+    memset(parameterParsing, 0, MAX_INPUT_LINE);
+  };
   void configure(Terminal* terminal);
   void setStream(Stream* __stream) {
     inputStream = __stream;
@@ -79,12 +83,12 @@ private:
   ReadLineReturn readline();
   ReadLineReturn callFunction();
   char* lastCmd();
-  int lastCmdIndex;
+  int lastCmdIndex = -1;
 
   char cmdBuffer[MAX_INPUT_LINE];
   unsigned long cmdBufferIndex = 0;
   char parameterParsing[MAX_INPUT_LINE];
-  char* parameterParseSave;
+  char* parameterParseSave = nullptr;
   unsigned long historyIndex = 0;
 
   static void helpHist(Terminal* terminal);

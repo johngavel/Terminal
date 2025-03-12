@@ -287,8 +287,7 @@ ReadLineReturn Terminal::readline() {
       } else
         __print(" ");
     } else if (readChar[0] == ESC_CHAR) {
-      while (inputStream->available() < 2)
-        ;
+      while (inputStream->available() < 2);
       inputStream->readBytes(&readChar[0], 2);
       if (readChar[0] == '[') {
         if (readChar[1] == 'A') { // UP Arrow
