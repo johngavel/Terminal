@@ -1,6 +1,8 @@
 # Terminal v. 1.0.7
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
-The Terminal handles backspace and up/down arrows from history. All commands typed into the Terminal a space delimited.
+The Terminal handles backspace and up/down arrows from history. Added TAB auto-complete for serial ports.
+
+All commands typed into the Terminal a space delimited.
 
 Some simple commands that I have implemented, include rebooting the device, setting the device to Upload Mode (For the Raspberry Pi Pico, type in the command and you don't have to push any buttons or reset the device), simple status commands of the code in progress. You can read parameters for the command line for turning on and off gpio lines.
 
