@@ -9,14 +9,13 @@
 // Actual Terminal Initialized with the Serial Stream
 Terminal terminal(&Serial);
 
-
 // Two Commands added to the Terminal
 // reboot and slowCount
 // Functions must be in the form of:
 // void functionName(Terminal* terminal)
 
 // Reboot the Adruino from the Terminal
-void(* resetFunc) (void) = 0;//declare reset function at address 0
+void (*resetFunc)(void) = 0; // declare reset function at address 0
 void reboot(Terminal* terminal) {
   terminal->println(WARNING, "Arduino Uno Rebooting.....");
   delay(100);
@@ -26,31 +25,32 @@ void reboot(Terminal* terminal) {
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
 void slowCount(Terminal* terminal) {
   bool passed = false;
-  String value = terminal->readParameter();  // Read the Parameter from the command line
+  String value = terminal->readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
-    for (int i = 0; i < count; i++) {
-      terminal->print(INFO, String(i+ 1) + " "); // Output to the terminal
-      delay(1000);
-    }
+      for (int i = 0; i < count; i++) {
+        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+        delay(1000);
+      }
     } else {
       terminal->println(ERROR, "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
-  } else terminal->invalidParameter();
+  } else
+    terminal->invalidParameter();
   terminal->println();
-  terminal->println((passed)?PASSED:FAILED, "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt(); // Prompt the user for the next command
+  terminal->println((passed) ? PASSED : FAILED, "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+  terminal->prompt();                                                   // Prompt the user for the next command
 }
 
 void setup() {
   Serial.begin(9600); // Setup your serial line
-  terminal.setup(); // Setup the Terminal
+  terminal.setup();   // Setup the Terminal
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
   // "help" and "?" - Help, listing of all the commands added to the Terminal
-  addStandardTerminalCommands(); 
+  addStandardTerminalCommands();
 
   // Add Program Specific Commands
   // reboot and slowCount defined above.

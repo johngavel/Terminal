@@ -6,9 +6,9 @@
 #ifndef __TERMINAL_CLASS
 #define __TERMINAL_CLASS
 
-#define MAX_INPUT_LINE 80
 #define HISTORY 10
 
+#include "utility/commandBuffer.h"
 #include "utility/queue.h"
 
 #include <Stream.h>
@@ -23,10 +23,7 @@ class Terminal {
 public:
   Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
   Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) { initialize(); };
-  void initialize() {
-    memset(cmdBuffer, 0, MAX_INPUT_LINE);
-    memset(parameterParsing, 0, MAX_INPUT_LINE);
-  };
+  void initialize() { memset(parameterParsing, 0, MAX_INPUT_LINE); };
   void configure(Terminal* terminal);
   void setStream(Stream* __stream) {
     inputStream = __stream;
@@ -85,11 +82,16 @@ private:
   char* lastCmd();
   int lastCmdIndex = -1;
 
-  char cmdBuffer[MAX_INPUT_LINE];
-  unsigned long cmdBufferIndex = 0;
+  CommandBuffer cmdBuffer;
   char parameterParsing[MAX_INPUT_LINE];
   char* parameterParseSave = nullptr;
   unsigned long historyIndex = 0;
+
+  void upArrow();
+  void downArrow();
+  void rightArrow();
+  void leftArrow();
+  void tab();
 
   static void helpHist(Terminal* terminal);
 };

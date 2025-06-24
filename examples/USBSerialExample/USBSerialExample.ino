@@ -7,7 +7,6 @@
 // Actual Terminal Initialized with the Serial Stream
 Terminal terminal(&Serial);
 
-
 // Simple Hello World Example Command
 void hello(Terminal* terminal) {
   terminal->println(INFO, "Hello World!");
@@ -15,9 +14,9 @@ void hello(Terminal* terminal) {
 }
 
 void setup() {
-  Serial.begin(); // Setup your serial line
+  Serial.begin();   // Setup your serial line
   terminal.setup(); // Setup the Terminal
-  addStandardTerminalCommands(); 
+  addStandardTerminalCommands();
   TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
   terminal.banner();
   terminal.prompt();

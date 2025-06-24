@@ -7,7 +7,6 @@
 // Actual Terminal Initialized with the Serial Stream
 Terminal terminal(&Serial1);
 
-
 // Simple Hello World Example Command
 void hello(Terminal* terminal) {
   terminal->println(INFO, "Hello World!");
@@ -16,8 +15,8 @@ void hello(Terminal* terminal) {
 
 void setup() {
   Serial1.begin(115200); // Setup your serial line
-  terminal.setup(); // Setup the Terminal
-  addStandardTerminalCommands(); 
+  terminal.setup();      // Setup the Terminal
+  addStandardTerminalCommands();
   // addCmd parameters are as follows:
   // 1st = String that is the command to be parsed and executed from the command line
   // 2nd = String that is a listing of all parameters in this command, only listed in help
