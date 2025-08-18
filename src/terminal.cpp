@@ -4,6 +4,15 @@
   Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 
+/*
+TODO:
+Fix Backspace on Telnet
+Add Left and Right Arrow Functions.
+Remove ESCAPE debug code.
+Modify Telnet Code with proper escape characters
+Modify build to just compile, don't build data.
+*/
+
 #include "stdtermcmd.h"
 #include "termcmd.h"
 #include "terminalclass.h"
@@ -196,22 +205,10 @@ void Terminal::invalidParameter() {
 void Terminal::configure(Terminal* terminal) {
   echo = terminal->echo;
   usecolor = terminal->usecolor;
-  usebackspace = terminal->usebackspace;
-  usedelete = terminal->usedelete;
   useprompt = terminal->useprompt;
   promptString = terminal->promptString;
   bannerFunction = terminal->bannerFunction;
 }
-
-void Terminal::useBS(bool __usebackspace) {
-  usebackspace = __usebackspace;
-  if (usebackspace) usedelete = false;
-};
-
-void Terminal::useDel(bool __usedelete) {
-  usedelete = __usedelete;
-  if (usedelete) usebackspace = false;
-};
 
 void Terminal::setup() {
   cmdBuffer.clearBuffer();
@@ -252,10 +249,10 @@ ReadLineReturn Terminal::readline() {
   if (available > 0) {
     inputStream->readBytes(&readChar[0], 1);
     if (readChar[0] == HT_CHAR) {
-      tab();
+      if (echo) tab();
     } else if (isPrintable(readChar[0])) {
       if (cmdBuffer.addCharacter(readChar[0])) {
-        if (echo) __print(readChar[0]);
+        if (echo) { printCommandLine(); }
       }
     } else if (readChar[0] == CR_CHAR) {
       if (echo) println();
@@ -264,25 +261,29 @@ ReadLineReturn Terminal::readline() {
       if (cmdBuffer.getCommandLength() > 0) {
         if (echo) println();
         functionCalled = callFunction();
-      } else if (echo)
-        __print(NL_CHAR);
-    } else if ((usedelete) && (readChar[0] == DEL_CHAR)) {
-      if (cmdBuffer.deleteCharacter()) {
-        if (echo) __print(DEL_CHAR);
       }
-    } else if ((usebackspace) && (readChar[0] == BS_CHAR)) {
-      if (cmdBuffer.deleteCharacter()) {
-        __print(" ");
-        __print(BS_CHAR);
-      } else
-        __print(" ");
-    } else if (readChar[0] == ESC_CHAR) {
+    } else if ((readChar[0] == DEL_CHAR) || (readChar[0] == BS_CHAR)) {
+      cmdBuffer.deleteCharacter();
+      if (echo) printCommandLine();
+    } else if ((echo) && (readChar[0] == ESC_CHAR)) {
       while (inputStream->available() < 2);
       inputStream->readBytes(&readChar[1], 2);
-      if ((readChar[1] == VT100_UP_ARROW[1]) && (readChar[2] == VT100_UP_ARROW[2])) upArrow();
-      if ((readChar[1] == VT100_DOWN_ARROW[1]) && (readChar[2] == VT100_DOWN_ARROW[2])) downArrow();
-      if ((readChar[1] == VT100_RIGHT_ARROW[1]) && (readChar[2] == VT100_RIGHT_ARROW[2])) rightArrow();
-      if ((readChar[1] == VT100_LEFT_ARROW[1]) && (readChar[2] == VT100_LEFT_ARROW[2])) leftArrow();
+      if ((readChar[1] == VT100_UP_ARROW[1]) && (readChar[2] == VT100_UP_ARROW[2]))
+        upArrow();
+      else if ((readChar[1] == VT100_DOWN_ARROW[1]) && (readChar[2] == VT100_DOWN_ARROW[2]))
+        downArrow();
+      else if ((readChar[1] == VT100_RIGHT_ARROW[1]) && (readChar[2] == VT100_RIGHT_ARROW[2]))
+        rightArrow();
+      else if ((readChar[1] == VT100_LEFT_ARROW[1]) && (readChar[2] == VT100_LEFT_ARROW[2]))
+        leftArrow();
+      else {
+        // __print("ESC " + String(readChar[1]) + String(readChar[2]));
+        // while (inputStream->available()) {
+        //   inputStream->readBytes(&readChar[0], 1);
+        //   __print(String(readChar[0]));
+        // }
+        // println();
+      }
     }
   }
   return functionCalled;
@@ -290,13 +291,6 @@ ReadLineReturn Terminal::readline() {
 
 char* Terminal::lastCmd() {
   return (char*) lastBuffer.get(lastBuffer.size() - 1);
-}
-
-void Terminal::helpHist(Terminal* terminal) {
-  terminal->println(INFO, "Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i) + ". ", (char*) terminal->lastBuffer.get(i));
-  terminal->println(PASSED, "Command History");
-  terminal->prompt();
 }
 
 void Terminal::clearScreen() {
@@ -311,4 +305,21 @@ void Terminal::clearScreen() {
 void Terminal::clearHistory() {
   lastBuffer.clear();
   historyIndex = 0;
+}
+
+void Terminal::terminalConfig(Terminal* terminal) {
+  String value = terminal->readParameter();
+  if (value == NULL) {
+    terminal->println(INFO, "Terminal Configuration: ");
+    terminal->println(INFO, "inputStream: " + String((bool) terminal->inputStream));
+    terminal->println(INFO, "outputStream: " + String((bool) terminal->outputStream));
+    terminal->println(INFO, "echo: " + String((bool) terminal->echo));
+    terminal->println(INFO, "usecolor: " + String((bool) terminal->usecolor));
+    terminal->println(INFO, "useprompt: " + String((bool) terminal->useprompt));
+    terminal->println(INFO, "promptString: " + terminal->promptString);
+  }
+  if (value == "echo") terminal->setEcho(!terminal->echo);
+  if (value == "usecolor") terminal->useColor(!terminal->usecolor);
+  terminal->println();
+  terminal->prompt();
 }

@@ -19,6 +19,7 @@ void addStandardTerminalCommands() {
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
   TERM_CMD->addCmd("help", "", "Print Help", help);
   TERM_CMD->addCmd("history", "", "Command History", helpHist);
+  TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
 }
 
 void help(Terminal* terminal) {

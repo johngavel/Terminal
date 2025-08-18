@@ -51,13 +51,12 @@ public:
   void setEcho(bool __echo) { echo = __echo; };
   bool getEcho() { return echo; };
   void useColor(bool __usecolor) { usecolor = __usecolor; };
-  void useBS(bool __usebackspace);
-  void useDel(bool __usedelete);
   void usePrompt(bool __useprompt) { useprompt = __useprompt; };
   void setPrompt(String __prompt) { promptString = __prompt; };
   void setBannerFunction(void function(Terminal*)) { bannerFunction = function; };
   void clearScreen();
   void clearHistory();
+  static void terminalConfig(Terminal* terminal);
   Queue lastBuffer = Queue(HISTORY, MAX_INPUT_LINE);
 
 private:
@@ -65,8 +64,6 @@ private:
   Stream* outputStream = nullptr;
   bool echo = true;
   bool usecolor = false;
-  bool usebackspace = false;
-  bool usedelete = true;
   bool useprompt = true;
   String promptString = "PROGRAM:\\> ";
   void (*bannerFunction)(Terminal*) = nullptr;
@@ -87,13 +84,13 @@ private:
   char* parameterParseSave = nullptr;
   unsigned long historyIndex = 0;
 
+  void clearCommandLine();
+  void printCommandLine();
   void upArrow();
   void downArrow();
   void rightArrow();
   void leftArrow();
   void tab();
-
-  static void helpHist(Terminal* terminal);
 };
 
 #endif

@@ -193,9 +193,7 @@ void setupTelnet() {
   telnet.useColor(true);
   telnet.setPrompt("telnet://>");
   telnet.setBannerFunction(banner);
-  telnet.setEcho(false);
-  telnet.useDel(false);
-  telnet.useBS(true);
+  telnet.setEcho(true);
 }
 
 void setup() {

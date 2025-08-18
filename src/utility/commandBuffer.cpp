@@ -5,6 +5,7 @@
 CommandBuffer::CommandBuffer() {
   clearBuffer();
   memset(blankLine, ' ', MAX_INPUT_LINE);
+  memset(tempLine, 0, MAX_INPUT_LINE);
   blankLine[MAX_INPUT_LINE - 1] = 0;
 }
 
@@ -29,8 +30,12 @@ unsigned long CommandBuffer::getCommandLength() {
 
 bool CommandBuffer::addCharacter(char character) {
   bool added = false;
-  if (cmdBufferIndex < MAX_INPUT_LINE) {
+  if (cmdBufferIndex < MAX_INPUT_LINE - 1) {
+    memset(tempLine, 0, MAX_INPUT_LINE);
+    memcpy(tempLine, &cmdBuffer[cmdBufferIndex], MAX_INPUT_LINE - cmdBufferIndex);
     cmdBuffer[cmdBufferIndex] = character;
+    memcpy(&cmdBuffer[cmdBufferIndex + 1], tempLine, MAX_INPUT_LINE - cmdBufferIndex);
+    cmdBuffer[MAX_INPUT_LINE - 1] = 0;
     cmdBufferIndex++;
     added = true;
   }
@@ -40,13 +45,20 @@ bool CommandBuffer::addCharacter(char character) {
 bool CommandBuffer::deleteCharacter() {
   bool deleted = false;
   if (cmdBufferIndex > 0) {
+    memset(tempLine, 0, MAX_INPUT_LINE);
+    memcpy(tempLine, &cmdBuffer[cmdBufferIndex], MAX_INPUT_LINE - cmdBufferIndex);
+    memcpy(&cmdBuffer[cmdBufferIndex - 1], tempLine, MAX_INPUT_LINE - cmdBufferIndex);
+    cmdBuffer[MAX_INPUT_LINE - 1] = 0;
     cmdBufferIndex--;
-    cmdBuffer[cmdBufferIndex] = 0;
     deleted = true;
   }
   return deleted;
 }
 
-void CommandBuffer::backIndex() {}
+void CommandBuffer::backIndex() {
+  if (cmdBufferIndex > 0) cmdBufferIndex--;
+}
 
-void CommandBuffer::forwardIndex() {}
+void CommandBuffer::forwardIndex() {
+  if (cmdBufferIndex < getCommandLength()) cmdBufferIndex++;
+}

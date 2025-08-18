@@ -2,6 +2,17 @@
 #include "terminalclass.h"
 #include "utility/characterCodes.h"
 
+void Terminal::clearCommandLine() {
+  __print(VT100_ERASE_LINE);
+  __print(VT100_SET_CURSOR_BEGIN);
+  prompt();
+}
+
+void Terminal::printCommandLine() {
+  clearCommandLine();
+  __print(cmdBuffer.getCommand());
+}
+
 void Terminal::tab() {
   String blankLine = "                         ";
   if (echo && (cmdBuffer.getCommandLength() > 0)) {
@@ -45,17 +56,12 @@ void Terminal::tab() {
     }
   }
 }
+
 void Terminal::upArrow() {
   char tempBuffer[MAX_INPUT_LINE];
   memset(tempBuffer, 0, MAX_INPUT_LINE);
   if (lastBuffer.size() > 0) {
-    if (usedelete)
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(DEL_CHAR);
-    if (usebackspace) {
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(BS_CHAR);
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(' ');
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(BS_CHAR);
-    }
+    clearCommandLine();
     cmdBuffer.clearBuffer();
     if (historyIndex > 0) historyIndex--;
     lastBuffer.get(historyIndex, tempBuffer);
@@ -68,13 +74,7 @@ void Terminal::downArrow() {
   char tempBuffer[MAX_INPUT_LINE];
   memset(tempBuffer, 0, MAX_INPUT_LINE);
   if (lastBuffer.size() > 0) {
-    if (usedelete)
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(DEL_CHAR);
-    if (usebackspace) {
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(BS_CHAR);
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(' ');
-      for (unsigned long i = 0; i < cmdBuffer.getCommandLength(); i++) __print(BS_CHAR);
-    }
+    clearCommandLine();
     cmdBuffer.clearBuffer();
     if (historyIndex < (lastBuffer.size() - 1)) historyIndex++;
     lastBuffer.get(historyIndex, tempBuffer);
@@ -83,6 +83,10 @@ void Terminal::downArrow() {
   }
 }
 
-void Terminal::rightArrow() {}
+void Terminal::rightArrow() {
+  if (echo) {}
+}
 
-void Terminal::leftArrow() {}
+void Terminal::leftArrow() {
+  if (echo) {}
+}

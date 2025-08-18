@@ -1,8 +1,6 @@
-# Terminal v. 1.0.7
+# Terminal v. 1.0.8
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
-The Terminal handles backspace and up/down arrows from history. Added TAB auto-complete for serial ports.
-
-All commands typed into the Terminal a space delimited.
+The Terminal handles backspace and up/down arrows from history. All commands typed into the Terminal a space delimited.
 
 Some simple commands that I have implemented, include rebooting the device, setting the device to Upload Mode (For the Raspberry Pi Pico, type in the command and you don't have to push any buttons or reset the device), simple status commands of the code in progress. You can read parameters for the command line for turning on and off gpio lines.
 
@@ -77,8 +75,6 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * setEcho - This configures the terminal class to echo the incoming data.
 * getEcho - Returns the echo setting for the terminal.
 * useColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
-* useBS - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
-* useDel - Depending on the Terminal you use it will send a BackSpace character or a Delete character when you press the Backspace Key. Configure for your terminal.
 * usePrompt - Allows you to supress all prompts to the user.
 ### Terminal Output
 * banner - displays the banner for the terminal to the user.

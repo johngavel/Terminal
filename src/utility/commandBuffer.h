@@ -19,6 +19,7 @@ public:
 private:
   char cmdBuffer[MAX_INPUT_LINE];
   char blankLine[MAX_INPUT_LINE];
+  char tempLine[MAX_INPUT_LINE];
   unsigned long cmdBufferIndex = 0;
 };
 
