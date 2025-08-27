@@ -111,10 +111,11 @@ TERM_CMD->addCmd(String command, String parameterDesc, String description, void 
 ## Standard Commands
 Two commands are already available to the you. A "help"/"?" and "history" commands. These can be added to your code by calling:
 * addStandardTerminalCommands()
-Help - This can be accessed by typing "help" or "?" at the command line. This will print out to the user a formated listing of all commands available. These commands will described when you added them to the TerminalCommand class.
-History - This can be accessed by typing "history" at the command line. This will print out to the user the last ten commands entered on this terminal.
-Clear Screen - This can be accessed by typing "clear" at the command line. This will print out escape commands that will clear the terminal screen.
-Reset Terminal - This can be accessed by typing "reset" at the command line. This will clear the screen and delete the command history.
+  * Help - This can be accessed by typing "help" or "?" at the command line. This will print out to the user a formated listing of all commands available. These commands will described when you added them to the TerminalCommand class.
+  * History - This can be accessed by typing "history" at the command line. This will print out to the user the last ten commands entered on this terminal.
+  * Clear Screen - This can be accessed by typing "clear" at the command line. This will print out escape commands that will clear the terminal screen.
+  * Reset Terminal - This can be accessed by typing "reset" at the command line. This will clear the screen and delete the command history.
+  * Enable/Disable Terminal Echo - This can be accessed by type "stty echo" or "stty -echo" at the command line. This will enable or disable the echo of commands sent to this terminal.
 
 ## Writing your own Commands
 I have provided in the examples some basic commands.
