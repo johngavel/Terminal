@@ -4,15 +4,6 @@
   Copyright (c) 2025 John J. Gavel.  All right reserved.
 */
 
-/*
-TODO:
-Fix Backspace on Telnet
-Add Left and Right Arrow Functions.
-Remove ESCAPE debug code.
-Modify Telnet Code with proper escape characters
-Modify build to just compile, don't build data.
-*/
-
 #include "stdtermcmd.h"
 #include "termcmd.h"
 #include "terminalclass.h"
@@ -241,52 +232,50 @@ ReadLineReturn Terminal::callFunction() {
 }
 
 ReadLineReturn Terminal::readline() {
+  if (inputStream == nullptr) return NO_PROCESSING;
+
   char readChar[5];
-  int available = 0;
-  ReadLineReturn functionCalled = NO_PROCESSING;
-  if (inputStream == nullptr) return functionCalled;
-  available = inputStream->available();
-  if (available > 0) {
-    inputStream->readBytes(&readChar[0], 1);
-    if (readChar[0] == HT_CHAR) {
-      if (echo) tab();
-    } else if (isPrintable(readChar[0])) {
-      if (cmdBuffer.addCharacter(readChar[0])) {
-        if (echo) { printCommandLine(); }
-      }
-    } else if (readChar[0] == CR_CHAR) {
-      if (echo) println();
-      functionCalled = callFunction();
-    } else if (readChar[0] == NL_CHAR) {
-      if (cmdBuffer.getCommandLength() > 0) {
-        if (echo) println();
-        functionCalled = callFunction();
-      }
-    } else if ((readChar[0] == DEL_CHAR) || (readChar[0] == BS_CHAR)) {
-      cmdBuffer.deleteCharacter();
-      if (echo) printCommandLine();
-    } else if ((echo) && (readChar[0] == ESC_CHAR)) {
-      while (inputStream->available() < 2);
-      inputStream->readBytes(&readChar[1], 2);
-      if ((readChar[1] == VT100_UP_ARROW[1]) && (readChar[2] == VT100_UP_ARROW[2]))
-        upArrow();
-      else if ((readChar[1] == VT100_DOWN_ARROW[1]) && (readChar[2] == VT100_DOWN_ARROW[2]))
-        downArrow();
-      else if ((readChar[1] == VT100_RIGHT_ARROW[1]) && (readChar[2] == VT100_RIGHT_ARROW[2]))
-        rightArrow();
-      else if ((readChar[1] == VT100_LEFT_ARROW[1]) && (readChar[2] == VT100_LEFT_ARROW[2]))
-        leftArrow();
-      else {
-        // __print("ESC " + String(readChar[1]) + String(readChar[2]));
-        // while (inputStream->available()) {
-        //   inputStream->readBytes(&readChar[0], 1);
-        //   __print(String(readChar[0]));
-        // }
-        // println();
-      }
+  int available = inputStream->available();
+  if (available <= 0) return NO_PROCESSING;
+
+  inputStream->readBytes(&readChar[0], 1);
+  char c = readChar[0];
+
+  if (c == HT_CHAR) {
+    if (echo) tab();
+  } else if (isPrintable(c)) {
+    if (cmdBuffer.addCharacter(c) && echo) { printCommandLine(); }
+  } else if (c == CR_CHAR || (c == NL_CHAR && cmdBuffer.getCommandLength() > 0)) {
+    if (echo) println();
+    return callFunction();
+  } else if (c == DEL_CHAR || c == BS_CHAR) {
+    cmdBuffer.deleteCharacter();
+    if (echo) printCommandLine();
+  } else if (c == ESC_CHAR && echo) {
+    // Wait for the next two bytes of the escape sequence
+    while (inputStream->available() < 2);
+    inputStream->readBytes(&readChar[1], 2);
+
+    if (readChar[1] == VT100_UP_ARROW[1] && readChar[2] == VT100_UP_ARROW[2]) {
+      upArrow();
+    } else if (readChar[1] == VT100_DOWN_ARROW[1] && readChar[2] == VT100_DOWN_ARROW[2]) {
+      downArrow();
+    } else if (readChar[1] == VT100_RIGHT_ARROW[1] && readChar[2] == VT100_RIGHT_ARROW[2]) {
+      rightArrow();
+    } else if (readChar[1] == VT100_LEFT_ARROW[1] && readChar[2] == VT100_LEFT_ARROW[2]) {
+      leftArrow();
+    } else {
+      // Optional: handle unknown escape sequences here
+      // __print("ESC " + String(readChar[1]) + String(readChar[2]));
+      // while (inputStream->available()) {
+      //   inputStream->readBytes(&readChar[0], 1);
+      //   __print(String(readChar[0]));
+      // }
+      // println();
     }
   }
-  return functionCalled;
+
+  return NO_PROCESSING;
 }
 
 char* Terminal::lastCmd() {

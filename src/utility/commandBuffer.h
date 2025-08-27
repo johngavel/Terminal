@@ -13,8 +13,9 @@ public:
   unsigned long getCommandLength();
   bool addCharacter(char character);
   bool deleteCharacter();
-  void backIndex();
-  void forwardIndex();
+  bool backIndex();
+  bool forwardIndex();
+  unsigned long getIndex() { return cmdBufferIndex; };
 
 private:
   char cmdBuffer[MAX_INPUT_LINE];

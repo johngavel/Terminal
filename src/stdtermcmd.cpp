@@ -12,6 +12,7 @@ void help(Terminal* terminal);
 void helpHist(Terminal* terminal);
 void clearScreen(Terminal* terminal);
 void resetTerminal(Terminal* terminal);
+void echoCommand(Terminal* terminal);
 
 void addStandardTerminalCommands() {
   TERM_CMD->addCmd("?", "", "Print Help", help);
@@ -19,7 +20,8 @@ void addStandardTerminalCommands() {
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
   TERM_CMD->addCmd("help", "", "Print Help", help);
   TERM_CMD->addCmd("history", "", "Command History", helpHist);
-  TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
+  TERM_CMD->addCmd("stty", "echo|-echo", "Enables/Disables Terminal Echo", echoCommand);
+  // TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
 }
 
 void help(Terminal* terminal) {
@@ -57,5 +59,22 @@ void resetTerminal(Terminal* terminal) {
   terminal->clearScreen();
   terminal->clearHistory();
   terminal->banner();
+  terminal->prompt();
+}
+
+void echoCommand(Terminal* terminal) {
+  bool passed = false;
+  String value = terminal->readParameter();
+  if (value != NULL) {
+    if (value.equals("echo")) {
+      terminal->setEcho(true);
+      passed = true;
+    }
+    if (value.equals("-echo")) {
+      terminal->setEcho(false);
+      passed = true;
+    }
+  }
+  if (!passed) terminal->invalidParameter();
   terminal->prompt();
 }

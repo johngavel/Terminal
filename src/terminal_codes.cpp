@@ -11,6 +11,8 @@ void Terminal::clearCommandLine() {
 void Terminal::printCommandLine() {
   clearCommandLine();
   __print(cmdBuffer.getCommand());
+  int backupCursor = cmdBuffer.getCommandLength() - cmdBuffer.getIndex();
+  for (int i = 0; i < backupCursor; i++) __print(VT100_LEFT_CURSOR);
 }
 
 void Terminal::tab() {
@@ -84,9 +86,13 @@ void Terminal::downArrow() {
 }
 
 void Terminal::rightArrow() {
-  if (echo) {}
+  if (echo) {
+    if (cmdBuffer.forwardIndex()) __print(VT100_RIGHT_CURSOR);
+  }
 }
 
 void Terminal::leftArrow() {
-  if (echo) {}
+  if (echo) {
+    if (cmdBuffer.backIndex()) __print(VT100_LEFT_CURSOR);
+  }
 }

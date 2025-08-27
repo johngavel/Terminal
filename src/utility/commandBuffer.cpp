@@ -55,10 +55,18 @@ bool CommandBuffer::deleteCharacter() {
   return deleted;
 }
 
-void CommandBuffer::backIndex() {
-  if (cmdBufferIndex > 0) cmdBufferIndex--;
+bool CommandBuffer::backIndex() {
+  if (cmdBufferIndex > 0) {
+    cmdBufferIndex--;
+    return true;
+  }
+  return false;
 }
 
-void CommandBuffer::forwardIndex() {
-  if (cmdBufferIndex < getCommandLength()) cmdBufferIndex++;
+bool CommandBuffer::forwardIndex() {
+  if (cmdBufferIndex < getCommandLength()) {
+    cmdBufferIndex++;
+    return true;
+  }
+  return false;
 }
