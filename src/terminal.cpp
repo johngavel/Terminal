@@ -211,7 +211,7 @@ ReadLineReturn Terminal::callFunction() {
   if (cmdBuffer.getCommandLength() > 0) {
     char* cmdName;
     functionCalled = ERROR_NO_CMD_FOUND;
-    if (lastBuffer.size() >= HISTORY) { lastBuffer.pop(); }
+    if (lastBuffer.size() >= HISTORY_BUFFER) { lastBuffer.pop(); }
     lastBuffer.push(cmdBuffer.getCommand());
     historyIndex = lastBuffer.size();
     memset(parameterParsing, 0, MAX_INPUT_LINE);

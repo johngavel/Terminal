@@ -10,6 +10,7 @@
 #define MAX_TERM_CMD 50
 
 #include "terminalclass.h"
+#include "features.h"
 
 #define TERM_CMD TerminalCommand::get()
 

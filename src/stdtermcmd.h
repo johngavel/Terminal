@@ -6,6 +6,7 @@
 #ifndef __STANDARD_TERMINAL_COMMDANDS
 #define __STANDARD_TERMINAL_COMMDANDS
 
+#include "features.h"
 void addStandardTerminalCommands();
 
 #endif

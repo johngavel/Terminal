@@ -6,7 +6,7 @@
 #ifndef __TERMINAL_CLASS
 #define __TERMINAL_CLASS
 
-#define HISTORY 10
+#include "features.h"
 
 #include "utility/commandBuffer.h"
 #include "utility/queue.h"
@@ -57,7 +57,7 @@ public:
   void clearScreen();
   void clearHistory();
   static void terminalConfig(Terminal* terminal);
-  Queue lastBuffer = Queue(HISTORY, MAX_INPUT_LINE);
+  Queue lastBuffer = Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
 
 private:
   Stream* inputStream = nullptr;

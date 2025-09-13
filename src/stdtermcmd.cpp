@@ -9,18 +9,18 @@
 #include "terminal.h"
 
 void help(Terminal* terminal);
-void helpHist(Terminal* terminal);
+void history(Terminal* terminal);
 void clearScreen(Terminal* terminal);
 void resetTerminal(Terminal* terminal);
 void echoCommand(Terminal* terminal);
 
 void addStandardTerminalCommands() {
   TERM_CMD->addCmd("?", "", "Print Help", help);
+  TERM_CMD->addCmd("help", "", "Print Help", help);
   TERM_CMD->addCmd("clear", "", "Clear the terminal screen", clearScreen);
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
-  TERM_CMD->addCmd("help", "", "Print Help", help);
-  TERM_CMD->addCmd("history", "", "Command History", helpHist);
   TERM_CMD->addCmd("stty", "echo|-echo", "Enables/Disables Terminal Echo", echoCommand);
+  TERM_CMD->addCmd("history", "", "Command History", history);
   // TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
 }
 
@@ -43,7 +43,7 @@ void help(Terminal* terminal) {
   terminal->prompt();
 }
 
-void helpHist(Terminal* terminal) {
+void history(Terminal* terminal) {
   terminal->println(INFO, "Command History");
   for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->lastBuffer.get(i));
   terminal->println(PASSED, "Command History");
