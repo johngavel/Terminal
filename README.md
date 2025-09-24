@@ -16,7 +16,7 @@ Written by John J. Gavel
 ## Future Work
 Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
 Global singleton (TERM_CMD) – simplifies API but reduces modularity.
-                 – This will require code changes when fixed.
+                            – This will require code changes when fixed.
 Minimal error handling – bad input mostly ignored.
 No namespaces – commands live in a flat registry; collisions possible.
 Memory footprint – holds command history; not tuned for very low-RAM MCUs.
