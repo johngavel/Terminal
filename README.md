@@ -1,4 +1,4 @@
-# Terminal v. 1.0.8
+# Terminal v. 1.0.9
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
@@ -12,6 +12,15 @@ Please see the Telnet Example for how to setup a Telent "like" session using thi
 If you have any ideas, suggestions, or problems; please let me know in the Discussions page!
 
 Written by John J. Gavel
+
+## Future Work
+Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
+Global singleton (TERM_CMD) – simplifies API but reduces modularity.
+                 – This will require code changes when fixed.
+Minimal error handling – bad input mostly ignored.
+No namespaces – commands live in a flat registry; collisions possible.
+Memory footprint – holds command history; not tuned for very low-RAM MCUs.
+                 – Add the ability to turn off Terminal Features via #defines
 
 ## Simple Example
 I have set this example up on a Rasberry Pi Pico and set the USB to connect to the PC as a Serial Device. 

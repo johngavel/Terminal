@@ -23,4 +23,13 @@ Notes:
 3. Get all of the Features working
 --------------------------------------------------------*/
 
+/* Weaknesses / Limitations
+
+⚠️ Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
+⚠️ Global singleton (TERM_CMD) – simplifies API but reduces modularity.
+⚠️ Blocking I/O assumption – designed for loop() polling, not async.
+⚠️ Minimal error handling – bad input mostly ignored.
+⚠️ No namespaces – commands live in a flat registry; collisions possible.
+⚠️ Memory footprint – holds command history; not tuned for very low-RAM MCUs.
+ */
 #endif
