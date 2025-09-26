@@ -9,6 +9,9 @@
 class Queue {
 public:
   Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __memory = nullptr);
+  ~Queue();
+  Queue(const Queue&) = delete;
+  Queue& operator=(const Queue&) = delete;
   bool full();
   bool empty();
   bool push(void* element);
@@ -25,6 +28,7 @@ private:
   unsigned long frontIndex;
   unsigned long backIndex;
   unsigned long countOfElements;
+  bool allocatedMemory;
 };
 
 #endif

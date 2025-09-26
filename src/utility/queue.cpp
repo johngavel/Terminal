@@ -9,10 +9,13 @@
 #include <string.h>
 
 Queue::Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __memory) {
+  allocatedMemory = false;
   capacity = __capacity;
   sizeOfElement = __sizeOfElement;
-  if (__memory == nullptr)
+  if (__memory == nullptr){
     memory = (unsigned char*) malloc(capacity * sizeOfElement);
+    allocatedMemory = true;
+  }
   else
     memory = (unsigned char*) __memory;
   if (memory == nullptr) {
@@ -20,6 +23,12 @@ Queue::Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __me
     capacity = 0;
   }
   clear();
+}
+
+Queue::~Queue() {
+  clear();
+  if (allocatedMemory)
+    free(memory);
 }
 
 inline bool Queue::full() {
