@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+namespace TerminalUtility {
 CommandBuffer::CommandBuffer() {
   clearBuffer();
   memset(blankLine, ' ', MAX_INPUT_LINE);
@@ -69,4 +70,5 @@ bool CommandBuffer::forwardIndex() {
     return true;
   }
   return false;
+}
 }

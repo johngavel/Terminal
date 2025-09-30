@@ -8,24 +8,37 @@
 #include "termcmd.h"
 #include "terminal.h"
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 void help(Terminal* terminal);
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 void history(Terminal* terminal);
+#endif
 void clearScreen(Terminal* terminal);
 void resetTerminal(Terminal* terminal);
 void echoCommand(Terminal* terminal);
 
 void addStandardTerminalCommands() {
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
   TERM_CMD->addCmd("?", "", "Print Help", help);
   TERM_CMD->addCmd("help", "", "Print Help", help);
+#endif  
   TERM_CMD->addCmd("clear", "", "Clear the terminal screen", clearScreen);
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
   TERM_CMD->addCmd("stty", "echo|-echo", "Enables/Disables Terminal Echo", echoCommand);
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   TERM_CMD->addCmd("history", "", "Command History", history);
-  // TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
+#endif  
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
+  TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
+#endif
 }
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 void help(Terminal* terminal) {
+#ifdef TERMINAL_BANNER
   terminal->banner();
+#endif
 
   int maxStringLength = 0;
   for (int i = 0; i < TERM_CMD->getCmdCount(); i++) {
@@ -36,19 +49,33 @@ void help(Terminal* terminal) {
     String line1 = TERM_CMD->getCmd(i) + " " + TERM_CMD->getParameter(i) + "                                         ";
     String line2 = "- " + TERM_CMD->getDescription(i);
     line1 = line1.substring(0, maxStringLength);
+#ifdef TERMINAL_LOGGING
     terminal->println(HELP, line1, line2);
+#else
+    terminal->print(line1);
+    terminal->println(line2);
+#endif    
   }
 
   terminal->println();
   terminal->prompt();
 }
+#endif
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 void history(Terminal* terminal) {
+#ifdef TERMINAL_LOGGING
   terminal->println(INFO, "Command History");
   for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->lastBuffer.get(i));
   terminal->println(PASSED, "Command History");
+#else
+  terminal->println("Command History");
+  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) {terminal->print(String(i + 1) + ". "); terminal->println((char*) terminal->lastBuffer.get(i));}
+  terminal->println("Command History");
+#endif  
   terminal->prompt();
 }
+#endif
 
 void clearScreen(Terminal* terminal) {
   terminal->clearScreen();
@@ -57,8 +84,12 @@ void clearScreen(Terminal* terminal) {
 
 void resetTerminal(Terminal* terminal) {
   terminal->clearScreen();
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   terminal->clearHistory();
+#endif  
+#ifdef TERMINAL_BANNER
   terminal->banner();
+#endif  
   terminal->prompt();
 }
 

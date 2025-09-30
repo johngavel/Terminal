@@ -3,6 +3,7 @@
 
 #define MAX_INPUT_LINE 80
 
+namespace TerminalUtility {
 class CommandBuffer {
 public:
   CommandBuffer();
@@ -23,5 +24,6 @@ private:
   char tempLine[MAX_INPUT_LINE];
   unsigned long cmdBufferIndex = 0;
 };
+}
 
 #endif

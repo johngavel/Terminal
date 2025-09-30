@@ -15,6 +15,7 @@ void Terminal::printCommandLine() {
   for (int i = 0; i < backupCursor; i++) __print(VT100_LEFT_CURSOR);
 }
 
+#ifdef TERMINAL_TAB
 void Terminal::tab() {
   String blankLine = "                         ";
   if (echo && (cmdBuffer.getCommandLength() > 0)) {
@@ -58,7 +59,9 @@ void Terminal::tab() {
     }
   }
 }
+#endif
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 void Terminal::upArrow() {
   char tempBuffer[MAX_INPUT_LINE];
   memset(tempBuffer, 0, MAX_INPUT_LINE);
@@ -84,7 +87,9 @@ void Terminal::downArrow() {
     __print(cmdBuffer.getCommand());
   }
 }
+#endif
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_EDITING
 void Terminal::rightArrow() {
   if (echo) {
     if (cmdBuffer.forwardIndex()) __print(VT100_RIGHT_CURSOR);
@@ -96,3 +101,4 @@ void Terminal::leftArrow() {
     if (cmdBuffer.backIndex()) __print(VT100_LEFT_CURSOR);
   }
 }
+#endif

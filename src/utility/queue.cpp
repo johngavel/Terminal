@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+namespace TerminalUtility {
 Queue::Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __memory) {
   allocatedMemory = false;
   capacity = __capacity;
@@ -92,4 +93,5 @@ void Queue::clear() {
   backIndex = capacity - 1;
   countOfElements = 0;
   if (memory != nullptr) memset(memory, 0, capacity * sizeOfElement);
+}
 }

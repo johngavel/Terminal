@@ -5,7 +5,7 @@
 
 #ifndef __QUEUE
 #define __QUEUE
-
+namespace TerminalUtility {
 class Queue {
 public:
   Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __memory = nullptr);
@@ -30,5 +30,6 @@ private:
   unsigned long countOfElements;
   bool allocatedMemory;
 };
+}
 
 #endif
