@@ -19,7 +19,7 @@ void Terminal::banner() {
     println(PROMPT, "Arduino Program");
 #else
     println("Arduino Program");
-#endif      
+#endif
   } else {
     (*bannerFunction)(this);
   }
@@ -27,7 +27,7 @@ void Terminal::banner() {
 #endif
 
 void Terminal::prompt() {
-  if (useprompt) 
+  if (useprompt)
 #ifdef TERMINAL_LOGGING
     print(PROMPT, promptString + " ");
 #else
@@ -147,7 +147,7 @@ void Terminal::println(PRINT_TYPES type, String line, String line2) {
 }
 #endif
 
-#ifdef TERMINAL_HEX_STRING  
+#ifdef TERMINAL_HEX_STRING
 static String hexByteString(unsigned char value) {
   String string = "";
   if (value < 16) string += "0";
@@ -242,7 +242,7 @@ void Terminal::configure(Terminal* terminal) {
 #ifdef TERMINAL_COLORS
   usecolor = terminal->usecolor;
 #endif
-#ifdef TERMINAL_BANNER  
+#ifdef TERMINAL_BANNER
   bannerFunction = terminal->bannerFunction;
 #endif
 }
@@ -261,7 +261,7 @@ ReadLineReturn Terminal::callFunction() {
     if (lastBuffer.size() >= HISTORY_BUFFER) { lastBuffer.pop(); }
     lastBuffer.push(cmdBuffer.getCommand());
     historyIndex = lastBuffer.size();
-#endif    
+#endif
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memcpy(parameterParsing, cmdBuffer.getCommand(), MAX_INPUT_LINE);
     cmdBuffer.clearBuffer();
@@ -270,7 +270,7 @@ ReadLineReturn Terminal::callFunction() {
     if (cmdIndex != -1) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
       lastCmdIndex = cmdIndex;
-#endif      
+#endif
       functionCalled = HELP_FUNCTION_CALLED;
       TERM_CMD->callFunction(cmdIndex, this);
     }
@@ -314,16 +314,16 @@ ReadLineReturn Terminal::readline() {
     } else if (readChar[1] == VT100_DOWN_ARROW[1] && readChar[2] == VT100_DOWN_ARROW[2]) {
       downArrow();
 #else
-    if (0) {     
-#endif      
+    if (0) {
+#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_EDITING
     } else if (readChar[1] == VT100_RIGHT_ARROW[1] && readChar[2] == VT100_RIGHT_ARROW[2]) {
       rightArrow();
     } else if (readChar[1] == VT100_LEFT_ARROW[1] && readChar[2] == VT100_LEFT_ARROW[2]) {
       leftArrow();
 #else
-    } else if (0) {     
-#endif      
+    } else if (0) {
+#endif
     } else {
       // Optional: handle unknown escape sequences here
       // __print("ESC " + String(readChar[1]) + String(readChar[2]));
@@ -352,8 +352,8 @@ void Terminal::clearScreen() {
   } else {
 #else
   if (0) {
-#endif        
-#ifdef TERMINAL_LOGGING    
+#endif
+#ifdef TERMINAL_LOGGING
     println(ERROR, "Command not implemeneted for this terminal.");
 #else
     println("Command not implemeneted for this terminal.");
@@ -372,7 +372,7 @@ void Terminal::clearHistory() {
 void Terminal::terminalConfig(Terminal* terminal) {
   String value = terminal->readParameter();
   if (value == NULL) {
-#ifdef TERMINAL_LOGGING    
+#ifdef TERMINAL_LOGGING
     terminal->println(INFO, "Terminal Configuration: ");
     terminal->println(INFO, "inputStream: " + String((bool) terminal->inputStream));
     terminal->println(INFO, "outputStream: " + String((bool) terminal->outputStream));
@@ -392,12 +392,12 @@ void Terminal::terminalConfig(Terminal* terminal) {
 #endif
     terminal->println("useprompt: " + String((bool) terminal->useprompt));
     terminal->println("promptString: " + terminal->promptString);
-#endif    
+#endif
   }
   if (value == "echo") terminal->setEcho(!terminal->echo);
 #ifdef TERMINAL_COLORS
   if (value == "usecolor") terminal->useColor(!terminal->usecolor);
-#endif  
+#endif
   terminal->println();
   terminal->prompt();
 }

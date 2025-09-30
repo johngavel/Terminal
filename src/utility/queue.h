@@ -30,6 +30,6 @@ private:
   unsigned long countOfElements;
   bool allocatedMemory;
 };
-}
+} // namespace TerminalUtility
 
 #endif

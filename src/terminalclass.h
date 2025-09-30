@@ -7,7 +7,6 @@
 #define __TERMINAL_CLASS
 
 #include "features.h"
-
 #include "utility/commandBuffer.h"
 #include "utility/queue.h"
 
@@ -40,46 +39,46 @@ public:
   void setup();
   void loop();
   void println();
-  #ifdef TERMINAL_COLORS
+#ifdef TERMINAL_COLORS
   void print(COLOR color, String line);
-  #else
-  inline void print(COLOR color, String line){ __print(line);};
-  #endif
-  #ifdef TERMINAL_LOGGING
+#else
+  inline void print(COLOR color, String line) { __print(line); };
+#endif
+#ifdef TERMINAL_LOGGING
   void print(PRINT_TYPES type, String line);
   void print(PRINT_TYPES type, String line, String line2);
   void println(PRINT_TYPES type, String line);
   void println(PRINT_TYPES type, String line, String line2);
-  #else
-  inline void print(String line){__print(line);};
-  inline void println(String line){__println(line);};
-  #endif
-#ifdef TERMINAL_HEX_STRING  
+#else
+  inline void print(String line) { __print(line); };
+  inline void println(String line) { __println(line); };
+#endif
+#ifdef TERMINAL_HEX_STRING
   void hexdump(unsigned char* buffer, unsigned long length);
-#endif  
-#ifdef TERMINAL_BANNER  
+#endif
+#ifdef TERMINAL_BANNER
   void banner();
-#endif  
+#endif
   void prompt();
   char* readParameter();
   void invalidParameter();
   void setEcho(bool __echo) { echo = __echo; };
   bool getEcho() { return echo; };
-#ifdef TERMINAL_COLORS  
+#ifdef TERMINAL_COLORS
   void useColor(bool __usecolor) { usecolor = __usecolor; };
-#endif  
+#endif
   void usePrompt(bool __useprompt) { useprompt = __useprompt; };
   void setPrompt(String __prompt) { promptString = __prompt; };
-#ifdef TERMINAL_BANNER  
+#ifdef TERMINAL_BANNER
   void setBannerFunction(void function(Terminal*)) { bannerFunction = function; };
-#endif  
+#endif
   void clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   void clearHistory();
-#endif  
+#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
   static void terminalConfig(Terminal* terminal);
-#endif  
+#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   TerminalUtility::Queue lastBuffer = TerminalUtility::Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
 #endif
@@ -88,19 +87,19 @@ private:
   Stream* inputStream = nullptr;
   Stream* outputStream = nullptr;
   bool echo = true;
-#ifdef TERMINAL_COLORS  
+#ifdef TERMINAL_COLORS
   bool usecolor = false;
-#endif  
+#endif
   bool useprompt = true;
   String promptString = "PROGRAM:\\> ";
-#ifdef TERMINAL_BANNER  
+#ifdef TERMINAL_BANNER
   void (*bannerFunction)(Terminal*) = nullptr;
-#endif  
+#endif
 
 #ifdef TERMINAL_COLORS
   void printColor(COLOR color);
-#else  
-  inline void printColor(COLOR color){};
+#else
+  inline void printColor(COLOR color) {};
 #endif
   void __print(String line);
   void __print(char character);
@@ -113,7 +112,7 @@ private:
   char* lastCmd();
   int lastCmdIndex = -1;
   unsigned long historyIndex = 0;
-#endif  
+#endif
 
   TerminalUtility::CommandBuffer cmdBuffer;
   char parameterParsing[MAX_INPUT_LINE];
@@ -124,11 +123,11 @@ private:
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   void upArrow();
   void downArrow();
-#endif  
+#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_EDITING
   void rightArrow();
   void leftArrow();
-#endif  
+#endif
 #ifdef TERMINAL_TAB
   void tab();
 #endif

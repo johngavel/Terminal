@@ -24,6 +24,6 @@ private:
   char tempLine[MAX_INPUT_LINE];
   unsigned long cmdBufferIndex = 0;
 };
-}
+} // namespace TerminalUtility
 
 #endif

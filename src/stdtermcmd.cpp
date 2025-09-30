@@ -14,21 +14,33 @@ void help(Terminal* terminal);
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 void history(Terminal* terminal);
 #endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
 void clearScreen(Terminal* terminal);
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
 void resetTerminal(Terminal* terminal);
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
 void echoCommand(Terminal* terminal);
+#endif
 
 void addStandardTerminalCommands() {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
   TERM_CMD->addCmd("?", "", "Print Help", help);
   TERM_CMD->addCmd("help", "", "Print Help", help);
-#endif  
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
   TERM_CMD->addCmd("clear", "", "Clear the terminal screen", clearScreen);
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
   TERM_CMD->addCmd("stty", "echo|-echo", "Enables/Disables Terminal Echo", echoCommand);
+#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   TERM_CMD->addCmd("history", "", "Command History", history);
-#endif  
+#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
   TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
 #endif
@@ -54,7 +66,7 @@ void help(Terminal* terminal) {
 #else
     terminal->print(line1);
     terminal->println(line2);
-#endif    
+#endif
   }
 
   terminal->println();
@@ -70,29 +82,37 @@ void history(Terminal* terminal) {
   terminal->println(PASSED, "Command History");
 #else
   terminal->println("Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) {terminal->print(String(i + 1) + ". "); terminal->println((char*) terminal->lastBuffer.get(i));}
+  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) {
+    terminal->print(String(i + 1) + ". ");
+    terminal->println((char*) terminal->lastBuffer.get(i));
+  }
   terminal->println("Command History");
-#endif  
+#endif
   terminal->prompt();
 }
 #endif
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
 void clearScreen(Terminal* terminal) {
   terminal->clearScreen();
   terminal->prompt();
 }
+#endif
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
 void resetTerminal(Terminal* terminal) {
   terminal->clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   terminal->clearHistory();
-#endif  
+#endif
 #ifdef TERMINAL_BANNER
   terminal->banner();
-#endif  
+#endif
   terminal->prompt();
 }
+#endif
 
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
 void echoCommand(Terminal* terminal) {
   bool passed = false;
   String value = terminal->readParameter();
@@ -109,3 +129,4 @@ void echoCommand(Terminal* terminal) {
   if (!passed) terminal->invalidParameter();
   terminal->prompt();
 }
+#endif

@@ -71,4 +71,4 @@ bool CommandBuffer::forwardIndex() {
   }
   return false;
 }
-}
+} // namespace TerminalUtility

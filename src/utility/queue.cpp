@@ -13,11 +13,10 @@ Queue::Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __me
   allocatedMemory = false;
   capacity = __capacity;
   sizeOfElement = __sizeOfElement;
-  if (__memory == nullptr){
+  if (__memory == nullptr) {
     memory = (unsigned char*) malloc(capacity * sizeOfElement);
     allocatedMemory = true;
-  }
-  else
+  } else
     memory = (unsigned char*) __memory;
   if (memory == nullptr) {
     sizeOfElement = 0;
@@ -28,8 +27,7 @@ Queue::Queue(unsigned long __capacity, unsigned long __sizeOfElement, void* __me
 
 Queue::~Queue() {
   clear();
-  if (allocatedMemory)
-    free(memory);
+  if (allocatedMemory) free(memory);
 }
 
 inline bool Queue::full() {
@@ -94,4 +92,4 @@ void Queue::clear() {
   countOfElements = 0;
   if (memory != nullptr) memset(memory, 0, capacity * sizeOfElement);
 }
-}
+} // namespace TerminalUtility
