@@ -17,8 +17,8 @@ Written by John J. Gavel
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
 ## Future Work
-- [ ]Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
-- [ ]Global singleton (TERM_CMD) – simplifies API but reduces modularity. This will require code changes when fixed.
+- [ ] Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
+- [ ] Global singleton (TERM_CMD) – simplifies API but reduces modularity. This will require code changes when fixed.
 - [ ] Minimal error handling – bad input mostly ignored.
 - [ ] No namespaces – commands live in a flat registry; collisions possible.
 - [X] Memory footprint – holds command history; not tuned for very low-RAM MCUs. Add the ability to turn off Terminal Features via #defines
