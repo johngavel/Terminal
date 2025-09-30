@@ -16,6 +16,27 @@ Written by John J. Gavel
 * 1.0.9 - Updated Version Numbers
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
+* 1.0.8 - Updated Version Numbers
+  * Added Left/Right Arrow Support
+  * Added echo enable/disable command
+  * Updated Escape Codes for erasing lines on the terminal
+* 1.0.7 - Updated Version Numbers
+  * Lint Fixes
+  * Add Auto-complete for TAB functionality
+  * Reformatted Up/Down Arrow Key 
+* 1.0.5 - Updated Version Numbers
+  * Added Clear and Reset Terminal Commands
+* 1.0.4 - Updated Version Numbers
+  * Added Example Code
+* 1.0.3 - Updated Version Numbers
+  * Added dynamic echo setting
+  * Added Example Code
+* 1.0.2 - Updated Version Numbers
+  * Formatting and Lint Fixes
+* 1.0.1 - Updated Version Numbers
+  * Setting up a new Terminal, based on an old Terminal
+  * Fixing Backspace and Delete 
+* 1.0.0 - Initial Revision
 ## Future Work
 - [ ] Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
 - [ ] Global singleton (TERM_CMD) – simplifies API but reduces modularity. This will require code changes when fixed.
