@@ -10,7 +10,7 @@
 #include "utility/characterCodes.h"
 
 #include <Arduino.h>
-
+namespace TerminalLibrary {
 #ifdef TERMINAL_BANNER
 void Terminal::banner() {
   if (bannerFunction == nullptr) {
@@ -402,3 +402,4 @@ void Terminal::terminalConfig(Terminal* terminal) {
   terminal->prompt();
 }
 #endif
+} // namespace TerminalLibrary

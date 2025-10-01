@@ -2,6 +2,7 @@
 #include "terminalclass.h"
 #include "utility/characterCodes.h"
 
+namespace TerminalLibrary {
 void Terminal::clearCommandLine() {
   __print(VT100_ERASE_LINE);
   __print(VT100_SET_CURSOR_BEGIN);
@@ -100,5 +101,6 @@ void Terminal::leftArrow() {
   if (echo) {
     if (cmdBuffer.backIndex()) __print(VT100_LEFT_CURSOR);
   }
+}
 }
 #endif

@@ -13,7 +13,7 @@
 #include "terminalclass.h"
 
 #define TERM_CMD TerminalCommand::get()
-
+namespace TerminalLibrary {
 class CmdItem {
 public:
   String command;
@@ -40,5 +40,5 @@ private:
   CmdItem list[MAX_TERM_CMD];
   int countCmd;
 };
-
+} // namespace TerminalLibrary
 #endif

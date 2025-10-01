@@ -7,7 +7,7 @@
 
 #include "termcmd.h"
 #include "terminal.h"
-
+namespace TerminalLibrary {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 void help(Terminal* terminal);
 #endif
@@ -130,3 +130,4 @@ void echoCommand(Terminal* terminal) {
   terminal->prompt();
 }
 #endif
+} // namespace TerminalLibrary

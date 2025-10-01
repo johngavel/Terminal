@@ -11,4 +11,6 @@
 #include "termcmd.h"
 #include "terminalclass.h"
 
+using namespace TerminalLibrary;
+
 #endif

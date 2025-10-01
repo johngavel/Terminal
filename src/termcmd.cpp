@@ -5,7 +5,7 @@
 */
 
 #include "termcmd.h"
-
+namespace TerminalLibrary {
 TerminalCommand* TerminalCommand::terminalCommand = nullptr;
 
 TerminalCommand::TerminalCommand() {
@@ -62,3 +62,4 @@ void TerminalCommand::callFunction(int index, Terminal* terminal) {
   void (*cmd)(Terminal*) = (void (*)(Terminal*)) list[index].function;
   (*cmd)(terminal);
 }
+} // namespace TerminalLibrary

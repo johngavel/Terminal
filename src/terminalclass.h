@@ -11,7 +11,7 @@
 #include "utility/queue.h"
 
 #include <Stream.h>
-
+namespace TerminalLibrary {
 #ifdef TERMINAL_LOGGING
 typedef enum { TRACE, INFO, WARNING, ERROR, HELP, PASSED, FAILED, PROMPT } PRINT_TYPES;
 #endif
@@ -132,5 +132,5 @@ private:
   void tab();
 #endif
 };
-
+} // namespace TerminalLibrary
 #endif

@@ -7,6 +7,7 @@
 #define __STANDARD_TERMINAL_COMMDANDS
 
 #include "features.h"
+namespace TerminalLibrary {
 void addStandardTerminalCommands();
-
+}
 #endif
