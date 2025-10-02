@@ -3,7 +3,7 @@ Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Execu
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
 
-The default tokenizer for commands is a space (' '). This is non-configurable at this time.
+The default tokenizer for commands is a space (' '). This is configurable via the setTokenizer method.
 
 Some simple commands that I have implemented, include rebooting the device, setting the device to Upload Mode (For the Raspberry Pi Pico, type in the command and you don't have to push any buttons or reset the device), simple status commands of the code in progress. You can read parameters for the command line for turning on and off gpio lines.
 
@@ -14,7 +14,7 @@ If you have any ideas, suggestions, or problems; please let me know in the Discu
 Written by John J. Gavel
 ## Release
 * 1.0.10 - Updated Version Numbers
-  * 
+  * Added custom Tokenizer
 * 1.0.9 - Updated Version Numbers
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
@@ -41,7 +41,7 @@ Written by John J. Gavel
   * Fixing Backspace and Delete 
 * 1.0.0 - Initial Revision
 ## Future Work
-- [ ] Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
+- [X] Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
 - [ ] Global singleton (TERM_CMD) – simplifies API but reduces modularity. This will require code changes when fixed.
 - [ ] Minimal error handling – bad input mostly ignored.
 - [X] No namespaces – commands live in a flat registry; collisions possible.
@@ -109,6 +109,7 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * loop - call this function in the loop function of the Arduino.
 ### Terminal Configuration
 * configure - This uses another terminal setup and configuration for itself.
+* setTokenizer - This overrides the default tokenizer of " " with user supplied tokens.
 * setEcho - This configures the terminal class to echo the incoming data.
 * getEcho - Returns the echo setting for the terminal.
 * useColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
