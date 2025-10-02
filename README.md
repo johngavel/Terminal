@@ -1,4 +1,4 @@
-# Terminal v. 1.0.9
+# Terminal v. 1.0.10
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
@@ -13,6 +13,8 @@ If you have any ideas, suggestions, or problems; please let me know in the Discu
 
 Written by John J. Gavel
 ## Release
+* 1.0.10 - Updated Version Numbers
+  * 
 * 1.0.9 - Updated Version Numbers
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
