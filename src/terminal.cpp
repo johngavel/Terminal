@@ -214,8 +214,13 @@ void Terminal::loop() {
   }
 }
 
+void Terminal::setTokenizer(String token) {
+  memset(tokenizer, 0, MAX_INPUT_LINE);
+  strncpy(tokenizer, token.c_str(), MAX_INPUT_LINE -1);
+}
+
 char* Terminal::readParameter() {
-  return strtok_r(NULL, " ", &parameterParseSave);
+  return strtok_r(NULL, tokenizer, &parameterParseSave);
 }
 
 void Terminal::invalidParameter() {
@@ -265,7 +270,7 @@ ReadLineReturn Terminal::callFunction() {
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memcpy(parameterParsing, cmdBuffer.getCommand(), MAX_INPUT_LINE);
     cmdBuffer.clearBuffer();
-    cmdName = strtok_r(parameterParsing, " ", &parameterParseSave);
+    cmdName = strtok_r(parameterParsing, tokenizer, &parameterParseSave);
     int cmdIndex = TERM_CMD->findCmd(String(cmdName));
     if (cmdIndex != -1) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY

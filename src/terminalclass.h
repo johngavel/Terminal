@@ -24,7 +24,7 @@ class Terminal {
 public:
   Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
   Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) { initialize(); };
-  void initialize() { memset(parameterParsing, 0, MAX_INPUT_LINE); };
+  void initialize() { memset(parameterParsing, 0, MAX_INPUT_LINE); setTokenizer(" ");};
   void configure(Terminal* terminal);
   void setStream(Stream* __stream) {
     inputStream = __stream;
@@ -60,6 +60,7 @@ public:
   void banner();
 #endif
   void prompt();
+  void setTokenizer(String token);
   char* readParameter();
   void invalidParameter();
   void setEcho(bool __echo) { echo = __echo; };
@@ -117,6 +118,7 @@ private:
   TerminalUtility::CommandBuffer cmdBuffer;
   char parameterParsing[MAX_INPUT_LINE];
   char* parameterParseSave = nullptr;
+  char tokenizer[MAX_INPUT_LINE];
 
   void clearCommandLine();
   void printCommandLine();
