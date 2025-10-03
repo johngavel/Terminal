@@ -216,7 +216,7 @@ void Terminal::loop() {
 
 void Terminal::setTokenizer(String token) {
   memset(tokenizer, 0, MAX_INPUT_LINE);
-  strncpy(tokenizer, token.c_str(), MAX_INPUT_LINE -1);
+  strncpy(tokenizer, token.c_str(), MAX_INPUT_LINE - 1);
 }
 
 char* Terminal::readParameter() {
@@ -244,6 +244,7 @@ void Terminal::configure(Terminal* terminal) {
   echo = terminal->echo;
   useprompt = terminal->useprompt;
   promptString = terminal->promptString;
+  setTokenizer(String(terminal->getTokenizer()));
 #ifdef TERMINAL_COLORS
   usecolor = terminal->usecolor;
 #endif
@@ -286,12 +287,26 @@ ReadLineReturn Terminal::callFunction() {
   return functionCalled;
 }
 
+bool Terminal::readCharAvailable(unsigned int numberOfChars, unsigned int timeout) {
+  bool available = false;
+  unsigned int availableChar = inputStream->available();
+  if (timeout > 0) {
+    uint32_t start = millis();
+    while ((!available) && ((millis() - start) < timeout)) {
+      availableChar = inputStream->available();
+      available = availableChar >= numberOfChars;
+    }
+  } else {
+    available = availableChar >= numberOfChars;
+  }
+  return available;
+}
+
 ReadLineReturn Terminal::readline() {
   if (inputStream == nullptr) return NO_PROCESSING;
 
   char readChar[5];
-  int available = inputStream->available();
-  if (available <= 0) return NO_PROCESSING;
+  if (!readCharAvailable(1)) return NO_PROCESSING;
 
   inputStream->readBytes(&readChar[0], 1);
   char c = readChar[0];
@@ -310,7 +325,10 @@ ReadLineReturn Terminal::readline() {
     if (echo) printCommandLine();
   } else if (c == ESC_CHAR && echo) {
     // Wait for the next two bytes of the escape sequence
-    while (inputStream->available() < 2);
+    if (!readCharAvailable(2, 12)) { // We didn't get the rest of the Escape char sequence
+      cmdBuffer.deleteCharacter();
+      return NO_PROCESSING;
+    }
     inputStream->readBytes(&readChar[1], 2);
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY

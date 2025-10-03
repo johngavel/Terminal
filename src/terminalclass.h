@@ -24,7 +24,11 @@ class Terminal {
 public:
   Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
   Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) { initialize(); };
-  void initialize() { memset(parameterParsing, 0, MAX_INPUT_LINE); setTokenizer(" ");};
+  void initialize() {
+    memset(parameterParsing, 0, MAX_INPUT_LINE);
+    memset(tokenizer, 0, MAX_INPUT_LINE);
+    setTokenizer(" ");
+  };
   void configure(Terminal* terminal);
   void setStream(Stream* __stream) {
     inputStream = __stream;
@@ -61,6 +65,7 @@ public:
 #endif
   void prompt();
   void setTokenizer(String token);
+  char* getTokenizer() { return tokenizer; };
   char* readParameter();
   void invalidParameter();
   void setEcho(bool __echo) { echo = __echo; };
@@ -107,6 +112,8 @@ private:
   void __println(String line);
   void __println(char character);
 
+  bool readCharAvailable(unsigned int numberOfChars, unsigned int timeout);
+  bool readCharAvailable(unsigned int numberOfChars) { return readCharAvailable(numberOfChars, 0); };
   ReadLineReturn readline();
   ReadLineReturn callFunction();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
