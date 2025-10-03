@@ -15,6 +15,7 @@ Written by John J. Gavel
 ## Release
 * 1.0.10 - Updated Version Numbers
   * Added custom Tokenizer
+  * Changed the reading of escape codes to be non-blocking
 * 1.0.9 - Updated Version Numbers
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
