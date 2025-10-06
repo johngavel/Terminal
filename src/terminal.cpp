@@ -377,9 +377,9 @@ void Terminal::clearScreen() {
   if (0) {
 #endif
 #ifdef TERMINAL_LOGGING
-    println(ERROR, "Command not implemeneted for this terminal.");
+    println(ERROR, "Command not implemented for this terminal.");
 #else
-    println("Command not implemeneted for this terminal.");
+    println("Command not implemented for this terminal.");
 #endif
   }
 }

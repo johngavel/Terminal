@@ -98,7 +98,7 @@ static const char* encToString(uint8_t enc) {
 }
 
 void wifiScan(Terminal* terminal) {
-  terminal->println(INFO, "Begining Scan.........");
+  terminal->println(INFO, "Beginning Scan.........");
   auto cnt = WiFi.scanNetworks();
   if (!cnt) {
     terminal->println(INFO, "No Networks Found.");

@@ -7,7 +7,7 @@
 [![Spell Check](https://github.com/johngavel/Terminal/actions/workflows/spell-check.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/spell-check.yml)
 
 # Terminal v. 1.0.10
-Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
+Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the ability to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
 
@@ -57,7 +57,7 @@ Written by John J. Gavel
 - [X] Memory footprint – holds command history; not tuned for very low-RAM MCUs. Add the ability to turn off Terminal Features via #defines
 
 ## Simple Example
-I have set this example up on a Rasberry Pi Pico and set the USB to connect to the PC as a Serial Device. 
+I have set this example up on a Raspberry Pi Pico and set the USB to connect to the PC as a Serial Device. 
 ```
 /*
   USBSerialExample.ino - Pico Serial Terminal Example
@@ -122,7 +122,7 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * setEcho - This configures the terminal class to echo the incoming data.
 * getEcho - Returns the echo setting for the terminal.
 * useColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
-* usePrompt - Allows you to supress all prompts to the user.
+* usePrompt - Allows you to suppress all prompts to the user.
 ### Terminal Output
 * banner - displays the banner for the terminal to the user.
 * prompt - displays the prompt for the terminal to the user, indicating input requested.
@@ -143,7 +143,7 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * clearHistory - Clears the command history from the terminal
 ### Terminal Input
 Since the Terminal Class is processing and parsing all of the Inputs, these functions are only supposed to be called from within a called command.
-* readParamter - Returns the parameter for the command that was typed in. Return NULL if no paramter was typed in. It is up to the user to convert the String paramter to a type for error checking.
+* readParamter - Returns the parameter for the command that was typed in. Return NULL if no parameter was typed in. It is up to the user to convert the String parameter to a type for error checking.
 * invalidParamter - This is an error condition as determined by the command. This function is called to indicate that command was malformed.
 
 ## TerminalCommand Class
@@ -151,14 +151,14 @@ This is the class that stores and manages the commands that you have created. Th
 This class is accessed with the TERM_CMD macro.
 TERM_CMD->addCmd(String command, String parameterDesc, String description, void function(Terminal*));
 * command - This is a string the user will type in to run your command. Such as "dir" or "copy".
-* paramterDesc - This is a string for the Help or Invalid Parameter, it should describe any paramters that your command has. Such as "filename" or "on/off".
+* paramterDesc - This is a string for the Help or Invalid Parameter, it should describe any parameters that your command has. Such as "filename" or "on/off".
 * description - This is a string for the Help, it should be a short blurb about your command. Such as "Directory Listing" or "Turns on or off GPIO Pin 1".
 * function - This is the function that will be called by the Terminal Class to run your command.
 
 ## Standard Commands
 Two commands are already available to the you. A "help"/"?" and "history" commands. These can be added to your code by calling:
 * addStandardTerminalCommands()
-  * Help - This can be accessed by typing "help" or "?" at the command line. This will print out to the user a formated listing of all commands available. These commands will described when you added them to the TerminalCommand class.
+  * Help - This can be accessed by typing "help" or "?" at the command line. This will print out to the user a formatted listing of all commands available. These commands will described when you added them to the TerminalCommand class.
   * History - This can be accessed by typing "history" at the command line. This will print out to the user the last ten commands entered on this terminal.
   * Clear Screen - This can be accessed by typing "clear" at the command line. This will print out escape commands that will clear the terminal screen.
   * Reset Terminal - This can be accessed by typing "reset" at the command line. This will clear the screen and delete the command history.
