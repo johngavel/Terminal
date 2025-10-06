@@ -1,3 +1,4 @@
+[![Arduino-lint](https://github.com/johngavel/Terminal/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/lint.yml)
 [![Check License status](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml)
 # Terminal v. 1.0.10
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the abilty to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
