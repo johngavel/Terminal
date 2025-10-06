@@ -1,5 +1,7 @@
 [![Arduino-lint](https://github.com/johngavel/Terminal/actions/workflows/lint.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/lint.yml)
 [![Check License status](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml)
+
+[![GitHub release](https://img.shields.io/github/release/johngavel/Terminal.svg?maxAge=3600)](https://github.com/johngavel/Terminal/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/johngavel/Terminal/blob/master/LICENSE)
 
 # Terminal v. 1.0.10
