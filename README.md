@@ -1,4 +1,4 @@
-[![Arduino-lint](https://github.com/johngavel/Terminal/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/lint.yml)
+[![Arduino-lint](https://github.com/johngavel/Terminal/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/arduino-lint.yml)
 [![Check License status](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/johngavel/Terminal/blob/master/LICENSE)
 
