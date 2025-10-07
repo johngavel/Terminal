@@ -24,7 +24,7 @@ jobs:
           # Add commands to install any dependent libraries here, e.g.:
           # arduino-cli lib install "MyOtherLibrary"
 
-      - name: Compile Library Examples
+      - name: Compile Pico Library Examples
         uses: arduino/compile-sketches@v1
         with:
           fqbn: rp2040:rp2040:rpipico
@@ -36,7 +36,7 @@ jobs:
             examples/TelnetTerminal
             examples/USBSerialExample
 
-      - name: Compile Library Examples
+      - name: Compile Arduino Library Examples
         uses: arduino/compile-sketches@v1
         with:
           fqbn: arduino:avr:mega
