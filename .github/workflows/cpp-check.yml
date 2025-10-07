@@ -1,15 +1,32 @@
-    name: Cppcheck Analysis
+name: cppcheck-action
+on: [push]
 
-    on: [push, pull_request]
+jobs:
+  build:
+    name: cppcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cppcheck
+        uses: deep5050/cppcheck-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN}}
+          check_library:
+          skip_preprocessor:
+          enable: all
+          exclude_check:
+          inconclusive: enable
+          inline_suppression:
+          force_language: c++
+          force:
+          max_ctu_depth:
+          platform:
+          std: c99
+          output_file:
+          other_options:
 
-    jobs:
-      cppcheck-job:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
-          - name: Run Cppcheck
-            uses: deep5050/cppcheck-action@main
-            with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              # Optional: Add custom Cppcheck arguments
-              cppcheck_args: "--enable=all --inconclusive --language=c++ --enable=warning,performance,portability --std=c99 --template=gcc --suppress=missingIncludeSystem"
+      - name: publish report    
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: 'main' # your branch name goes here
