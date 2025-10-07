@@ -29,8 +29,8 @@ jobs:
           fqbn: rp2040:rp2040:rpipico
           libraries: |
             - source-path: ./src
-        sketch-paths: |
-           examples/HelloWorldPicoTerminal
-           examples/PicoTerminal
-           examples/TelnetTerminal
-           examples/USBSerialExample
+          sketch-paths: |
+            examples/HelloWorldPicoTerminal
+            examples/PicoTerminal
+            examples/TelnetTerminal
+            examples/USBSerialExample
