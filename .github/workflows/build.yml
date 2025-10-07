@@ -20,6 +20,7 @@ jobs:
           arduino-cli core update-index
           arduino-cli update 
           arduino-cli core install rp2040:rp2040
+          arduino-cli core install arduino:avr
           # Add commands to install any dependent libraries here, e.g.:
           # arduino-cli lib install "MyOtherLibrary"
 
@@ -34,3 +35,12 @@ jobs:
             examples/PicoTerminal
             examples/TelnetTerminal
             examples/USBSerialExample
+
+      - name: Compile Library Examples
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: arduino:avr:mega
+          libraries: |
+            - source-path: ./src
+          sketch-paths: |
+            examples/ArduinoTerminal
