@@ -2,8 +2,8 @@
 [![Compile Examples](https://github.com/johngavel/Terminal/actions/workflows/build.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/build.yml)
 [![CPP Check](https://github.com/johngavel/Terminal/actions/workflows/cpp-check.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/cpp-check.yml)
 [![Check License status](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/johngavel/Terminal/blob/master/LICENSE)
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/johngavel/Terminal/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/johngavel/Terminal.svg)](https://github.com/johngavel/Terminal/issues)
 [![Spell Check](https://github.com/johngavel/Terminal/actions/workflows/spell-check.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/spell-check.yml)
 
@@ -27,6 +27,7 @@ Written by John J. Gavel
 * 1.0.10 - Updated Version Numbers
   * Added custom Tokenizer
   * Changed the reading of escape codes to be non-blocking
+  * Added CI tools to GitHub
 * 1.0.9 - Updated Version Numbers
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
