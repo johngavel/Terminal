@@ -3,9 +3,10 @@
 [![Check License status](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/check-license.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/johngavel/Terminal/blob/master/LICENSE)
 
-[![GitHub release](https://img.shields.io/github/release/johngavel/Terminal.svg?maxAge=3600)](https://github.com/johngavel/Terminal/releases)
 [![GitHub issues](https://img.shields.io/github/issues/johngavel/Terminal.svg)](https://github.com/johngavel/Terminal/issues)
 [![Spell Check](https://github.com/johngavel/Terminal/actions/workflows/spell-check.yml/badge.svg)](https://github.com/johngavel/Terminal/actions/workflows/spell-check.yml)
+
+[![GitHub release](https://img.shields.io/github/release/johngavel/Terminal.svg?maxAge=3600)](https://github.com/johngavel/Terminal/releases)
 
 # Terminal v. 1.0.10
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the ability to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
