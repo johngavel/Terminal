@@ -5,8 +5,8 @@
 
 #include "stdtermcmd.h"
 
-#include "termcmd.h"
 #include "Terminal.h"
+#include "termcmd.h"
 namespace TerminalLibrary {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 void help(Terminal* terminal);
