@@ -1,0 +1,15 @@
+    name: Cppcheck Analysis
+
+    on: [push, pull_request]
+
+    jobs:
+      cppcheck-job:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - name: Run Cppcheck
+            uses: deep5050/cppcheck-action@main
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              # Optional: Add custom Cppcheck arguments
+              cppcheck_args: "--enable=all --inconclusive --language=c++ --enable=warning,performance,portability --std=c99 --template=gcc --suppress=missingIncludeSystem"
