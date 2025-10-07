@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        fqbn: [rp2040:rp2040:rpipico] # Example boards
+        fqbn: [rp2040:rp2040] # Example boards
     steps:
       - uses: actions/checkout@v4
 
