@@ -78,13 +78,13 @@ void help(Terminal* terminal) {
 void history(Terminal* terminal) {
 #ifdef TERMINAL_LOGGING
   terminal->println(INFO, "Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->lastBuffer.get(i));
+  for (unsigned long i = 0; i < terminal->lastBuffer->size(); i++) terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->lastBuffer->get(i));
   terminal->println(PASSED, "Command History");
 #else
   terminal->println("Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer.size(); i++) {
+  for (unsigned long i = 0; i < terminal->lastBuffer->size(); i++) {
     terminal->print(String(i + 1) + ". ");
-    terminal->println((char*) terminal->lastBuffer.get(i));
+    terminal->println((char*) terminal->lastBuffer->get(i));
   }
   terminal->println("Command History");
 #endif

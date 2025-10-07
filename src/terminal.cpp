@@ -264,9 +264,9 @@ ReadLineReturn Terminal::callFunction() {
     char* cmdName;
     functionCalled = ERROR_NO_CMD_FOUND;
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-    if (lastBuffer.size() >= HISTORY_BUFFER) { lastBuffer.pop(); }
-    lastBuffer.push(cmdBuffer.getCommand());
-    historyIndex = lastBuffer.size();
+    if (lastBuffer->size() >= HISTORY_BUFFER) { lastBuffer->pop(); }
+    lastBuffer->push(cmdBuffer.getCommand());
+    historyIndex = lastBuffer->size();
 #endif
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memcpy(parameterParsing, cmdBuffer.getCommand(), MAX_INPUT_LINE);
@@ -363,7 +363,7 @@ ReadLineReturn Terminal::readline() {
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 char* Terminal::lastCmd() {
-  return (char*) lastBuffer.get(lastBuffer.size() - 1);
+  return (char*) lastBuffer->get(lastBuffer->size() - 1);
 }
 #endif
 
@@ -386,7 +386,7 @@ void Terminal::clearScreen() {
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 void Terminal::clearHistory() {
-  lastBuffer.clear();
+  lastBuffer->clear();
   historyIndex = 0;
 }
 #endif

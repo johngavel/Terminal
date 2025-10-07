@@ -66,11 +66,11 @@ void Terminal::tab() {
 void Terminal::upArrow() {
   char tempBuffer[MAX_INPUT_LINE];
   memset(tempBuffer, 0, MAX_INPUT_LINE);
-  if (lastBuffer.size() > 0) {
+  if (lastBuffer->size() > 0) {
     clearCommandLine();
     cmdBuffer.clearBuffer();
     if (historyIndex > 0) historyIndex--;
-    lastBuffer.get(historyIndex, tempBuffer);
+    lastBuffer->get(historyIndex, tempBuffer);
     cmdBuffer.setCommand(tempBuffer);
     __print(cmdBuffer.getCommand());
   }
@@ -79,11 +79,11 @@ void Terminal::upArrow() {
 void Terminal::downArrow() {
   char tempBuffer[MAX_INPUT_LINE];
   memset(tempBuffer, 0, MAX_INPUT_LINE);
-  if (lastBuffer.size() > 0) {
+  if (lastBuffer->size() > 0) {
     clearCommandLine();
     cmdBuffer.clearBuffer();
-    if (historyIndex < (lastBuffer.size() - 1)) historyIndex++;
-    lastBuffer.get(historyIndex, tempBuffer);
+    if (historyIndex < (lastBuffer->size() - 1)) historyIndex++;
+    lastBuffer->get(historyIndex, tempBuffer);
     cmdBuffer.setCommand(tempBuffer);
     __print(cmdBuffer.getCommand());
   }

@@ -86,7 +86,7 @@ public:
   static void terminalConfig(Terminal* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-  TerminalUtility::Queue lastBuffer = TerminalUtility::Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
+  TerminalUtility::Queue* lastBuffer = new TerminalUtility::Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
 #endif
 
 private:
