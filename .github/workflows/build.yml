@@ -16,11 +16,10 @@ jobs:
 
       - name: Install Arduino Boards and Libraries
         run: |
-          arduino-cli core update-index
-          arduino-cli core install ${{ matrix.fqbn }}
           arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+          arduino-cli core update-index
           arduino-cli update 
-          arduino-cli upgrade 
+          arduino-cli core install ${{ matrix.fqbn }}
           # Add commands to install any dependent libraries here, e.g.:
           # arduino-cli lib install "MyOtherLibrary"
 
