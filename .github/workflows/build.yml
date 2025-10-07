@@ -1,0 +1,35 @@
+name: Arduino Library Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        fqbn: [rp2040:rp2040:rpipico] # Example boards
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+
+      - name: Install Arduino Boards and Libraries
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install ${{ matrix.fqbn }}
+          arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+          arduino-cli update 
+          arduino-cli upgrade 
+          # Add commands to install any dependent libraries here, e.g.:
+          # arduino-cli lib install "MyOtherLibrary"
+
+      - name: Compile Library Examples
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: ${{ matrix.fqbn }}
+          libraries: |
+            - source-path: ./src
+          # Optionally, specify specific example sketches to compile
+          sketches-from-examples: true
+          sketch-names: "HelloWorldPicoTerminal.ino,PicoTerminal.ino,USBSerialExample.ino"
