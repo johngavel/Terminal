@@ -23,6 +23,9 @@ void resetTerminal(Terminal* terminal);
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
 void echoCommand(Terminal* terminal);
 #endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
+void diagCommand(Terminal* terminal);
+#endif
 
 void addStandardTerminalCommands() {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
@@ -43,6 +46,9 @@ void addStandardTerminalCommands() {
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
   TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
+  TERM_CMD->addCmd("diag", "", "Memory Diagnostics of the Terminal Library", diagCommand);
 #endif
 }
 
@@ -127,6 +133,40 @@ void echoCommand(Terminal* terminal) {
     }
   }
   if (!passed) terminal->invalidParameter();
+  terminal->prompt();
+}
+#endif
+
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
+void diagCommand(Terminal* terminal) {
+  terminal->println();
+  terminal->println(PROMPT, "Terminal Diagnostics");
+  terminal->print(INFO, "Standard Commands: ");
+
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
+  terminal->print(HELP, "help, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
+  terminal->print(HELP, "history, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
+  terminal->print(HELP, "clear, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
+  terminal->print(HELP, "reset, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
+  terminal->print(HELP, "stty, ");
+#endif
+  terminal->println(HELP, "diag.");
+
+  terminal->println(HELP, "Maximum Input String: ", String((int)MAX_INPUT_LINE));
+  terminal->println(HELP, "Current Number of Commands: ", String(TERM_CMD->getCmdCount()));
+  terminal->println(HELP, "Maximum Commands Allowed: ", String((int)MAX_TERM_CMD));
+  terminal->println(HELP, "RAM Usage Terminal: ", String(sizeof(*terminal)) + " bytes");
+  terminal->println(HELP, "RAM Usage Commands: ", String(sizeof(*TERM_CMD)) + " bytes");
+  terminal->println();
+  terminal->println(PASSED, "Terminal Diagnostics");
   terminal->prompt();
 }
 #endif

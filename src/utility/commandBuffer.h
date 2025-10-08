@@ -1,7 +1,7 @@
 #ifndef __TERMINAL_COMMAND_BUFFER
 #define __TERMINAL_COMMAND_BUFFER
 
-#define MAX_INPUT_LINE 80
+#include "../features.h"
 
 namespace TerminalUtility {
 class CommandBuffer {

@@ -97,7 +97,7 @@ void Terminal::print(PRINT_TYPES type, String line) {
     __print("] ");
     break;
   case WARNING: printColor(Magenta); break;
-  case HELP:
+  case HELP: printColor(Yellow); break;
   case INFO:
   default: break;
   }
@@ -109,10 +109,8 @@ void Terminal::print(PRINT_TYPES type, String line, String line2) {
   printColor(Normal);
   switch (type) {
   case HELP:
-    print(type, line);
-    printColor(Yellow);
-    __print(line2);
-    printColor(Normal);
+    print(INFO, line);
+    print(HELP, line2);
     break;
   case ERROR:
     print(type, line);

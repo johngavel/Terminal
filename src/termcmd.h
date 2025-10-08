@@ -7,8 +7,6 @@
 #ifndef __TERMINAL_COMMAND
 #define __TERMINAL_COMMAND
 
-#define MAX_TERM_CMD 50
-
 #include "features.h"
 #include "terminalclass.h"
 
