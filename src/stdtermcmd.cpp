@@ -161,9 +161,9 @@ void diagCommand(Terminal* terminal) {
 #endif
   terminal->println(HELP, "diag.");
 
-  terminal->println(HELP, "Maximum Input String: ", String((int)MAX_INPUT_LINE));
+  terminal->println(HELP, "Maximum Input String: ", String((int) MAX_INPUT_LINE));
   terminal->println(HELP, "Current Number of Commands: ", String(TERM_CMD->getCmdCount()));
-  terminal->println(HELP, "Maximum Commands Allowed: ", String((int)MAX_TERM_CMD));
+  terminal->println(HELP, "Maximum Commands Allowed: ", String((int) MAX_TERM_CMD));
   terminal->println(HELP, "RAM Usage Terminal: ", String(sizeof(*terminal)) + " bytes");
   terminal->println(HELP, "RAM Usage Commands: ", String(sizeof(*TERM_CMD)) + " bytes");
   terminal->println();
@@ -189,14 +189,19 @@ void diagCommand(Terminal* terminal) {
 #endif
   terminal->println("diag.");
 
-  terminal->print("Maximum Input String: "); terminal->println(String((int)MAX_INPUT_LINE));
-  terminal->print("Current Number of Commands: "); terminal->println(String(TERM_CMD->getCmdCount()));
-  terminal->print("Maximum Commands Allowed: "); terminal->println(String((int)MAX_TERM_CMD));
-  terminal->print("RAM Usage Terminal: "); terminal->println(String(sizeof(*terminal)) + " bytes");
-  terminal->print("RAM Usage Commands: "); terminal->println(String(sizeof(*TERM_CMD)) + " bytes");
+  terminal->print("Maximum Input String: ");
+  terminal->println(String((int) MAX_INPUT_LINE));
+  terminal->print("Current Number of Commands: ");
+  terminal->println(String(TERM_CMD->getCmdCount()));
+  terminal->print("Maximum Commands Allowed: ");
+  terminal->println(String((int) MAX_TERM_CMD));
+  terminal->print("RAM Usage Terminal: ");
+  terminal->println(String(sizeof(*terminal)) + " bytes");
+  terminal->print("RAM Usage Commands: ");
+  terminal->println(String(sizeof(*TERM_CMD)) + " bytes");
   terminal->println();
   terminal->println("Terminal Diagnostics");
-#endif  
+#endif
   terminal->prompt();
 }
 #endif
