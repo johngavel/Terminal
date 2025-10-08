@@ -3,11 +3,11 @@
 
 /* Defined Feature Macros to turn on/off specific features - This can save memory or computing power */
 
-#define TERMINAL_COLORS
-#define TERMINAL_TAB
-#define TERMINAL_LOGGING
-#define TERMINAL_BANNER
-#define TERMINAL_HEX_STRING
+#define TERMINAL_COLORS      // Gives the Terminal the escape code to print in color
+#define TERMINAL_TAB         // Tab Auto-Complete Feature
+#define TERMINAL_LOGGING     // Logging features of TRACE, INFO, WARNING, ERROR, HELP, PASSED, FAILED, PROMPT
+#define TERMINAL_BANNER      // User generated banner that is used at start-up
+#define TERMINAL_HEX_STRING  // Diagnostics prints that do HEX printing for the user
 
 #define TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 #define TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
@@ -27,19 +27,4 @@
 #define HISTORY_BUFFER 10
 #endif
 
-/*-------------------------------------------------------
-Notes:
-1. Refactor for MAX_INPUT_LINE into this file
-2. Add custom parameterizaiton
---------------------------------------------------------*/
-
-/* Weaknesses / Limitations
-
-⚠️ Tokenizer is fixed – only splits on spaces; no quotes/escaped args.
-⚠️ Global singleton (TERM_CMD) – simplifies API but reduces modularity.
-⚠️ Blocking I/O assumption – designed for loop() polling, not async.
-⚠️ Minimal error handling – bad input mostly ignored.
-⚠️ No namespaces – commands live in a flat registry; collisions possible.
-⚠️ Memory footprint – holds command history; not tuned for very low-RAM MCUs.
- */
 #endif

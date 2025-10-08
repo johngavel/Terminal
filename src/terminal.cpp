@@ -199,7 +199,9 @@ void Terminal::loop() {
     println();
 #ifdef TERMINAL_LOGGING
     print(ERROR, "Unrecognized command: ");
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
     println(WARNING, lastCmd());
+#endif    
     println(INFO, "Enter \'?\' or \'help\' for a list of commands.");
 #else
     print("Unrecognized command: ");
@@ -224,8 +226,10 @@ char* Terminal::readParameter() {
 void Terminal::invalidParameter() {
   println();
 #ifdef TERMINAL_LOGGING
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   println(ERROR, "Unrecognized parameter: " + TERM_CMD->getParameter(lastCmdIndex) + ": ");
   println(WARNING, "Command: " + String(lastCmd()));
+#endif  
   println(INFO, "Enter \'?\' or \'help\' for a list of commands.");
 #else
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY

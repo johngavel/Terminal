@@ -140,6 +140,7 @@ void echoCommand(Terminal* terminal) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
 void diagCommand(Terminal* terminal) {
   terminal->println();
+#ifdef TERMINAL_LOGGING
   terminal->println(PROMPT, "Terminal Diagnostics");
   terminal->print(INFO, "Standard Commands: ");
 
@@ -167,6 +168,35 @@ void diagCommand(Terminal* terminal) {
   terminal->println(HELP, "RAM Usage Commands: ", String(sizeof(*TERM_CMD)) + " bytes");
   terminal->println();
   terminal->println(PASSED, "Terminal Diagnostics");
+#else
+  terminal->println("Terminal Diagnostics");
+  terminal->print("Standard Commands: ");
+
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
+  terminal->print("help, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
+  terminal->print("history, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
+  terminal->print("clear, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
+  terminal->print("reset, ");
+#endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
+  terminal->print("stty, ");
+#endif
+  terminal->println("diag.");
+
+  terminal->print("Maximum Input String: "); terminal->println(String((int)MAX_INPUT_LINE));
+  terminal->print("Current Number of Commands: "); terminal->println(String(TERM_CMD->getCmdCount()));
+  terminal->print("Maximum Commands Allowed: "); terminal->println(String((int)MAX_TERM_CMD));
+  terminal->print("RAM Usage Terminal: "); terminal->println(String(sizeof(*terminal)) + " bytes");
+  terminal->print("RAM Usage Commands: "); terminal->println(String(sizeof(*TERM_CMD)) + " bytes");
+  terminal->println();
+  terminal->println("Terminal Diagnostics");
+#endif  
   terminal->prompt();
 }
 #endif
