@@ -29,6 +29,7 @@ Written by John J. Gavel
   * Changed the reading of escape codes to be non-blocking
   * Added CI tools to GitHub
   * Fixed issue with Arduino Terminal Example not compiling
+  * Added Terminal Memory Diagnostics Helper in features.h
 * 1.0.9 - Updated Version Numbers
   * Added features.h - Allows the user to customize the Terminal library by adding and removing Terminal Features. Such as Color, History, Logging, and each of the standard terminal commands. Just comment out the unwanted feature.
   * Updated Terminal Utilities by adding a destructor, and removing the copy constructor
