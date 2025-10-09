@@ -2,7 +2,13 @@
   ArduinoTerminal.ino - Arduino Serial Terminal Example
   Copyright (c) 2025 John J. Gavel.  All right reserved.
 
-  This program is too big to fit on an Arduino Uno!
+  This can compile on a Arduino Uno:
+  Sketch uses 17172 bytes (53%) of program storage space. Maximum is 32256 bytes.
+  Global variables use 1635 bytes (79%) of dynamic memory, leaving 413 bytes for local variables. Maximum is 2048 bytes.
+
+  I however recommend turning off all of the features and decreasing the buffer sizes located in the features.h file
+  Sketch uses 7604 bytes (23%) of program storage space. Maximum is 32256 bytes.
+  Global variables use 624 bytes (30%) of dynamic memory, leaving 1424 bytes for local variables. Maximum is 2048 bytes.
 */
 #include <Terminal.h>
 
@@ -17,7 +23,11 @@ Terminal terminal(&Serial);
 // Reboot the Adruino from the Terminal
 void (*resetFunc)(void) = 0; // declare reset function at address 0
 void reboot(Terminal* terminal) {
+#ifdef TERMINAL_LOGGING
   terminal->println(WARNING, "Arduino Uno Rebooting.....");
+#else
+  terminal->println("Arduino Uno Rebooting.....");
+#endif  
   delay(100);
   resetFunc();
 }
@@ -31,16 +41,28 @@ void slowCount(Terminal* terminal) {
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
+#ifdef TERMINAL_LOGGING        
         terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+#else
+        terminal->print(String(i + 1) + " "); // Output to the terminal
+#endif        
         delay(1000);
       }
     } else {
+#ifdef TERMINAL_LOGGING        
       terminal->println(ERROR, "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+#else
+      terminal->println("Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+#endif      
     }
   } else
     terminal->invalidParameter();
   terminal->println();
+#ifdef TERMINAL_LOGGING        
   terminal->println((passed) ? PASSED : FAILED, "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+#else
+  terminal->println(String((passed) ? "PASSED" : "FAILED") + " - Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+#endif
   terminal->prompt();                                                   // Prompt the user for the next command
 }
 
@@ -63,11 +85,17 @@ void setup() {
   TERM_CMD->addCmd("reboot", "", "Restarts the Arduino Uno", reboot);
   TERM_CMD->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
+#ifdef TERMINAL_BANNER
   // Print the banner for Startup - This banner can be overridden with "setBannerFunction"
-  // for a custom banner
+  // for a custom banner  
   terminal.banner();
+#endif  
   // Setup is complete - print a prompt for the user to get started.
+#ifdef TERMINAL_LOGGING          
   terminal.println(PASSED, "Setup Complete");
+#else
+  terminal.println("PASSED Setup Complete");
+#endif  
   terminal.prompt();
 }
 

@@ -39,7 +39,7 @@ jobs:
       - name: Compile Arduino Library Examples
         uses: arduino/compile-sketches@v1
         with:
-          fqbn: arduino:avr:mega
+          fqbn: arduino:avr:uno
           libraries: |
             - source-path: ./src
           sketch-paths: |
