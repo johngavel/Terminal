@@ -102,5 +102,5 @@ void Terminal::leftArrow() {
     if (cmdBuffer.backIndex()) __print(VT100_LEFT_CURSOR);
   }
 }
-}
 #endif
+}
