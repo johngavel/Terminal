@@ -103,4 +103,4 @@ void Terminal::leftArrow() {
   }
 }
 #endif
-}
+} // namespace TerminalLibrary

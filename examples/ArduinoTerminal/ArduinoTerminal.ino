@@ -27,7 +27,7 @@ void reboot(Terminal* terminal) {
   terminal->println(WARNING, "Arduino Uno Rebooting.....");
 #else
   terminal->println("Arduino Uno Rebooting.....");
-#endif  
+#endif
   delay(100);
   resetFunc();
 }
@@ -41,29 +41,29 @@ void slowCount(Terminal* terminal) {
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
-#ifdef TERMINAL_LOGGING        
+#ifdef TERMINAL_LOGGING
         terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
 #else
         terminal->print(String(i + 1) + " "); // Output to the terminal
-#endif        
+#endif
         delay(1000);
       }
     } else {
-#ifdef TERMINAL_LOGGING        
+#ifdef TERMINAL_LOGGING
       terminal->println(ERROR, "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
 #else
       terminal->println("Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
-#endif      
+#endif
     }
   } else
     terminal->invalidParameter();
   terminal->println();
-#ifdef TERMINAL_LOGGING        
+#ifdef TERMINAL_LOGGING
   terminal->println((passed) ? PASSED : FAILED, "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
 #else
   terminal->println(String((passed) ? "PASSED" : "FAILED") + " - Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
 #endif
-  terminal->prompt();                                                   // Prompt the user for the next command
+  terminal->prompt(); // Prompt the user for the next command
 }
 
 void setup() {
@@ -87,15 +87,15 @@ void setup() {
 
 #ifdef TERMINAL_BANNER
   // Print the banner for Startup - This banner can be overridden with "setBannerFunction"
-  // for a custom banner  
+  // for a custom banner
   terminal.banner();
-#endif  
+#endif
   // Setup is complete - print a prompt for the user to get started.
-#ifdef TERMINAL_LOGGING          
+#ifdef TERMINAL_LOGGING
   terminal.println(PASSED, "Setup Complete");
 #else
   terminal.println("PASSED Setup Complete");
-#endif  
+#endif
   terminal.prompt();
 }
 
