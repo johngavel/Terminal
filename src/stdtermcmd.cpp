@@ -136,7 +136,7 @@ void echoCommand(Terminal* terminal) {
       passed = true;
     }
     if (value.equals("-color")) {
-      terminal->useColor(true);
+      terminal->useColor(false);
       passed = true;
     }
   }
