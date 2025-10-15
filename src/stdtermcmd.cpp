@@ -39,7 +39,7 @@ void addStandardTerminalCommands() {
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
-  TERM_CMD->addCmd("stty", "echo|-echo", "Enables/Disables Terminal Echo", echoCommand);
+  TERM_CMD->addCmd("stty", "echo|-echo|color|-color", "Enables/Disables Terminal Echo or Color", echoCommand);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   TERM_CMD->addCmd("history", "", "Command History", history);
@@ -129,6 +129,14 @@ void echoCommand(Terminal* terminal) {
     }
     if (value.equals("-echo")) {
       terminal->setEcho(false);
+      passed = true;
+    }
+    if (value.equals("color")) {
+      terminal->useColor(true);
+      passed = true;
+    }
+    if (value.equals("-color")) {
+      terminal->useColor(true);
       passed = true;
     }
   }
