@@ -9,7 +9,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/johngavel/Terminal.svg?maxAge=3600)](https://github.com/johngavel/Terminal/releases)
 
-# Terminal v. 1.0.11
+# Terminal v. 1.0.12
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the ability to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
@@ -26,6 +26,7 @@ Written by John J. Gavel
 ## Release
 * 1.0.11 - Updated Version Numbers
   * Fixing and updating Arduino UNO Example
+  * Updated stty command, to control Echo, Color, and Prompt. Changed Feature Name.
 * 1.0.10 - Updated Version Numbers
   * Added custom Tokenizer
   * Changed the reading of escape codes to be non-blocking
