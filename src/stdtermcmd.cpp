@@ -20,8 +20,8 @@ void clearScreen(Terminal* terminal);
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
 void resetTerminal(Terminal* terminal);
 #endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
-void echoCommand(Terminal* terminal);
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
+void sttyCommand(Terminal* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
 void diagCommand(Terminal* terminal);
@@ -38,8 +38,8 @@ void addStandardTerminalCommands() {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
   TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
 #endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
-  TERM_CMD->addCmd("stty", "echo|-echo|color|-color", "Enables/Disables Terminal Echo or Color", echoCommand);
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
+  TERM_CMD->addCmd("stty", "echo|-echo|color|-color|prompt|-prompt", "Enables/Disables Terminal Echo, Color, or Prompt", sttyCommand);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   TERM_CMD->addCmd("history", "", "Command History", history);
@@ -118,8 +118,8 @@ void resetTerminal(Terminal* terminal) {
 }
 #endif
 
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
-void echoCommand(Terminal* terminal) {
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
+void sttyCommand(Terminal* terminal) {
   bool passed = false;
   String value = terminal->readParameter();
   if (value != NULL) {
@@ -137,6 +137,14 @@ void echoCommand(Terminal* terminal) {
     }
     if (value.equals("-color")) {
       terminal->useColor(false);
+      passed = true;
+    }
+    if (value.equals("prompt")) {
+      terminal->usePrompt(true);
+      passed = true;
+    }
+    if (value.equals("-prompt")) {
+      terminal->usePrompt(false);
       passed = true;
     }
   }
@@ -164,7 +172,7 @@ void diagCommand(Terminal* terminal) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
   terminal->print(HELP, "reset, ");
 #endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
   terminal->print(HELP, "stty, ");
 #endif
   terminal->println(HELP, "diag.");
@@ -192,7 +200,7 @@ void diagCommand(Terminal* terminal) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
   terminal->print("reset, ");
 #endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_ECHO
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
   terminal->print("stty, ");
 #endif
   terminal->println("diag.");
