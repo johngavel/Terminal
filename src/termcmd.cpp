@@ -7,7 +7,7 @@
 #include "termcmd.h"
 
 static TerminalLibrary::TerminalCommand terminalCommand;
-extern TerminalLibrary::TerminalCommand* terminalCommand_Ptr = &terminalCommand;
+TerminalLibrary::TerminalCommand* terminalCommand_Ptr = &terminalCommand;
 
 namespace TerminalLibrary {
 
