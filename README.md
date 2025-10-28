@@ -26,7 +26,7 @@ Written by John J. Gavel
 ## Release
 * 1.0.12 - Updated Version Numbers
   * Replaced Terminal Commands from a Singleton to a global. Allowing the user to create different Terminal Commands for each different Terminal or use the same one.
-  * BREAKING - Changed the format of the Terminal Command Function. Instead of being passed the called terminal, they are now passed an "OutputInterface*". This change allowed the seperation of the Terminal and the Terminal Commands. OutputInterface contains all of the methods that Terminal had so no other code change is necessary. (Maybe?!?).
+  * BREAKING - Changed the format of the Terminal Command Function. Instead of being passed the called terminal, they are now passed an "OutputInterface*". This change allowed the separation of the Terminal and the Terminal Commands. OutputInterface contains all of the methods that Terminal had so no other code change is necessary. (Maybe?!?).
     * void hello(Terminal* terminal); --> void hello(OutputInterface* terminal);
   * Added ASCII Table utility, that allows the terminal to print nice multi-color tables.
   * Removed terminal configuration help command
