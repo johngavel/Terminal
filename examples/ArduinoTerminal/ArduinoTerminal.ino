@@ -18,11 +18,11 @@ Terminal terminal(&Serial);
 // Two Commands added to the Terminal
 // reboot and slowCount
 // Functions must be in the form of:
-// void functionName(Terminal* terminal)
+// void functionName(OutputInterface* terminal)
 
 // Reboot the Adruino from the Terminal
 void (*resetFunc)(void) = 0; // declare reset function at address 0
-void reboot(Terminal* terminal) {
+void reboot(OutputInterface* terminal) {
 #ifdef TERMINAL_LOGGING
   terminal->println(WARNING, "Arduino Uno Rebooting.....");
 #else
@@ -33,7 +33,7 @@ void reboot(Terminal* terminal) {
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
-void slowCount(Terminal* terminal) {
+void slowCount(OutputInterface* terminal) {
   bool passed = false;
   String value = terminal->readParameter(); // Read the Parameter from the command line
   if (value != NULL) {

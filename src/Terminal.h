@@ -8,8 +8,9 @@
 #define __TERMINAL
 
 #include "stdtermcmd.h"
-#include "termcmd.h"
 #include "terminalclass.h"
+
+#include <Arduino.h>
 
 using namespace TerminalLibrary;
 

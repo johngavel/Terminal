@@ -227,13 +227,19 @@ void Terminal::invalidParameter() {
   println();
 #ifdef TERMINAL_LOGGING
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-  println(ERROR, "Unrecognized parameter: " + TERM_CMD->getParameter(lastCmdIndex) + ": ");
+  if (terminalCommandPtr)
+    println(ERROR, "Unrecognized parameter: " + terminalCommandPtr->getParameter(lastCmdIndex) + ": ");
+  else
+    println(ERROR, "No Command Processor.");
   println(WARNING, "Command: " + String(lastCmd()));
 #endif
   println(INFO, "Enter \'?\' or \'help\' for a list of commands.");
 #else
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-  println("Unrecognized parameter: " + TERM_CMD->getParameter(lastCmdIndex) + ": ");
+  if (terminalCommandPtr)
+    println("Unrecognized parameter: " + terminalCommandPtr->getParameter(lastCmdIndex) + ": ");
+  else
+    println(ERROR, "No Command Processor.");
   println("Command: " + String(lastCmd()));
 #else
   println("Unrecognized parameter");
@@ -242,16 +248,16 @@ void Terminal::invalidParameter() {
 #endif
 }
 
-void Terminal::configure(Terminal* terminal) {
-  echo = terminal->echo;
-  useprompt = terminal->useprompt;
-  promptString = terminal->promptString;
+void Terminal::configure(OutputInterface* terminal) {
+  setEcho(terminal->getEcho());
+  setPrompt(terminal->getPrompt());
+  setPromptString(terminal->getPromptString());
   setTokenizer(String(terminal->getTokenizer()));
 #ifdef TERMINAL_COLORS
-  usecolor = terminal->usecolor;
+  setColor(terminal->getColor());
 #endif
 #ifdef TERMINAL_BANNER
-  bannerFunction = terminal->bannerFunction;
+  setBannerFunction(terminal->getBannerFunction());
 #endif
 }
 
@@ -274,13 +280,17 @@ ReadLineReturn Terminal::callFunction() {
     memcpy(parameterParsing, cmdBuffer.getCommand(), MAX_INPUT_LINE);
     cmdBuffer.clearBuffer();
     cmdName = strtok_r(parameterParsing, tokenizer, &parameterParseSave);
-    int cmdIndex = TERM_CMD->findCmd(String(cmdName));
-    if (cmdIndex != -1) {
+    if (terminalCommandPtr) {
+      int cmdIndex = terminalCommandPtr->findCmd(String(cmdName));
+      if (cmdIndex != -1) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-      lastCmdIndex = cmdIndex;
+        lastCmdIndex = cmdIndex;
 #endif
-      functionCalled = HELP_FUNCTION_CALLED;
-      TERM_CMD->callFunction(cmdIndex, this);
+        functionCalled = HELP_FUNCTION_CALLED;
+        terminalCommandPtr->callFunction(cmdIndex, this);
+      }
+    } else {
+      functionCalled = ERROR_NO_CMD_FOUND;
     }
   } else {
     functionCalled = EMPTY_STRING;
@@ -393,38 +403,4 @@ void Terminal::clearHistory() {
 }
 #endif
 
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
-void Terminal::terminalConfig(Terminal* terminal) {
-  String value = terminal->readParameter();
-  if (value == NULL) {
-#ifdef TERMINAL_LOGGING
-    terminal->println(INFO, "Terminal Configuration: ");
-    terminal->println(INFO, "inputStream: " + String((bool) terminal->inputStream));
-    terminal->println(INFO, "outputStream: " + String((bool) terminal->outputStream));
-    terminal->println(INFO, "echo: " + String((bool) terminal->echo));
-#ifdef TERMINAL_COLORS
-    terminal->println(INFO, "usecolor: " + String((bool) terminal->usecolor));
-#endif
-    terminal->println(INFO, "useprompt: " + String((bool) terminal->useprompt));
-    terminal->println(INFO, "promptString: " + terminal->promptString);
-#else
-    terminal->println("Terminal Configuration: ");
-    terminal->println("inputStream: " + String((bool) terminal->inputStream));
-    terminal->println("outputStream: " + String((bool) terminal->outputStream));
-    terminal->println("echo: " + String((bool) terminal->echo));
-#ifdef TERMINAL_COLORS
-    terminal->println("usecolor: " + String((bool) terminal->usecolor));
-#endif
-    terminal->println("useprompt: " + String((bool) terminal->useprompt));
-    terminal->println("promptString: " + terminal->promptString);
-#endif
-  }
-  if (value == "echo") terminal->setEcho(!terminal->echo);
-#ifdef TERMINAL_COLORS
-  if (value == "usecolor") terminal->useColor(!terminal->usecolor);
-#endif
-  terminal->println();
-  terminal->prompt();
-}
-#endif
 } // namespace TerminalLibrary

@@ -7,20 +7,18 @@
 #define __TERMINAL_CLASS
 
 #include "features.h"
+#include "output_interface.h"
+#include "termcmd.h"
 #include "utility/commandBuffer.h"
 #include "utility/queue.h"
 
 #include <Stream.h>
-namespace TerminalLibrary {
-#ifdef TERMINAL_LOGGING
-typedef enum { TRACE, INFO, WARNING, ERROR, HELP, PASSED, FAILED, PROMPT } PRINT_TYPES;
-#endif
 
-typedef enum { Normal = 0, Black = 30, Red, Green, Yellow, Blue, Magenta, Cyan, White } COLOR;
+namespace TerminalLibrary {
 
 typedef enum { NO_PROCESSING, HELP_FUNCTION_CALLED, EMPTY_STRING, ERROR_NO_CMD_FOUND } ReadLineReturn;
 
-class Terminal {
+class Terminal : public OutputInterface {
 public:
   Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
   Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) { initialize(); };
@@ -28,8 +26,11 @@ public:
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memset(tokenizer, 0, MAX_INPUT_LINE);
     setTokenizer(" ");
+    terminalCommandPtr = TERM_CMD;
   };
-  void configure(Terminal* terminal);
+  void configure(OutputInterface* terminal);
+  void setTerminalCommand(TerminalCommand* __terminalCommandPtr) { terminalCommandPtr = __terminalCommandPtr; };
+  TerminalCommand* getTerminalCommand() { return terminalCommandPtr; };
   void setStream(Stream* __stream) {
     inputStream = __stream;
     outputStream = __stream;
@@ -60,9 +61,6 @@ public:
 #ifdef TERMINAL_HEX_STRING
   void hexdump(unsigned char* buffer, unsigned long length);
 #endif
-#ifdef TERMINAL_BANNER
-  void banner();
-#endif
   void prompt();
   void setTokenizer(String token);
   char* getTokenizer() { return tokenizer; };
@@ -71,23 +69,23 @@ public:
   void setEcho(bool __echo) { echo = __echo; };
   bool getEcho() { return echo; };
 #ifdef TERMINAL_COLORS
-  void useColor(bool __usecolor) { usecolor = __usecolor; };
+  void setColor(bool __usecolor) { usecolor = __usecolor; };
+  bool getColor() { return usecolor; };
 #endif
-  void usePrompt(bool __useprompt) { useprompt = __useprompt; };
-  void setPrompt(String __prompt) { promptString = __prompt; };
+  void setPrompt(bool __useprompt) { useprompt = __useprompt; };
+  bool getPrompt() { return useprompt; };
+  void setPromptString(String __prompt) { promptString = __prompt; };
+  String getPromptString() { return promptString; };
 #ifdef TERMINAL_BANNER
-  void setBannerFunction(void function(Terminal*)) { bannerFunction = function; };
+  void banner();
+  void (*getBannerFunction())(OutputInterface*) { return bannerFunction; };
+  void setBannerFunction(void (*function)(OutputInterface*)) { bannerFunction = function; };
 #endif
   void clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   void clearHistory();
 #endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
-  static void terminalConfig(Terminal* terminal);
-#endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-  TerminalUtility::Queue* lastBuffer = new TerminalUtility::Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
-#endif
+  TerminalUtility::Queue* getLastBuffer() { return lastBuffer; };
 
 private:
   Stream* inputStream = nullptr;
@@ -99,7 +97,7 @@ private:
   bool useprompt = true;
   String promptString = "PROGRAM:\\> ";
 #ifdef TERMINAL_BANNER
-  void (*bannerFunction)(Terminal*) = nullptr;
+  void (*bannerFunction)(OutputInterface*) = nullptr;
 #endif
 
 #ifdef TERMINAL_COLORS
@@ -140,6 +138,10 @@ private:
 #ifdef TERMINAL_TAB
   void tab();
 #endif
+#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
+  TerminalUtility::Queue* lastBuffer = new TerminalUtility::Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
+#endif
+  TerminalCommand* terminalCommandPtr = nullptr;
 };
 } // namespace TerminalLibrary
 #endif

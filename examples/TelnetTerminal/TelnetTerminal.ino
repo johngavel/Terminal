@@ -34,9 +34,9 @@ Terminal terminal(&Serial);
 // Five Commands added to the Terminal
 // ipconfig, exit, reboot, upload, and slowCount
 // Functions must be in the form of:
-// void functionName(Terminal* terminal)
+// void functionName(OutputInterface* terminal)
 
-void wifiIFConfig(Terminal* terminal) {
+void wifiIFConfig(OutputInterface* terminal) {
   IPAddress ipAddress = WiFi.localIP();
   bool linked = WiFi.isConnected();
   terminal->println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
@@ -55,21 +55,21 @@ void wifiIFConfig(Terminal* terminal) {
 }
 
 // Reboot the Adruino from the Terminal
-void reboot(Terminal* terminal) {
+void reboot(OutputInterface* terminal) {
   terminal->println(WARNING, "Pico Rebooting.....");
   delay(100);
   rp2040.reboot();
 }
 
 // Reboots the Pico into Upload Code Mode
-void uploadPico(Terminal* terminal) {
+void uploadPico(OutputInterface* terminal) {
   terminal->println(WARNING, "Rebooting in USB Mode....");
   delay(100);
   rp2040.rebootToBootloader();
 }
 
 // Exits the Telnet Session
-void exitTelnet(Terminal* terminal) {
+void exitTelnet(OutputInterface* terminal) {
   if (terminal == &telnet) {
     terminal->println(WARNING, "Closing Telnet Session....");
     delay(100);
@@ -97,7 +97,7 @@ static const char* encToString(uint8_t enc) {
   return "UNKN";
 }
 
-void wifiScan(Terminal* terminal) {
+void wifiScan(OutputInterface* terminal) {
   terminal->println(INFO, "Beginning Scan.........");
   auto cnt = WiFi.scanNetworks();
   if (!cnt) {
@@ -120,7 +120,7 @@ void wifiScan(Terminal* terminal) {
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
-void slowCount(Terminal* terminal) {
+void slowCount(OutputInterface* terminal) {
   bool passed = false;
   String value = terminal->readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
@@ -143,7 +143,7 @@ void slowCount(Terminal* terminal) {
 /******* End Terminal Commands ***************/
 
 // Custom Banner - Added to the start of the Terminal and Help Command
-void banner(Terminal* terminal) {
+void banner(OutputInterface* terminal) {
   terminal->println();
   terminal->println(PROMPT, "PicoW Telnet Example Program");
   terminal->println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));

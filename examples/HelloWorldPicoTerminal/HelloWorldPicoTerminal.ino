@@ -8,7 +8,7 @@
 Terminal terminal(&Serial1);
 
 // Simple Hello World Example Command
-void hello(Terminal* terminal) {
+void hello(OutputInterface* terminal) {
   terminal->println(INFO, "Hello World!");
   terminal->prompt();
 }

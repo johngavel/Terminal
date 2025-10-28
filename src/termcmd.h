@@ -8,9 +8,12 @@
 #define __TERMINAL_COMMAND
 
 #include "features.h"
-#include "terminalclass.h"
+#include "output_interface.h"
 
-#define TERM_CMD TerminalCommand::get()
+#include <Arduino.h>
+
+#define TERM_CMD terminalCommand_Ptr
+
 namespace TerminalLibrary {
 class CmdItem {
 public:
@@ -22,21 +25,21 @@ public:
 
 class TerminalCommand {
 public:
-  static TerminalCommand* get();
-  int addCmd(String command, String parameterDesc, String description, void function(Terminal*));
+  TerminalCommand();
+  int addCmd(String command, String parameterDesc, String description, void function(OutputInterface*));
 
   int getCmdCount() { return countCmd; };
   int findCmd(String command);
   String getCmd(int index);
   String getParameter(int index);
   String getDescription(int index);
-  void callFunction(int index, Terminal* terminal);
+  void callFunction(int index, OutputInterface* terminal);
 
 private:
-  TerminalCommand();
-  static TerminalCommand* terminalCommand;
   CmdItem list[MAX_TERM_CMD];
   int countCmd;
 };
 } // namespace TerminalLibrary
+
+extern TerminalLibrary::TerminalCommand* terminalCommand_Ptr;
 #endif

@@ -5,8 +5,11 @@
 */
 
 #include "termcmd.h"
+
+static TerminalLibrary::TerminalCommand terminalCommand;
+extern TerminalLibrary::TerminalCommand* terminalCommand_Ptr = &terminalCommand;
+
 namespace TerminalLibrary {
-TerminalCommand* TerminalCommand::terminalCommand = nullptr;
 
 TerminalCommand::TerminalCommand() {
   countCmd = 0;
@@ -18,12 +21,7 @@ TerminalCommand::TerminalCommand() {
   }
 }
 
-TerminalCommand* TerminalCommand::get() {
-  if (terminalCommand == nullptr) terminalCommand = new TerminalCommand();
-  return terminalCommand;
-}
-
-int TerminalCommand::addCmd(String command, String parameterDesc, String description, void function(Terminal*)) {
+int TerminalCommand::addCmd(String command, String parameterDesc, String description, void function(OutputInterface*)) {
   int returnInt = -1;
   if (findCmd(command) == -1) {
     if (countCmd < MAX_TERM_CMD) {
@@ -58,8 +56,8 @@ String TerminalCommand::getDescription(int index) {
   return list[index].description;
 }
 
-void TerminalCommand::callFunction(int index, Terminal* terminal) {
-  void (*cmd)(Terminal*) = (void (*)(Terminal*)) list[index].function;
+void TerminalCommand::callFunction(int index, OutputInterface* terminal) {
+  void (*cmd)(OutputInterface*) = (void (*)(OutputInterface*)) list[index].function;
   (*cmd)(terminal);
 }
 } // namespace TerminalLibrary

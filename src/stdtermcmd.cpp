@@ -5,26 +5,27 @@
 
 #include "stdtermcmd.h"
 
-#include "Terminal.h"
+#include "output_interface.h"
 #include "termcmd.h"
+
 namespace TerminalLibrary {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
-void help(Terminal* terminal);
+void help(OutputInterface* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-void history(Terminal* terminal);
+void history(OutputInterface* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
-void clearScreen(Terminal* terminal);
+void clearScreen(OutputInterface* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
-void resetTerminal(Terminal* terminal);
+void resetTerminal(OutputInterface* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
-void sttyCommand(Terminal* terminal);
+void sttyCommand(OutputInterface* terminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
-void diagCommand(Terminal* terminal);
+void diagCommand(OutputInterface* terminal);
 #endif
 
 void addStandardTerminalCommands() {
@@ -44,16 +45,13 @@ void addStandardTerminalCommands() {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   TERM_CMD->addCmd("history", "", "Command History", history);
 #endif
-#ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CONFIGURATION
-  TERM_CMD->addCmd("terminal", "", "Terminal Configuration", Terminal::terminalConfig);
-#endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
   TERM_CMD->addCmd("diag", "", "Memory Diagnostics of the Terminal Library", diagCommand);
 #endif
 }
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
-void help(Terminal* terminal) {
+void help(OutputInterface* terminal) {
 #ifdef TERMINAL_BANNER
   terminal->banner();
 #endif
@@ -81,16 +79,17 @@ void help(Terminal* terminal) {
 #endif
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-void history(Terminal* terminal) {
+void history(OutputInterface* terminal) {
 #ifdef TERMINAL_LOGGING
   terminal->println(INFO, "Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer->size(); i++) terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->lastBuffer->get(i));
+  for (unsigned long i = 0; i < terminal->getLastBuffer()->size(); i++)
+    terminal->println(HELP, String(i + 1) + ". ", (char*) terminal->getLastBuffer()->get(i));
   terminal->println(PASSED, "Command History");
 #else
   terminal->println("Command History");
-  for (unsigned long i = 0; i < terminal->lastBuffer->size(); i++) {
+  for (unsigned long i = 0; i < terminal->getLastBuffer()->size(); i++) {
     terminal->print(String(i + 1) + ". ");
-    terminal->println((char*) terminal->lastBuffer->get(i));
+    terminal->println((char*) terminal->getLastBuffer()->get(i));
   }
   terminal->println("Command History");
 #endif
@@ -99,14 +98,14 @@ void history(Terminal* terminal) {
 #endif
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
-void clearScreen(Terminal* terminal) {
+void clearScreen(OutputInterface* terminal) {
   terminal->clearScreen();
   terminal->prompt();
 }
 #endif
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
-void resetTerminal(Terminal* terminal) {
+void resetTerminal(OutputInterface* terminal) {
   terminal->clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   terminal->clearHistory();
@@ -119,7 +118,7 @@ void resetTerminal(Terminal* terminal) {
 #endif
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
-void sttyCommand(Terminal* terminal) {
+void sttyCommand(OutputInterface* terminal) {
   bool passed = false;
   String value = terminal->readParameter();
   if (value != NULL) {
@@ -132,19 +131,19 @@ void sttyCommand(Terminal* terminal) {
       passed = true;
     }
     if (value.equals("color")) {
-      terminal->useColor(true);
+      terminal->setColor(true);
       passed = true;
     }
     if (value.equals("-color")) {
-      terminal->useColor(false);
+      terminal->setColor(false);
       passed = true;
     }
     if (value.equals("prompt")) {
-      terminal->usePrompt(true);
+      terminal->setPrompt(true);
       passed = true;
     }
     if (value.equals("-prompt")) {
-      terminal->usePrompt(false);
+      terminal->setPrompt(false);
       passed = true;
     }
   }
@@ -154,7 +153,7 @@ void sttyCommand(Terminal* terminal) {
 #endif
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
-void diagCommand(Terminal* terminal) {
+void diagCommand(OutputInterface* terminal) {
   terminal->println();
 #ifdef TERMINAL_LOGGING
   terminal->println(PROMPT, "Terminal Diagnostics");

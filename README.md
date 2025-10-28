@@ -79,7 +79,7 @@ Terminal terminal(&Serial);
 
 
 // Simple Hello World Example Command
-void hello(Terminal* terminal) {
+void hello(OutputInterface* terminal) {
   terminal->println(INFO, "Hello World!");
   terminal->prompt();
 }
@@ -130,8 +130,8 @@ The Terminal library provides 2 classes. A Terminal Class for Processing, Parsin
 * setTokenizer - This overrides the default tokenizer of " " with user supplied tokens.
 * setEcho - This configures the terminal class to echo the incoming data.
 * getEcho - Returns the echo setting for the terminal.
-* useColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
-* usePrompt - Allows you to suppress all prompts to the user.
+* setColor - The Terminal Class can use the common color escape codes. However not all terminals process these.
+* setPrompt - Allows you to suppress all prompts to the user.
 ### Terminal Output
 * banner - displays the banner for the terminal to the user.
 * prompt - displays the prompt for the terminal to the user, indicating input requested.
@@ -158,7 +158,7 @@ Since the Terminal Class is processing and parsing all of the Inputs, these func
 ## TerminalCommand Class
 This is the class that stores and manages the commands that you have created. This class is a Singleton and only one will exist in the system.
 This class is accessed with the TERM_CMD macro.
-TERM_CMD->addCmd(String command, String parameterDesc, String description, void function(Terminal*));
+TERM_CMD->addCmd(String command, String parameterDesc, String description, void function(OutputInterface*));
 * command - This is a string the user will type in to run your command. Such as "dir" or "copy".
 * paramterDesc - This is a string for the Help or Invalid Parameter, it should describe any parameters that your command has. Such as "filename" or "on/off".
 * description - This is a string for the Help, it should be a short blurb about your command. Such as "Directory Listing" or "Turns on or off GPIO Pin 1".
@@ -177,7 +177,7 @@ Two commands are already available to the you. A "help"/"?" and "history" comman
 I have provided in the examples some basic commands.
 
 All commands shall be functions within your code. Methods of classes must be static.
-The format of the function shall be: void functionName(Terminal* terminal)
+The format of the function shall be: void functionName(OutputInterface* terminal)
 * void - There is no return processing done by the Terminal class from calling your function.
 * functionName - Whatever name you choose to call your function.
 * terminal - This a pointer back to the Terminal that called your function, use this terminal to execute and respond back to the user.
@@ -185,7 +185,7 @@ The format of the function shall be: void functionName(Terminal* terminal)
 ### Simple Command Example
 This is a simple command that will will do a digital read on GPIO Pin 3. I have already pre-supposed that you have setup this Pin 3 as a digital input.
 ```
-void readPin3(Terminal* terminal) {
+void readPin3(OutputInterface* terminal) {
   int val = digitalRead(3);
   if (val == HIGH) terminal->println(INFO, "Pin 3 is HIGH");
   else terminal->println(INFO, "Pin 3 is LOW");
@@ -208,7 +208,7 @@ program:/>
 ### Parameter Command Example
 This is a simple command that takes one parameter.
 ```
-void slowCount(Terminal* terminal) {
+void slowCount(OutputInterface* terminal) {
   bool passed = false;
   String value = terminal->readParameter();  // Read the Parameter from the command line
   if (value != NULL) {
@@ -261,7 +261,7 @@ Reboot the Arduino Device from the Command Line
 ```
 // Reboot the Adruino from the Terminal
 void(* resetFunc) (void) = 0;//declare reset function at address 0
-void reboot(Terminal* terminal) {
+void reboot(OutputInterface* terminal) {
   terminal->println(WARNING, "Arduino Uno Rebooting.....");
   delay(100);
   resetFunc();
@@ -271,7 +271,7 @@ void reboot(Terminal* terminal) {
 Reboot the Raspberry Pico from the Command Line
 ```
 // Reboot the Adruino from the Terminal
-void reboot(Terminal* terminal) {
+void reboot(OutputInterface* terminal) {
   terminal->println(WARNING, "Pico Rebooting.....");
   delay(100);
   rp2040.reboot();
@@ -281,7 +281,7 @@ void reboot(Terminal* terminal) {
 Reboot the Raspberry Pico from the Command Line into the Upload state, prevents you from having to do the double button press or holding the button when powering on.
 ```
 // Reboots the Pico into Upload Code Mode
-void uploadPico(Terminal* terminal) {
+void uploadPico(OutputInterface* terminal) {
   terminal->println(WARNING, "Rebooting in USB Mode....");
   delay(100);
   rp2040.rebootToBootloader();
@@ -290,7 +290,7 @@ void uploadPico(Terminal* terminal) {
 ### Batch File Command
 One of the neat things that the Terminal Command Class can do is create a batch file command. This command assumes that you have setup a littlefs file system and have some other terminal setup.
 ```
-void runCommand(Terminal* terminal) {
+void runCommand(OutputInterface* terminal) {
   char* value;
   value = terminal->readParameter();
   if (value != NULL) {
@@ -299,7 +299,7 @@ void runCommand(Terminal* terminal) {
     runTerminal.configure(terminal);
     runTerminal.setup();
     runTerminal.setEcho(false);
-    runTerminal.usePrompt(false);
+    runTerminal.setPrompt(false);
     while (file.available()) runTerminal.loop();
   } else {
     terminal->invalidParameter();
