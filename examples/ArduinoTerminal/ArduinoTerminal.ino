@@ -2,13 +2,11 @@
   ArduinoTerminal.ino - Arduino Serial Terminal Example
   Copyright (c) 2025 John J. Gavel.  All right reserved.
 
-  This can compile on a Arduino Uno:
+  This cannot compile on a Arduino Uno:
   Sketch uses 17172 bytes (53%) of program storage space. Maximum is 32256 bytes.
   Global variables use 1635 bytes (79%) of dynamic memory, leaving 413 bytes for local variables. Maximum is 2048 bytes.
 
   I however recommend turning off all of the features and decreasing the buffer sizes located in the features.h file
-  Sketch uses 7604 bytes (23%) of program storage space. Maximum is 32256 bytes.
-  Global variables use 624 bytes (30%) of dynamic memory, leaving 1424 bytes for local variables. Maximum is 2048 bytes.
 */
 #include <Terminal.h>
 

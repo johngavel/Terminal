@@ -36,10 +36,10 @@ jobs:
             examples/TelnetTerminal
             examples/USBSerialExample
 
-      - name: Compile Arduino UNO Library Examples
+      - name: Compile Arduino Mega Library Examples
         uses: arduino/compile-sketches@v1
         with:
-          fqbn: arduino:avr:uno
+          fqbn: arduino:avr:mega
           libraries: |
             - source-path: ./src
           sketch-paths: |
