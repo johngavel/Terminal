@@ -43,13 +43,4 @@ jobs:
           libraries: |
             - source-path: ./src
           sketch-paths: |
-            examples/ArduinoTerminal
-
-      - name: Compile Arduino Mega Library Examples
-        uses: arduino/compile-sketches@v1
-        with:
-          fqbn: arduino:avr:mega
-          libraries: |
-            - source-path: ./src
-          sketch-paths: |
             examples/ArduinoTerminal            
