@@ -30,9 +30,10 @@ readParameter	KEYWORD2
 invalidParameter	KEYWORD2
 setEcho	KEYWORD2
 getEcho	KEYWORD2
-useColor	KEYWORD2
-usePrompt	KEYWORD2
+setColor	KEYWORD2
+getColor	KEYWORD2
 setPrompt	KEYWORD2
+getPrompt	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

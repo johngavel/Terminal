@@ -170,7 +170,7 @@ void setupSerialPort() {
   // Setup of the Serial Terminal
   Serial.begin(115200);    // Setup your serial line
   terminal.setup();        // Setup the Terminal
-  terminal.useColor(true); // Output color to the Terminal
+  terminal.setColor(true); // Output color to the Terminal
   terminal.setPrompt("example://>");
   terminal.setBannerFunction(banner);
   terminal.banner();
@@ -190,7 +190,7 @@ void setupSerialPort() {
 void setupTelnet() {
   // Setup the Telnet Terminal
   telnet.setup();
-  telnet.useColor(true);
+  telnet.setColor(true);
   telnet.setPrompt("telnet://>");
   telnet.setBannerFunction(banner);
   telnet.setEcho(true);

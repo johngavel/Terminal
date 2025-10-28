@@ -75,7 +75,7 @@ void banner(OutputInterface* terminal) {
 void setup() {
   Serial1.begin(115200);   // Setup your serial line
   terminal.setup();        // Setup the Terminal
-  terminal.useColor(true); // Output color to the Terminal
+  terminal.setColor(true); // Output color to the Terminal
   terminal.setPrompt("example://>");
   terminal.setBannerFunction(banner);
   // Adds to standard commands to the terminal:
