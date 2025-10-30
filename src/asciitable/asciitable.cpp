@@ -65,4 +65,4 @@ void AsciiTable::printDone(String done) {
   terminal->println();
   terminal->println(PASSED, done);
 }
-}
+} // namespace ASCIITable

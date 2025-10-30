@@ -29,6 +29,23 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
       list[countCmd].parameter = parameterDesc;
       list[countCmd].description = description;
       list[countCmd].function = (void*) function;
+      list[countCmd].handler = nullptr;
+      returnInt = countCmd;
+      countCmd++;
+    }
+  }
+  return returnInt;
+}
+
+int TerminalCommand::addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface*)> handler) {
+  int returnInt = -1;
+  if (findCmd(command) == -1) {
+    if (countCmd < MAX_TERM_CMD) {
+      list[countCmd].command = command;
+      list[countCmd].parameter = parameterDesc;
+      list[countCmd].description = description;
+      list[countCmd].function = nullptr;
+      list[countCmd].handler = handler;
       returnInt = countCmd;
       countCmd++;
     }
@@ -57,7 +74,10 @@ String TerminalCommand::getDescription(int index) {
 }
 
 void TerminalCommand::callFunction(int index, OutputInterface* terminal) {
-  void (*cmd)(OutputInterface*) = (void (*)(OutputInterface*)) list[index].function;
-  (*cmd)(terminal);
+  if (list[index].function) {
+    void (*cmd)(OutputInterface*) = (void (*)(OutputInterface*)) list[index].function;
+    (*cmd)(terminal);
+  }
+  if (list[index].handler) { list[index].handler(terminal); }
 }
 } // namespace TerminalLibrary

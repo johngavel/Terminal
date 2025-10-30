@@ -6,7 +6,7 @@
 #include "../terminalclass.h"
 
 namespace ASCIITable {
-  using namespace TerminalLibrary;
+using namespace TerminalLibrary;
 
 class AsciiTable {
 public:
@@ -25,7 +25,7 @@ private:
   int numberOfColumns;
   OutputInterface* terminal;
 };
-};
+}; // namespace ASCIITable
 
 using namespace ASCIITable;
 #endif
