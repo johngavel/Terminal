@@ -28,25 +28,25 @@ void sttyCommand(OutputInterface* terminal);
 void diagCommand(OutputInterface* terminal);
 #endif
 
-void addStandardTerminalCommands() {
+void addStandardTerminalCommands(TerminalCommand* __termCmd) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
-  TERM_CMD->addCmd("?", "", "Print Help", help);
-  TERM_CMD->addCmd("help", "", "Print Help", help);
+  __termCmd->addCmd("?", "", "Print Help", help);
+  __termCmd->addCmd("help", "", "Print Help", help);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
-  TERM_CMD->addCmd("clear", "", "Clear the terminal screen", clearScreen);
+  __termCmd->addCmd("clear", "", "Clear the terminal screen", clearScreen);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_RESET
-  TERM_CMD->addCmd("reset", "", "Reset the Terminal", resetTerminal);
+  __termCmd->addCmd("reset", "", "Reset the Terminal", resetTerminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
-  TERM_CMD->addCmd("stty", "echo|-echo|color|-color|prompt|-prompt", "Enables/Disables Terminal Echo, Color, or Prompt", sttyCommand);
+  __termCmd->addCmd("stty", "echo|-echo|color|-color|prompt|-prompt", "Enables/Disables Terminal Echo, Color, or Prompt", sttyCommand);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-  TERM_CMD->addCmd("history", "", "Command History", history);
+  __termCmd->addCmd("history", "", "Command History", history);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
-  TERM_CMD->addCmd("diag", "", "Memory Diagnostics of the Terminal Library", diagCommand);
+  __termCmd->addCmd("diag", "", "Memory Diagnostics of the Terminal Library", diagCommand);
 #endif
 }
 

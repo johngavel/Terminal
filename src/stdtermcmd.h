@@ -7,7 +7,8 @@
 #define __STANDARD_TERMINAL_COMMDANDS
 
 #include "features.h"
+#include "termcmd.h"
 namespace TerminalLibrary {
-void addStandardTerminalCommands();
+void addStandardTerminalCommands(TerminalCommand* __termCmd);
 }
 #endif

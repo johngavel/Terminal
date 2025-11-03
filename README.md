@@ -94,7 +94,7 @@ void hello(OutputInterface* terminal) {
 void setup() {
   Serial.begin(); // Setup your serial line
   terminal.setup(); // Setup the Terminal
-  addStandardTerminalCommands(); 
+  addStandardTerminalCommands(TERM_CMD); 
   TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
   terminal.banner();
   terminal.prompt();
@@ -173,7 +173,7 @@ TERM_CMD->addCmd(String command, String parameterDesc, String description, void 
 
 ## Standard Commands
 Two commands are already available to the you. A "help"/"?" and "history" commands. These can be added to your code by calling:
-* addStandardTerminalCommands()
+* addStandardTerminalCommands(TERM_CMD)
   * Help - This can be accessed by typing "help" or "?" at the command line. This will print out to the user a formatted listing of all commands available. These commands will described when you added them to the TerminalCommand class.
   * History - This can be accessed by typing "history" at the command line. This will print out to the user the last ten commands entered on this terminal.
   * Clear Screen - This can be accessed by typing "clear" at the command line. This will print out escape commands that will clear the terminal screen.

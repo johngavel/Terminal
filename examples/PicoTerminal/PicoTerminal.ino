@@ -81,7 +81,7 @@ void setup() {
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
   // "help" and "?" - Help, listing of all the commands added to the Terminal
-  addStandardTerminalCommands();
+  addStandardTerminalCommands(TERM_CMD);
 
   // Add Program Specific Commands
   // reboot and slowCount defined above.
