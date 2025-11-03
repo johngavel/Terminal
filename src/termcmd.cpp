@@ -18,6 +18,9 @@ TerminalCommand::TerminalCommand() {
     list[i].parameter = "";
     list[i].description = "";
     list[i].function = NULL;
+#ifndef ARDUINO_ARCH_AVR
+    list[i].handler = nullptr;
+#endif
   }
 }
 
@@ -29,7 +32,9 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
       list[countCmd].parameter = parameterDesc;
       list[countCmd].description = description;
       list[countCmd].function = (void*) function;
+#ifndef ARDUINO_ARCH_AVR      
       list[countCmd].handler = nullptr;
+#endif      
       returnInt = countCmd;
       countCmd++;
     }
@@ -37,6 +42,7 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
   return returnInt;
 }
 
+#ifndef ARDUINO_ARCH_AVR
 int TerminalCommand::addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface*)> handler) {
   int returnInt = -1;
   if (findCmd(command) == -1) {
@@ -52,6 +58,7 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
   }
   return returnInt;
 }
+#endif
 
 int TerminalCommand::findCmd(String command) {
   int cmdIndex = -1;
@@ -78,6 +85,8 @@ void TerminalCommand::callFunction(int index, OutputInterface* terminal) {
     void (*cmd)(OutputInterface*) = (void (*)(OutputInterface*)) list[index].function;
     (*cmd)(terminal);
   }
+#ifndef ARDUINO_ARCH_AVR  
   if (list[index].handler) { list[index].handler(terminal); }
+#endif
 }
 } // namespace TerminalLibrary

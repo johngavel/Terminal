@@ -11,7 +11,9 @@
 #include "output_interface.h"
 
 #include <Arduino.h>
+#ifndef ARDUINO_ARCH_AVR
 #include <functional>
+#endif
 
 #define TERM_CMD terminalCommand_Ptr
 
@@ -22,15 +24,18 @@ public:
   String description;
   String parameter;
   void* function;
+#ifndef ARDUINO_ARCH_AVR  
   std::function<void(OutputInterface*)> handler;
+#endif
 };
 
 class TerminalCommand {
 public:
   TerminalCommand();
   int addCmd(String command, String parameterDesc, String description, void function(OutputInterface*));
+#ifndef ARDUINO_ARCH_AVR
   int addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface*)> handler);
-
+#endif
   int getCmdCount() { return countCmd; };
   int findCmd(String command);
   String getCmd(int index);
