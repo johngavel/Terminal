@@ -32,9 +32,9 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
       list[countCmd].parameter = parameterDesc;
       list[countCmd].description = description;
       list[countCmd].function = (void*) function;
-#ifndef ARDUINO_ARCH_AVR      
+#ifndef ARDUINO_ARCH_AVR
       list[countCmd].handler = nullptr;
-#endif      
+#endif
       returnInt = countCmd;
       countCmd++;
     }
@@ -85,7 +85,7 @@ void TerminalCommand::callFunction(int index, OutputInterface* terminal) {
     void (*cmd)(OutputInterface*) = (void (*)(OutputInterface*)) list[index].function;
     (*cmd)(terminal);
   }
-#ifndef ARDUINO_ARCH_AVR  
+#ifndef ARDUINO_ARCH_AVR
   if (list[index].handler) { list[index].handler(terminal); }
 #endif
 }

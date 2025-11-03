@@ -24,7 +24,7 @@ public:
   String description;
   String parameter;
   void* function;
-#ifndef ARDUINO_ARCH_AVR  
+#ifndef ARDUINO_ARCH_AVR
   std::function<void(OutputInterface*)> handler;
 #endif
 };
