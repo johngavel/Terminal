@@ -50,6 +50,7 @@ public:
   inline void print(COLOR color, String line) { __print(line); };
 #endif
 #ifdef TERMINAL_LOGGING
+  void printHeader(PRINT_TYPES type);
   void print(PRINT_TYPES type, String line);
   void print(PRINT_TYPES type, String line, String line2);
   void println(PRINT_TYPES type, String line);

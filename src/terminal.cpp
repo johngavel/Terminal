@@ -70,7 +70,7 @@ void Terminal::print(COLOR color, String line) {
 #endif
 
 #ifdef TERMINAL_LOGGING
-void Terminal::print(PRINT_TYPES type, String line) {
+void Terminal::printHeader(PRINT_TYPES type) {
   printColor(Normal);
   switch (type) {
   case TRACE:
@@ -96,7 +96,36 @@ void Terminal::print(PRINT_TYPES type, String line) {
     print(Red, " FAILED ");
     __print("] ");
     break;
-  case WARNING: printColor(Magenta); break;
+  case WARNING:
+    __print("[");
+    print(Magenta, "  WARN  ");
+    __print("] ");
+    break;
+  case HELP: printColor(Yellow); break;
+  case INFO:
+  default: break;
+  }
+}
+
+void Terminal::print(PRINT_TYPES type, String line) {
+  printColor(Normal);
+  switch (type) {
+  case TRACE:
+    printColor(Cyan);
+    break;
+  case PROMPT: printColor(Green); break;
+  case ERROR:
+    printColor(Red);
+    break;
+  case PASSED:
+    printColor(Green);
+    break;
+  case FAILED:
+    printColor(Red);
+    break;
+  case WARNING:
+    printColor(Magenta);
+    break;
   case HELP: printColor(Yellow); break;
   case INFO:
   default: break;
@@ -112,18 +141,9 @@ void Terminal::print(PRINT_TYPES type, String line, String line2) {
     print(INFO, line);
     print(HELP, line2);
     break;
-  case ERROR:
-    print(type, line);
-    print(WARNING, line2);
-    break;
-  case PASSED:
-  case FAILED:
-    print(type, line);
-    print(INFO, line2);
-    break;
   default:
     print(type, line);
-    print(type, line2);
+    print(INFO, line2);
     break;
   }
 }
@@ -135,11 +155,13 @@ void Terminal::println() {
 
 #ifdef TERMINAL_LOGGING
 void Terminal::println(PRINT_TYPES type, String line) {
+  printHeader(type);
   print(type, line);
   println();
 }
 
 void Terminal::println(PRINT_TYPES type, String line, String line2) {
+  printHeader(type);
   print(type, line, line2);
   println();
 }
@@ -198,10 +220,13 @@ void Terminal::loop() {
   if (ret == ERROR_NO_CMD_FOUND) {
     println();
 #ifdef TERMINAL_LOGGING
-    print(ERROR, "Unrecognized command: ");
+    char line[80];
+    memset(line, 0, sizeof(line));
+    strncpy(line, "Unrecognized command: ", sizeof(line));
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-    println(WARNING, lastCmd());
+    strncat(line, lastCmd(), sizeof(line));
 #endif
+    println(ERROR, line);
     println(INFO, "Enter \'?\' or \'help\' for a list of commands.");
 #else
     print("Unrecognized command: ");
