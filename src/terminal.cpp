@@ -110,22 +110,12 @@ void Terminal::printHeader(PRINT_TYPES type) {
 void Terminal::print(PRINT_TYPES type, String line) {
   printColor(Normal);
   switch (type) {
-  case TRACE:
-    printColor(Cyan);
-    break;
+  case TRACE: printColor(Cyan); break;
   case PROMPT: printColor(Green); break;
-  case ERROR:
-    printColor(Red);
-    break;
-  case PASSED:
-    printColor(Green);
-    break;
-  case FAILED:
-    printColor(Red);
-    break;
-  case WARNING:
-    printColor(Magenta);
-    break;
+  case ERROR: printColor(Red); break;
+  case PASSED: printColor(Green); break;
+  case FAILED: printColor(Red); break;
+  case WARNING: printColor(Magenta); break;
   case HELP: printColor(Yellow); break;
   case INFO:
   default: break;
