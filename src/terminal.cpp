@@ -214,7 +214,7 @@ void Terminal::loop() {
     memset(line, 0, sizeof(line));
     strncpy(line, "Unrecognized command: ", sizeof(line));
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
-    strncat(line, lastCmd(), sizeof(line));
+    strncat(line, lastCmd(), (sizeof(line) - strlen(line)));
 #endif
     println(ERROR, line);
     println(INFO, "Enter \'?\' or \'help\' for a list of commands.");
