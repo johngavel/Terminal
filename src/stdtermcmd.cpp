@@ -52,11 +52,11 @@ void addStandardTerminalCommands(TerminalCommand* __termCmd) {
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 namespace {
-constexpr size_t kMaxCmdLen   = 48;
+constexpr size_t kMaxCmdLen = 48;
 constexpr size_t kMaxParamLen = 64;
-constexpr size_t kMaxDescLen  = 96;
-constexpr size_t kMaxLhsLen   = kMaxCmdLen + 1 + kMaxParamLen; // "cmd param"
-}
+constexpr size_t kMaxDescLen = 96;
+constexpr size_t kMaxLhsLen = kMaxCmdLen + 1 + kMaxParamLen; // "cmd param"
+} // namespace
 
 void help(OutputInterface* terminal) {
 #ifdef TERMINAL_BANNER
@@ -68,7 +68,7 @@ void help(OutputInterface* terminal) {
 
   // First pass: compute display width (clamped)
   for (int i = 0; i < count; ++i) {
-    const String cmd   = TERM_CMD->getCmd(i);
+    const String cmd = TERM_CMD->getCmd(i);
     const String param = TERM_CMD->getParameter(i);
     const bool hasParam = param.length() > 0;
 
@@ -79,22 +79,20 @@ void help(OutputInterface* terminal) {
 
   // Second pass: build and print
   for (int i = 0; i < count; ++i) {
-    const String cmd   = TERM_CMD->getCmd(i);
+    const String cmd = TERM_CMD->getCmd(i);
     const String param = TERM_CMD->getParameter(i);
-    const String desc  = TERM_CMD->getDescription(i);
+    const String desc = TERM_CMD->getDescription(i);
 
     char lhs[kMaxLhsLen + 1];
     size_t pos = 0;
 
     // Copy cmd
-    for (size_t j = 0; j < cmd.length() && pos < kMaxLhsLen; ++j)
-      lhs[pos++] = cmd[j];
+    for (size_t j = 0; j < cmd.length() && pos < kMaxLhsLen; ++j) lhs[pos++] = cmd[j];
 
     // Optional space + param
     if (param.length() && pos < kMaxLhsLen) {
       lhs[pos++] = ' ';
-      for (size_t j = 0; j < param.length() && pos < kMaxLhsLen; ++j)
-        lhs[pos++] = param[j];
+      for (size_t j = 0; j < param.length() && pos < kMaxLhsLen; ++j) lhs[pos++] = param[j];
     }
 
     // Pad to maxWidth
@@ -104,10 +102,11 @@ void help(OutputInterface* terminal) {
 #ifdef TERMINAL_LOGGING
     // " - " + desc into rhs buffer
     char rhs[3 + kMaxDescLen + 1];
-    rhs[0] = ' '; rhs[1] = '-'; rhs[2] = ' ';
+    rhs[0] = ' ';
+    rhs[1] = '-';
+    rhs[2] = ' ';
     size_t rpos = 2;
-    for (size_t j = 0; j < desc.length() && j < kMaxDescLen; ++j)
-      rhs[rpos++] = desc[j];
+    for (size_t j = 0; j < desc.length() && j < kMaxDescLen; ++j) rhs[rpos++] = desc[j];
     rhs[rpos] = '\0';
 
     terminal->println(HELP, lhs, rhs);
