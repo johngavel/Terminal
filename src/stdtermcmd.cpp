@@ -51,25 +51,69 @@ void addStandardTerminalCommands(TerminalCommand* __termCmd) {
 }
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
+namespace {
+constexpr size_t kMaxCmdLen   = 48;
+constexpr size_t kMaxParamLen = 64;
+constexpr size_t kMaxDescLen  = 96;
+constexpr size_t kMaxLhsLen   = kMaxCmdLen + 1 + kMaxParamLen; // "cmd param"
+}
+
 void help(OutputInterface* terminal) {
 #ifdef TERMINAL_BANNER
   terminal->banner();
 #endif
 
-  int maxStringLength = 0;
-  for (int i = 0; i < TERM_CMD->getCmdCount(); i++) {
-    int length = TERM_CMD->getCmd(i).length() + TERM_CMD->getParameter(i).length() + 2;
-    maxStringLength = (maxStringLength > length) ? maxStringLength : length;
+  const int count = TERM_CMD->getCmdCount();
+  size_t maxWidth = 0;
+
+  // First pass: compute display width (clamped)
+  for (int i = 0; i < count; ++i) {
+    const String cmd   = TERM_CMD->getCmd(i);
+    const String param = TERM_CMD->getParameter(i);
+    const bool hasParam = param.length() > 0;
+
+    size_t width = cmd.length() + (hasParam ? (1 + param.length()) : 0);
+    if (width > kMaxLhsLen) width = kMaxLhsLen; // clamp to buffer capacity
+    if (width > maxWidth) maxWidth = width;
   }
-  for (int i = 0; i < TERM_CMD->getCmdCount(); i++) {
-    String line1 = TERM_CMD->getCmd(i) + " " + TERM_CMD->getParameter(i) + "                                         ";
-    String line2 = "- " + TERM_CMD->getDescription(i);
-    line1 = line1.substring(0, maxStringLength);
+
+  // Second pass: build and print
+  for (int i = 0; i < count; ++i) {
+    const String cmd   = TERM_CMD->getCmd(i);
+    const String param = TERM_CMD->getParameter(i);
+    const String desc  = TERM_CMD->getDescription(i);
+
+    char lhs[kMaxLhsLen + 1];
+    size_t pos = 0;
+
+    // Copy cmd
+    for (size_t j = 0; j < cmd.length() && pos < kMaxLhsLen; ++j)
+      lhs[pos++] = cmd[j];
+
+    // Optional space + param
+    if (param.length() && pos < kMaxLhsLen) {
+      lhs[pos++] = ' ';
+      for (size_t j = 0; j < param.length() && pos < kMaxLhsLen; ++j)
+        lhs[pos++] = param[j];
+    }
+
+    // Pad to maxWidth
+    while (pos < maxWidth && pos < kMaxLhsLen) lhs[pos++] = ' ';
+    lhs[pos] = '\0';
+
 #ifdef TERMINAL_LOGGING
-    terminal->println(HELP, line1, line2);
+    // " - " + desc into rhs buffer
+    char rhs[3 + kMaxDescLen + 1];
+    rhs[0] = ' '; rhs[1] = '-'; rhs[2] = ' ';
+    size_t rpos = 2;
+    for (size_t j = 0; j < desc.length() && j < kMaxDescLen; ++j)
+      rhs[rpos++] = desc[j];
+    rhs[rpos] = '\0';
+
+    terminal->println(HELP, lhs, rhs);
 #else
-    terminal->print(line1);
-    terminal->println(line2);
+    terminal->print(lhs);
+    terminal->println(String("- ") + desc);
 #endif
   }
 
