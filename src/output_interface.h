@@ -52,6 +52,8 @@ public:
   virtual bool getPrompt() = 0;
   virtual String getPromptString() = 0;
   virtual void setPromptString(String __prompt) = 0;
+  virtual String getTerminalName() = 0;
+  virtual void setTerminalName(String __terminalName) = 0;
 #ifdef TERMINAL_BANNER
   virtual void (*getBannerFunction())(OutputInterface*) = 0;
   virtual void setBannerFunction(void (*function)(OutputInterface*)) = 0;

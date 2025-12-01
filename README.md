@@ -29,8 +29,9 @@ Written by John J. Gavel
   * BREAKING - Changed the format of the Terminal Command Function. Instead of being passed the called terminal, they are now passed an "OutputInterface*". This change allowed the separation of the Terminal and the Terminal Commands. OutputInterface contains all of the methods that Terminal had so no other code change is necessary. (Maybe?!?).
     * void hello(Terminal* terminal); --> void hello(OutputInterface* terminal);
   * Added ASCII Table utility, that allows the terminal to print nice multi-color tables.
-  * Removed terminal configuration help command
+  * Removed terminal configuration command
   * Standardized get/set methods
+  * Added Terminal Name String
 * 1.0.11 - Updated Version Numbers
   * Fixing and updating Arduino UNO Example
   * Updated stty command, to control Echo, Color, and Prompt. Changed Feature Name.
