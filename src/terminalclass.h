@@ -77,8 +77,8 @@ public:
   bool getPrompt() { return useprompt; };
   void setPromptString(String __prompt) { promptString = __prompt; };
   String getPromptString() { return promptString; };
-  void setTerminalName(String __terminalName) {terminalName = __terminalName;};
-  String getTerminalName() {return terminalName;};
+  void setTerminalName(String __terminalName) { terminalName = __terminalName; };
+  String getTerminalName() { return terminalName; };
 #ifdef TERMINAL_BANNER
   void banner();
   void (*getBannerFunction())(OutputInterface*) { return bannerFunction; };
