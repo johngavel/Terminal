@@ -21,7 +21,9 @@ typedef enum { NO_PROCESSING, HELP_FUNCTION_CALLED, EMPTY_STRING, ERROR_NO_CMD_F
 class Terminal : public OutputInterface {
 public:
   Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
-  Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) { initialize(); };
+  Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) {
+    initialize();
+  };
   void initialize() {
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memset(tokenizer, 0, MAX_INPUT_LINE);

@@ -40,17 +40,17 @@ void wifiIFConfig(OutputInterface* terminal) {
   IPAddress ipAddress = WiFi.localIP();
   bool linked = WiFi.isConnected();
   terminal->println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
-  terminal->println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
-                              String(ipAddress[3]));
+  terminal->println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.subnetMask();
-  terminal->println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
-                              String(ipAddress[3]));
+  terminal->println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.gatewayIP();
-  terminal->println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
-                              String(ipAddress[3]));
+  terminal->println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.dnsIP();
-  terminal->println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") + String(ipAddress[2]) + String(".") +
-                              String(ipAddress[3]));
+  terminal->println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   terminal->prompt();
 }
 
@@ -111,7 +111,8 @@ void wifiScan(OutputInterface* terminal) {
     for (auto i = 0; i < cnt; i++) {
       uint8_t bssid[6];
       WiFi.BSSID(i, bssid);
-      sprintf(line, "%32s %5s %17s %2d %4ld", WiFi.SSID(i), encToString(WiFi.encryptionType(i)), macToString(bssid), WiFi.channel(i), WiFi.RSSI(i));
+      sprintf(line, "%32s %5s %17s %2d %4ld", WiFi.SSID(i), encToString(WiFi.encryptionType(i)), macToString(bssid),
+              WiFi.channel(i), WiFi.RSSI(i));
       terminal->println(INFO, line);
     }
   }
@@ -132,13 +133,15 @@ void slowCount(OutputInterface* terminal) {
         delay(1000);
       }
     } else {
-      terminal->println(ERROR, "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+      terminal->println(ERROR,
+                        "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
     terminal->invalidParameter();
   terminal->println();
-  terminal->println((passed) ? PASSED : FAILED, "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt();                                                   // Prompt the user for the next command
+  terminal->println((passed) ? PASSED : FAILED,
+                    "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+  terminal->prompt();                       // Prompt the user for the next command
 }
 /******* End Terminal Commands ***************/
 

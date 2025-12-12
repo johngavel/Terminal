@@ -40,7 +40,8 @@ void addStandardTerminalCommands(TerminalCommand* __termCmd) {
   __termCmd->addCmd("reset", "", "Reset the Terminal", resetTerminal);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_STTY
-  __termCmd->addCmd("stty", "echo|-echo|color|-color|prompt|-prompt", "Enables/Disables Terminal Echo, Color, or Prompt", sttyCommand);
+  __termCmd->addCmd("stty", "echo|-echo|color|-color|prompt|-prompt",
+                    "Enables/Disables Terminal Echo, Color, or Prompt", sttyCommand);
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
   __termCmd->addCmd("history", "", "Command History", history);

@@ -46,8 +46,8 @@ void AsciiTable::printHeader() {
   terminal->println();
 }
 
-void AsciiTable::printData(String line0, String line1, String line2, String line3, String line4, String line5, String line6, String line7, String line8,
-                           String line9) {
+void AsciiTable::printData(String line0, String line1, String line2, String line3, String line4, String line5,
+                           String line6, String line7, String line8, String line9) {
   if (numberOfColumns > 0) printCellData(columnColor[0], line0, columnWidth[0]);
   if (numberOfColumns > 1) printCellData(columnColor[1], line1, columnWidth[1]);
   if (numberOfColumns > 2) printCellData(columnColor[2], line2, columnWidth[2]);

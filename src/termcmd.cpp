@@ -43,7 +43,8 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
 }
 
 #ifndef ARDUINO_ARCH_AVR
-int TerminalCommand::addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface*)> handler) {
+int TerminalCommand::addCmd(String command, String parameterDesc, String description,
+                            std::function<void(OutputInterface*)> handler) {
   int returnInt = -1;
   if (findCmd(command) == -1) {
     if (countCmd < MAX_TERM_CMD) {
