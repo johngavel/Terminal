@@ -202,7 +202,7 @@ void Terminal::hexdump(unsigned char* buffer, unsigned long length) {
   }
 }
 #endif
-
+#include <GavelDebug.h>
 void Terminal::loop() {
   ReadLineReturn ret;
   ret = readline();
@@ -387,6 +387,15 @@ ReadLineReturn Terminal::readline() {
 
   return NO_PROCESSING;
 }
+
+void Terminal::setContext(unsigned int i, void* ptr) {
+  if (i >= MAX_CONTEXT) return;
+  contextArray[i] = ptr;
+};
+void* Terminal::getContext(unsigned int i) {
+  if (i >= MAX_CONTEXT) return nullptr;
+  return contextArray[i];
+};
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
 char* Terminal::lastCmd() {

@@ -11,6 +11,8 @@
 
 #include <Arduino.h>
 
+#define MAX_CONTEXT 4
+
 namespace TerminalLibrary {
 
 #ifdef TERMINAL_LOGGING
@@ -71,6 +73,9 @@ public:
   virtual void setStream(Stream* __inputStream, Stream* __outputStream) = 0;
   virtual Stream* getInput() = 0;
   virtual Stream* getOutput() = 0;
+
+  virtual void setContext(unsigned int i, void* ptr) = 0;
+  virtual void* getContext(unsigned int i) = 0;
 };
 
 }; // namespace TerminalLibrary

@@ -92,6 +92,9 @@ public:
 #endif
   TerminalUtility::Queue* getLastBuffer() { return lastBuffer; };
 
+  virtual void setContext(unsigned int i, void* ptr) override;
+  virtual void* getContext(unsigned int i) override;
+
 private:
   Stream* inputStream = nullptr;
   Stream* outputStream = nullptr;
@@ -148,6 +151,8 @@ private:
   TerminalUtility::Queue* lastBuffer = new TerminalUtility::Queue(HISTORY_BUFFER, MAX_INPUT_LINE);
 #endif
   TerminalCommand* terminalCommandPtr = nullptr;
+
+  void* contextArray[MAX_CONTEXT] = {nullptr};
 };
 } // namespace TerminalLibrary
 #endif
