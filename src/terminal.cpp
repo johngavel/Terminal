@@ -202,7 +202,7 @@ void Terminal::hexdump(unsigned char* buffer, unsigned long length) {
   }
 }
 #endif
-#include <GavelDebug.h>
+
 void Terminal::loop() {
   ReadLineReturn ret;
   ret = readline();
