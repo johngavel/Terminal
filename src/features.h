@@ -3,11 +3,12 @@
 
 /* Defined Feature Macros to turn on/off specific features - This can save memory or computing power */
 
-#define TERMINAL_COLORS     // Gives the Terminal the escape code to print in color
-#define TERMINAL_TAB        // Tab Auto-Complete Feature
-#define TERMINAL_LOGGING    // Logging features of TRACE, INFO, WARNING, ERROR, HELP, PASSED, FAILED, PROMPT
-#define TERMINAL_BANNER     // User generated banner that is used at start-up
-#define TERMINAL_HEX_STRING // Diagnostics prints that do HEX printing for the user
+#define TERMINAL_ENABLE_DEBUG // Give the Terminal a Debug Object to register outputs with
+#define TERMINAL_COLORS       // Gives the Terminal the escape code to print in color
+#define TERMINAL_TAB          // Tab Auto-Complete Feature
+#define TERMINAL_LOGGING      // Logging features of TRACE, INFO, WARNING, ERROR, HELP, PASSED, FAILED, PROMPT
+#define TERMINAL_BANNER       // User generated banner that is used at start-up
+#define TERMINAL_HEX_STRING   // Diagnostics prints that do HEX printing for the user
 
 #define TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
 #define TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY

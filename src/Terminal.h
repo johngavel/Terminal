@@ -8,6 +8,7 @@
 #define __TERMINAL
 
 #include "stdtermcmd.h"
+#include "terminal_debug.h"
 #include "terminalclass.h"
 
 #include <Arduino.h>
