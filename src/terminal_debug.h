@@ -10,7 +10,6 @@
 */
 
 #include <Terminal.h> // OutputInterface, COLOR, PRINT_TYPES (optional), Arduino String
-#include <algorithm>
 #include <cstdarg>
 #include <cstdio>
 #include <vector>
@@ -97,15 +96,26 @@ public:
   inline void registerOutput(OutputInterface* out) {
     if (!out) return;
     LockGuard g(*this);
-    if (std::find(sinks_.begin(), sinks_.end(), out) == sinks_.end()) { sinks_.push_back(out); }
+    bool exists = false;
+    for (auto* s : sinks_) {
+      if (s == out) {
+        exists = true;
+        break;
+      }
+    }
+    if (!exists) { sinks_.push_back(out); }
   }
 
   // Deregister a sink. Safe to call even if not present.
   inline void deregisterOutput(OutputInterface* out) {
     if (!out) return;
     LockGuard g(*this);
-    auto it = std::remove(sinks_.begin(), sinks_.end(), out);
-    sinks_.erase(it, sinks_.end());
+    for (auto it = sinks_.begin(); it != sinks_.end();) {
+      if (*it == out)
+        it = sinks_.erase(it);
+      else
+        ++it;
+    }
   }
 
   // ---------------------------------------------------------------------------
