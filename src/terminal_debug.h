@@ -53,6 +53,7 @@ public:
   inline void banner() {}
 #endif
   inline void prompt() {}
+
 private:
   Debug() = default;
   Debug(const Debug&) = delete;
@@ -91,9 +92,7 @@ public:
       if (sinks_[i] == out) return;
     }
     // Add if capacity allows
-    if (sinks_count_ < TERMINAL_MAX_SINKS) {
-      sinks_[sinks_count_++] = out;
-    }
+    if (sinks_count_ < TERMINAL_MAX_SINKS) { sinks_[sinks_count_++] = out; }
   }
 
   // Deregister a sink. Safe to call even if not present.
@@ -167,7 +166,7 @@ public:
     va_copy(copy, args);
     int n = ::vsnprintf(small, sizeof(small), fmt, copy);
     va_end(copy);
-    if (n >= 0 && (size_t)n < sizeof(small)) {
+    if (n >= 0 && (size_t) n < sizeof(small)) {
       String s(small);
       va_end(args);
       print(s);
@@ -175,9 +174,12 @@ public:
     }
     int needed = (n < 0) ? 256 : (n + 1);
     // allocate only as much as needed, without <vector>
-    char* buf = new char[(size_t)needed];
-    if (!buf) { va_end(args); return; }
-    ::vsnprintf(buf, (size_t)needed, fmt, args);
+    char* buf = new char[(size_t) needed];
+    if (!buf) {
+      va_end(args);
+      return;
+    }
+    ::vsnprintf(buf, (size_t) needed, fmt, args);
     va_end(args);
     String s(buf);
     delete[] buf;
@@ -193,16 +195,19 @@ public:
     va_copy(copy, args);
     int n = ::vsnprintf(small, sizeof(small), fmt, copy);
     va_end(copy);
-    if (n >= 0 && (size_t)n < sizeof(small)) {
+    if (n >= 0 && (size_t) n < sizeof(small)) {
       String s(small);
       va_end(args);
       print(color, s);
       return;
     }
     int needed = (n < 0) ? 256 : (n + 1);
-    char* buf = new char[(size_t)needed];
-    if (!buf) { va_end(args); return; }
-    ::vsnprintf(buf, (size_t)needed, fmt, args);
+    char* buf = new char[(size_t) needed];
+    if (!buf) {
+      va_end(args);
+      return;
+    }
+    ::vsnprintf(buf, (size_t) needed, fmt, args);
     va_end(args);
     String s(buf);
     delete[] buf;
@@ -215,39 +220,60 @@ public:
 #ifdef TERMINAL_LOGGING
   inline void print(PRINT_TYPES type, const String& line) {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->print(type, line); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->print(type, line);
+    }
   }
   inline void print(PRINT_TYPES type, const String& line, const String& line2) {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->print(type, line, line2); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->print(type, line, line2);
+    }
   }
   inline void println(PRINT_TYPES type, const String& line) {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->println(type, line); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->println(type, line);
+    }
   }
   inline void println(PRINT_TYPES type, const String& line, const String& line2) {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->println(type, line, line2); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->println(type, line, line2);
+    }
   }
 #endif // TERMINAL_LOGGING
 
 #ifdef TERMINAL_HEX_STRING
   inline void hexdump(unsigned char* buffer, unsigned long length) {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->hexdump(buffer, length); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->hexdump(buffer, length);
+    }
   }
 #endif // TERMINAL_HEX_STRING
 
 #ifdef TERMINAL_BANNER
   inline void banner() {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->banner(); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->banner();
+    }
   }
 #endif // TERMINAL_BANNER
 
   inline void prompt() {
     auto snap = snapshotSinks_();
-    for (size_t i = 0; i < snap.count; ++i) { auto* w = snap.arr[i]; if (w) w->prompt(); }
+    for (size_t i = 0; i < snap.count; ++i) {
+      auto* w = snap.arr[i];
+      if (w) w->prompt();
+    }
   }
 
 private:
@@ -299,46 +325,46 @@ private:
 // Convenience macros (zero-cost in Release)
 // ============================================================================
 #if defined(TERMINAL_ENABLE_DEBUG)
-#define DBG_PRINT(s) \
+#define DBG_PRINT(s)                                                                                                   \
   do { ::TerminalLibrary::Debug::instance().print((s)); } while (0)
-#define DBG_PRINTC(c, s) \
+#define DBG_PRINTC(c, s)                                                                                               \
   do { ::TerminalLibrary::Debug::instance().print((c), (s)); } while (0)
-#define DBG_PRINTLN() \
+#define DBG_PRINTLN()                                                                                                  \
   do { ::TerminalLibrary::Debug::instance().println(); } while (0)
-#define DBG_PRINTLNS(s) \
+#define DBG_PRINTLNS(s)                                                                                                \
   do { ::TerminalLibrary::Debug::instance().println((s)); } while (0)
-#define DBG_PRINTF(fmt, ...) \
+#define DBG_PRINTF(fmt, ...)                                                                                           \
   do { ::TerminalLibrary::Debug::instance().printf((fmt), ##__VA_ARGS__); } while (0)
-#define DBG_PRINTFC(c, fmt, ...) \
+#define DBG_PRINTFC(c, fmt, ...)                                                                                       \
   do { ::TerminalLibrary::Debug::instance().printf((c), (fmt), ##__VA_ARGS__); } while (0)
-#define DBG_REGISTER(o) \
+#define DBG_REGISTER(o)                                                                                                \
   do { ::TerminalLibrary::Debug::instance().registerOutput((o)); } while (0)
-#define DBG_DEREGISTER(o) \
+#define DBG_DEREGISTER(o)                                                                                              \
   do { ::TerminalLibrary::Debug::instance().deregisterOutput((o)); } while (0)
 #else
-#define DBG_PRINT(s) \
-  do { \
+#define DBG_PRINT(s)                                                                                                   \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_PRINTC(c, s) \
-  do { \
+#define DBG_PRINTC(c, s)                                                                                               \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_PRINTLN() \
-  do { \
+#define DBG_PRINTLN()                                                                                                  \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_PRINTLNS(s) \
-  do { \
+#define DBG_PRINTLNS(s)                                                                                                \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_PRINTF(fmt, ...) \
-  do { \
+#define DBG_PRINTF(fmt, ...)                                                                                           \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_PRINTFC(c, fmt, ...) \
-  do { \
+#define DBG_PRINTFC(c, fmt, ...)                                                                                       \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_REGISTER(o) \
-  do { \
+#define DBG_REGISTER(o)                                                                                                \
+  do {                                                                                                                 \
   } while (0)
-#define DBG_DEREGISTER(o) \
-  do { \
+#define DBG_DEREGISTER(o)                                                                                              \
+  do {                                                                                                                 \
   } while (0)
 #endif
 
