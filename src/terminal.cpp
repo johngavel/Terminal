@@ -254,7 +254,11 @@ void Terminal::invalidParameter() {
   if (terminalCommandPtr)
     println("Unrecognized parameter: " + terminalCommandPtr->getParameter(lastCmdIndex) + ": ");
   else
+#ifdef TERMINAL_LOGGING
     println(ERROR, "No Command Processor.");
+#else
+    println("No Command Processor.");
+#endif
   println("Command: " + String(lastCmd()));
 #else
   println("Unrecognized parameter");
