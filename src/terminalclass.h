@@ -57,6 +57,8 @@ public:
   void print(PRINT_TYPES type, String line, String line2);
   void println(PRINT_TYPES type, String line);
   void println(PRINT_TYPES type, String line, String line2);
+  inline void print(String line) { print(INFO, line); };
+  inline void println(String line) { println(INFO, line); };
 #else
   inline void print(String line) { __print(line); };
   inline void println(String line) { __println(line); };

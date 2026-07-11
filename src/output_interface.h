@@ -30,6 +30,8 @@ public:
   virtual void print(PRINT_TYPES type, String line, String line2) = 0;
   virtual void println(PRINT_TYPES type, String line) = 0;
   virtual void println(PRINT_TYPES type, String line, String line2) = 0;
+  virtual void print(String line) = 0;
+  virtual void println(String line) = 0;
 #else
   virtual void print(String line) = 0;
   virtual void println(String line) = 0;
