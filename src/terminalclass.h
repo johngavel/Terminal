@@ -35,6 +35,7 @@ public:
   TerminalCommand* getTerminalCommand() { return terminalCommandPtr; };
   inline operator TerminalCommand*() { return terminalCommandPtr; }
   inline TerminalCommand* operator->() { return terminalCommandPtr; }
+  template <typename... Args> inline int addCmd(const Args&... args) { return terminalCommandPtr->addCmd(args...); }
   void setStream(Stream* __stream) {
     inputStream = __stream;
     outputStream = __stream;

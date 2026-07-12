@@ -226,12 +226,12 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  terminal->addCmd("ifconfig", "", "IP Configuration", wifiIFConfig);
-  terminal->addCmd("reboot", "", "Restarts the Pico", reboot);
-  terminal->addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
-  terminal->addCmd("exit", "", "Close the Terminal", exitTelnet);
-  terminal->addCmd("wifiscan", "", "Scans the Wifi for Networks", wifiScan);
-  terminal->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
+  terminal.addCmd("ifconfig", "", "IP Configuration", wifiIFConfig);
+  terminal.addCmd("reboot", "", "Restarts the Pico", reboot);
+  terminal.addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
+  terminal.addCmd("exit", "", "Close the Terminal", exitTelnet);
+  terminal.addCmd("wifiscan", "", "Scans the Wifi for Networks", wifiScan);
+  terminal.addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
   setupSerialPort();
 }

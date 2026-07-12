@@ -93,9 +93,9 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  terminal->addCmd("reboot", "", "Restarts the Pico", reboot);
-  terminal->addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
-  terminal->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
+  terminal.addCmd("reboot", "", "Restarts the Pico", reboot);
+  terminal.addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
+  terminal.addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
   // Print the banner for Startup - This banner can be overridden with "setBannerFunction"
   // for a custom banner
