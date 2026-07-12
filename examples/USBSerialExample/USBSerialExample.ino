@@ -8,9 +8,9 @@
 Terminal terminal(&Serial);
 
 // Simple Hello World Example Command
-void hello(OutputInterface* terminal) {
-  terminal->println(INFO, "Hello World!");
-  terminal->prompt();
+void hello(OutputInterface& terminal) {
+  terminal.println(INFO, "Hello World!");
+  terminal.prompt();
 }
 
 void setup() {

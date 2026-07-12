@@ -13,41 +13,41 @@ Terminal terminal(&Serial1);
 // void functionName(OutputInterface* terminal)
 
 // Reboot the Adruino from the Terminal
-void reboot(OutputInterface* terminal) {
-  terminal->println(WARNING, "Pico Rebooting.....");
+void reboot(OutputInterface& terminal) {
+  terminal.println(WARNING, "Pico Rebooting.....");
   delay(100);
   rp2040.reboot();
 }
 
 // Reboots the Pico into Upload Code Mode
-void uploadPico(OutputInterface* terminal) {
-  terminal->println(WARNING, "Rebooting in USB Mode....");
+void uploadPico(OutputInterface& terminal) {
+  terminal.println(WARNING, "Rebooting in USB Mode....");
   delay(100);
   rp2040.rebootToBootloader();
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
-void slowCount(OutputInterface* terminal) {
+void slowCount(OutputInterface& terminal) {
   bool passed = false;
-  String value = terminal->readParameter(); // Read the Parameter from the command line
+  String value = terminal.readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
-        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+        terminal.print(INFO, String(i + 1) + " "); // Output to the terminal
         delay(1000);
       }
     } else {
-      terminal->println(ERROR,
+      terminal.println(ERROR,
                         "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
-    terminal->invalidParameter();
-  terminal->println();
-  terminal->println((passed) ? PASSED : FAILED,
+    terminal.invalidParameter();
+  terminal.println();
+  terminal.println((passed) ? PASSED : FAILED,
                     "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt();                       // Prompt the user for the next command
+  terminal.prompt();                       // Prompt the user for the next command
 }
 
 // Custom Banner - Added to the start of the Terminal and Help Command

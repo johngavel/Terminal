@@ -97,51 +97,51 @@ static const char* encToString(uint8_t enc) {
   return "UNKN";
 }
 
-void wifiScan(OutputInterface* terminal) {
-  terminal->println(INFO, "Beginning Scan.........");
+void wifiScan(OutputInterface& terminal) {
+  terminal.println(INFO, "Beginning Scan.........");
   auto cnt = WiFi.scanNetworks();
   if (!cnt) {
-    terminal->println(INFO, "No Networks Found.");
+    terminal.println(INFO, "No Networks Found.");
   } else {
     char line[80];
     sprintf(line, "Found %d networks\n", cnt);
-    terminal->println(INFO, line);
+    terminal.println(INFO, line);
     sprintf(line, "%32s %5s %17s %2s %4s", "SSID", "ENC", "BSSID        ", "CH", "RSSI");
-    terminal->println(INFO, line);
+    terminal.println(INFO, line);
     for (auto i = 0; i < cnt; i++) {
       uint8_t bssid[6];
       WiFi.BSSID(i, bssid);
       sprintf(line, "%32s %5s %17s %2d %4ld", WiFi.SSID(i), encToString(WiFi.encryptionType(i)), macToString(bssid),
               WiFi.channel(i), WiFi.RSSI(i));
-      terminal->println(INFO, line);
+      terminal.println(INFO, line);
     }
   }
-  terminal->println(PASSED, "Scan Complete");
-  terminal->prompt();
+  terminal.println(PASSED, "Scan Complete");
+  terminal.prompt();
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
 void slowCount(OutputInterface* terminal) {
   bool passed = false;
-  String value = terminal->readParameter(); // Read the Parameter from the command line
+  String value = terminal.readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
-        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+        terminal.print(INFO, String(i + 1) + " "); // Output to the terminal
         delay(1000);
       }
     } else {
-      terminal->println(ERROR,
+      terminal.println(ERROR,
                         "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
-    terminal->invalidParameter();
-  terminal->println();
-  terminal->println((passed) ? PASSED : FAILED,
+    terminal.invalidParameter();
+  terminal.println();
+  terminal.println((passed) ? PASSED : FAILED,
                     "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt();                       // Prompt the user for the next command
+  terminal.prompt();                       // Prompt the user for the next command
 }
 /******* End Terminal Commands ***************/
 
