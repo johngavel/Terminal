@@ -27,13 +27,17 @@ void sttyCommand(OutputInterface* terminal);
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
 void diagCommand(OutputInterface* terminal);
 #endif
+#ifdef TERMINAL_BANNER
 void bannerCommand(OutputInterface* terminal);
+#endif
 
 void addStandardTerminalCommands(TerminalCommand* __termCmd) {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
   __termCmd->addCmd("?", "", "Print Help", help);
   __termCmd->addCmd("help", "", "Print Help", help);
+#ifdef TERMINAL_BANNER
   __termCmd->addCmd("banner", "", "Print Banner", bannerCommand);
+#endif
 #endif
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_CLEAR
   __termCmd->addCmd("clear", "", "Clear the terminal screen", clearScreen);
@@ -266,9 +270,12 @@ void diagCommand(OutputInterface* terminal) {
   terminal->prompt();
 }
 
+#ifdef TERMINAL_BANNER
 void bannerCommand(OutputInterface* terminal) {
   terminal->banner();
   terminal->prompt();
 }
+#endif
+
 #endif
 } // namespace TerminalLibrary
