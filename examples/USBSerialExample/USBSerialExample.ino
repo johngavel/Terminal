@@ -17,7 +17,7 @@ void setup() {
   Serial.begin();   // Setup your serial line
   terminal.setup(); // Setup the Terminal
   addStandardTerminalCommands(terminal);
-  TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
+  terminal->addCmd("hello", "", "Prints Hello World!", hello);
   terminal.banner();
   terminal.prompt();
 }

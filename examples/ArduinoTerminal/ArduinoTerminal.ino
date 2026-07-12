@@ -83,8 +83,8 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  TERM_CMD->addCmd("reboot", "", "Restarts the Arduino Uno", reboot);
-  TERM_CMD->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
+  terminal->addCmd("reboot", "", "Restarts the Arduino Uno", reboot);
+  terminal->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
 #ifdef TERMINAL_BANNER
   // Print the banner for Startup - This banner can be overridden with "setBannerFunction"

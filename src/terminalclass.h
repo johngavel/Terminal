@@ -34,6 +34,7 @@ public:
   void setTerminalCommand(TerminalCommand* __terminalCommandPtr) { terminalCommandPtr = __terminalCommandPtr; };
   TerminalCommand* getTerminalCommand() { return terminalCommandPtr; };
   inline operator TerminalCommand*() { return terminalCommandPtr; }
+  inline TerminalCommand* operator->() { return terminalCommandPtr; }
   void setStream(Stream* __stream) {
     inputStream = __stream;
     outputStream = __stream;

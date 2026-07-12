@@ -22,7 +22,7 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
+  terminal->addCmd("hello", "", "Prints Hello World!", hello);
   terminal.prompt();
 }
 
