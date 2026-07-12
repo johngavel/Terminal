@@ -33,6 +33,7 @@ public:
   void configure(OutputInterface* terminal);
   void setTerminalCommand(TerminalCommand* __terminalCommandPtr) { terminalCommandPtr = __terminalCommandPtr; };
   TerminalCommand* getTerminalCommand() { return terminalCommandPtr; };
+  inline operator TerminalCommand*() { return terminalCommandPtr; }
   void setStream(Stream* __stream) {
     inputStream = __stream;
     outputStream = __stream;
