@@ -24,8 +24,8 @@ void Terminal::tab() {
     int cmdCount = 0;
     int cmdIndex = -1;
     String buffer = cmdBuffer.getCommand();
-    for (int i = 0; i < TERM_CMD->getCmdCount(); i++) {
-      String readCommand = TERM_CMD->getCmd(i);
+    for (int i = 0; i < terminalCommandPtr->getCmdCount(); i++) {
+      String readCommand = terminalCommandPtr->getCmd(i);
       readCommand = readCommand.substring(0, cmdBuffer.getCommandLength());
       if (readCommand.compareTo(buffer) == 0) {
         cmdCount++;
@@ -34,22 +34,22 @@ void Terminal::tab() {
     }
     // If single command then replace command with found one.
     if (cmdCount == 1) {
-      String readCommand = TERM_CMD->getCmd(cmdIndex);
+      String readCommand = terminalCommandPtr->getCmd(cmdIndex);
       readCommand = readCommand.substring(cmdBuffer.getCommandLength());
       __print(readCommand);
       cmdBuffer.clearBuffer();
-      cmdBuffer.setCommand((char*) TERM_CMD->getCmd(cmdIndex).c_str());
+      cmdBuffer.setCommand((char*) terminalCommandPtr->getCmd(cmdIndex).c_str());
       __print(" ");
       cmdBuffer.addCharacter(' ');
     } else { // If multiple commands, print commands and replace prompt.
       cmdCount = 0;
-      for (int i = 0; i < TERM_CMD->getCmdCount(); i++) {
-        String readCommand = TERM_CMD->getCmd(i);
+      for (int i = 0; i < terminalCommandPtr->getCmdCount(); i++) {
+        String readCommand = terminalCommandPtr->getCmd(i);
         readCommand = readCommand.substring(0, cmdBuffer.getCommandLength());
         if (readCommand.compareTo(buffer) == 0) {
           if (cmdCount % 3 == 0) println();
-          __print(TERM_CMD->getCmd(i));
-          String line = blankLine.substring(0, 16 - TERM_CMD->getCmd(i).length());
+          __print(terminalCommandPtr->getCmd(i));
+          String line = blankLine.substring(0, 16 - terminalCommandPtr->getCmd(i).length());
           __print(line);
           cmdCount++;
         }
