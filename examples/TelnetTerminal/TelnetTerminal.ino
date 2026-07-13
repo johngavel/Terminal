@@ -36,47 +36,47 @@ Terminal terminal(&Serial);
 // Functions must be in the form of:
 // void functionName(OutputInterface* terminal)
 
-void wifiIFConfig(OutputInterface* terminal) {
+void wifiIFConfig(OutputInterface& terminal) {
   IPAddress ipAddress = WiFi.localIP();
   bool linked = WiFi.isConnected();
-  terminal->println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
-  terminal->println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
+  terminal.println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.subnetMask();
-  terminal->println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.gatewayIP();
-  terminal->println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.dnsIP();
-  terminal->println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
-  terminal->prompt();
+  terminal.prompt();
 }
 
-// Reboot the Adruino from the Terminal
-void reboot(OutputInterface* terminal) {
-  terminal->println(WARNING, "Pico Rebooting.....");
+// Reboot the Arduino from the Terminal
+void reboot(OutputInterface& terminal) {
+  terminal.println(WARNING, "Pico Rebooting.....");
   delay(100);
   rp2040.reboot();
 }
 
 // Reboots the Pico into Upload Code Mode
-void uploadPico(OutputInterface* terminal) {
-  terminal->println(WARNING, "Rebooting in USB Mode....");
+void uploadPico(OutputInterface& terminal) {
+  terminal.println(WARNING, "Rebooting in USB Mode....");
   delay(100);
   rp2040.rebootToBootloader();
 }
 
 // Exits the Telnet Session
-void exitTelnet(OutputInterface* terminal) {
+void exitTelnet(OutputInterface& terminal) {
   if (terminal == &telnet) {
-    terminal->println(WARNING, "Closing Telnet Session....");
+    terminal.println(WARNING, "Closing Telnet Session....");
     delay(100);
     client.stop();
   } else {
-    terminal->println(ERROR, "Not Supported on this terminal.");
-    terminal->prompt();
+    terminal.println(ERROR, "Not Supported on this terminal.");
+    terminal.prompt();
   }
 }
 
@@ -146,27 +146,27 @@ void slowCount(OutputInterface* terminal) {
 /******* End Terminal Commands ***************/
 
 // Custom Banner - Added to the start of the Terminal and Help Command
-void banner(OutputInterface* terminal) {
-  terminal->println();
-  terminal->println(PROMPT, "PicoW Telnet Example Program");
-  terminal->println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
-  terminal->println();
-  terminal->print(INFO, "Core is running at ");
-  terminal->print(INFO, String(rp2040.f_cpu() / 1000000));
-  terminal->println(INFO, " Mhz");
+void banner(OutputInterface& terminal) {
+  terminal.println();
+  terminal.println(PROMPT, "PicoW Telnet Example Program");
+  terminal.println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
+  terminal.println();
+  terminal.print(INFO, "Core is running at ");
+  terminal.print(INFO, String(rp2040.f_cpu() / 1000000));
+  terminal.println(INFO, " Mhz");
   int used = rp2040.getUsedHeap();
   int total = rp2040.getTotalHeap();
   int percentage = (used * 100) / total;
-  terminal->print(INFO, "RAM Memory Usage: ");
-  terminal->print(INFO, String(used));
-  terminal->print(INFO, "/");
-  terminal->print(INFO, String(total));
-  terminal->print(INFO, " --> ");
-  terminal->print(INFO, String(percentage));
-  terminal->println(INFO, "%");
-  terminal->print(INFO, "CPU Temperature: ");
-  terminal->print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
-  terminal->println(INFO, "°F.");
+  terminal.print(INFO, "RAM Memory Usage: ");
+  terminal.print(INFO, String(used));
+  terminal.print(INFO, "/");
+  terminal.print(INFO, String(total));
+  terminal.print(INFO, " --> ");
+  terminal.print(INFO, String(percentage));
+  terminal.println(INFO, "%");
+  terminal.print(INFO, "CPU Temperature: ");
+  terminal.print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
+  terminal.println(INFO, "°F.");
 }
 
 void setupSerialPort() {

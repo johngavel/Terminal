@@ -51,27 +51,27 @@ void slowCount(OutputInterface& terminal) {
 }
 
 // Custom Banner - Added to the start of the Terminal and Help Command
-void banner(OutputInterface* terminal) {
-  terminal->println();
-  terminal->println(PROMPT, "Pico Example Program");
-  terminal->println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
-  terminal->println();
-  terminal->print(INFO, "Core is running at ");
-  terminal->print(INFO, String(rp2040.f_cpu() / 1000000));
-  terminal->println(INFO, " Mhz");
+void banner(OutputInterface& terminal) {
+  terminal.println();
+  terminal.println(PROMPT, "Pico Example Program");
+  terminal.println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
+  terminal.println();
+  terminal.print(INFO, "Core is running at ");
+  terminal.print(INFO, String(rp2040.f_cpu() / 1000000));
+  terminal.println(INFO, " Mhz");
   int used = rp2040.getUsedHeap();
   int total = rp2040.getTotalHeap();
   int percentage = (used * 100) / total;
-  terminal->print(INFO, "RAM Memory Usage: ");
-  terminal->print(INFO, String(used));
-  terminal->print(INFO, "/");
-  terminal->print(INFO, String(total));
-  terminal->print(INFO, " --> ");
-  terminal->print(INFO, String(percentage));
-  terminal->println(INFO, "%");
-  terminal->print(INFO, "CPU Temperature: ");
-  terminal->print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
-  terminal->println(INFO, "°F.");
+  terminal.print(INFO, "RAM Memory Usage: ");
+  terminal.print(INFO, String(used));
+  terminal.print(INFO, "/");
+  terminal.print(INFO, String(total));
+  terminal.print(INFO, " --> ");
+  terminal.print(INFO, String(percentage));
+  terminal.println(INFO, "%");
+  terminal.print(INFO, "CPU Temperature: ");
+  terminal.print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
+  terminal.println(INFO, "°F.");
 }
 
 void setup() {
