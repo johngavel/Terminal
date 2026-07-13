@@ -36,47 +36,47 @@ Terminal terminal(&Serial);
 // Functions must be in the form of:
 // void functionName(OutputInterface* terminal)
 
-void wifiIFConfig(OutputInterface* terminal) {
+void wifiIFConfig(OutputInterface& terminal) {
   IPAddress ipAddress = WiFi.localIP();
   bool linked = WiFi.isConnected();
-  terminal->println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
-  terminal->println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
+  terminal.println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.subnetMask();
-  terminal->println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.gatewayIP();
-  terminal->println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.dnsIP();
-  terminal->println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
+  terminal.println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
                               String(ipAddress[2]) + String(".") + String(ipAddress[3]));
-  terminal->prompt();
+  terminal.prompt();
 }
 
-// Reboot the Adruino from the Terminal
-void reboot(OutputInterface* terminal) {
-  terminal->println(WARNING, "Pico Rebooting.....");
+// Reboot the Arduino from the Terminal
+void reboot(OutputInterface& terminal) {
+  terminal.println(WARNING, "Pico Rebooting.....");
   delay(100);
   rp2040.reboot();
 }
 
 // Reboots the Pico into Upload Code Mode
-void uploadPico(OutputInterface* terminal) {
-  terminal->println(WARNING, "Rebooting in USB Mode....");
+void uploadPico(OutputInterface& terminal) {
+  terminal.println(WARNING, "Rebooting in USB Mode....");
   delay(100);
   rp2040.rebootToBootloader();
 }
 
 // Exits the Telnet Session
-void exitTelnet(OutputInterface* terminal) {
+void exitTelnet(OutputInterface& terminal) {
   if (terminal == &telnet) {
-    terminal->println(WARNING, "Closing Telnet Session....");
+    terminal.println(WARNING, "Closing Telnet Session....");
     delay(100);
     client.stop();
   } else {
-    terminal->println(ERROR, "Not Supported on this terminal.");
-    terminal->prompt();
+    terminal.println(ERROR, "Not Supported on this terminal.");
+    terminal.prompt();
   }
 }
 
@@ -97,76 +97,76 @@ static const char* encToString(uint8_t enc) {
   return "UNKN";
 }
 
-void wifiScan(OutputInterface* terminal) {
-  terminal->println(INFO, "Beginning Scan.........");
+void wifiScan(OutputInterface& terminal) {
+  terminal.println(INFO, "Beginning Scan.........");
   auto cnt = WiFi.scanNetworks();
   if (!cnt) {
-    terminal->println(INFO, "No Networks Found.");
+    terminal.println(INFO, "No Networks Found.");
   } else {
     char line[80];
     sprintf(line, "Found %d networks\n", cnt);
-    terminal->println(INFO, line);
+    terminal.println(INFO, line);
     sprintf(line, "%32s %5s %17s %2s %4s", "SSID", "ENC", "BSSID        ", "CH", "RSSI");
-    terminal->println(INFO, line);
+    terminal.println(INFO, line);
     for (auto i = 0; i < cnt; i++) {
       uint8_t bssid[6];
       WiFi.BSSID(i, bssid);
       sprintf(line, "%32s %5s %17s %2d %4ld", WiFi.SSID(i), encToString(WiFi.encryptionType(i)), macToString(bssid),
               WiFi.channel(i), WiFi.RSSI(i));
-      terminal->println(INFO, line);
+      terminal.println(INFO, line);
     }
   }
-  terminal->println(PASSED, "Scan Complete");
-  terminal->prompt();
+  terminal.println(PASSED, "Scan Complete");
+  terminal.prompt();
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
 void slowCount(OutputInterface* terminal) {
   bool passed = false;
-  String value = terminal->readParameter(); // Read the Parameter from the command line
+  String value = terminal.readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
-        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+        terminal.print(INFO, String(i + 1) + " "); // Output to the terminal
         delay(1000);
       }
     } else {
-      terminal->println(ERROR,
+      terminal.println(ERROR,
                         "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
-    terminal->invalidParameter();
-  terminal->println();
-  terminal->println((passed) ? PASSED : FAILED,
+    terminal.invalidParameter();
+  terminal.println();
+  terminal.println((passed) ? PASSED : FAILED,
                     "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt();                       // Prompt the user for the next command
+  terminal.prompt();                       // Prompt the user for the next command
 }
 /******* End Terminal Commands ***************/
 
 // Custom Banner - Added to the start of the Terminal and Help Command
-void banner(OutputInterface* terminal) {
-  terminal->println();
-  terminal->println(PROMPT, "PicoW Telnet Example Program");
-  terminal->println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
-  terminal->println();
-  terminal->print(INFO, "Core is running at ");
-  terminal->print(INFO, String(rp2040.f_cpu() / 1000000));
-  terminal->println(INFO, " Mhz");
+void banner(OutputInterface& terminal) {
+  terminal.println();
+  terminal.println(PROMPT, "PicoW Telnet Example Program");
+  terminal.println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
+  terminal.println();
+  terminal.print(INFO, "Core is running at ");
+  terminal.print(INFO, String(rp2040.f_cpu() / 1000000));
+  terminal.println(INFO, " Mhz");
   int used = rp2040.getUsedHeap();
   int total = rp2040.getTotalHeap();
   int percentage = (used * 100) / total;
-  terminal->print(INFO, "RAM Memory Usage: ");
-  terminal->print(INFO, String(used));
-  terminal->print(INFO, "/");
-  terminal->print(INFO, String(total));
-  terminal->print(INFO, " --> ");
-  terminal->print(INFO, String(percentage));
-  terminal->println(INFO, "%");
-  terminal->print(INFO, "CPU Temperature: ");
-  terminal->print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
-  terminal->println(INFO, "°F.");
+  terminal.print(INFO, "RAM Memory Usage: ");
+  terminal.print(INFO, String(used));
+  terminal.print(INFO, "/");
+  terminal.print(INFO, String(total));
+  terminal.print(INFO, " --> ");
+  terminal.print(INFO, String(percentage));
+  terminal.println(INFO, "%");
+  terminal.print(INFO, "CPU Temperature: ");
+  terminal.print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
+  terminal.println(INFO, "°F.");
 }
 
 void setupSerialPort() {
@@ -216,7 +216,7 @@ void setup() {
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
   // "help" and "?" - Help, listing of all the commands added to the Terminal
-  addStandardTerminalCommands(TERM_CMD);
+  addStandardTerminalCommands(terminal);
 
   // Add Program Specific Commands
   // reboot and slowCount defined above.
@@ -226,12 +226,12 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  TERM_CMD->addCmd("ifconfig", "", "IP Configuration", wifiIFConfig);
-  TERM_CMD->addCmd("reboot", "", "Restarts the Pico", reboot);
-  TERM_CMD->addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
-  TERM_CMD->addCmd("exit", "", "Close the Terminal", exitTelnet);
-  TERM_CMD->addCmd("wifiscan", "", "Scans the Wifi for Networks", wifiScan);
-  TERM_CMD->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
+  terminal.addCmd("ifconfig", "", "IP Configuration", wifiIFConfig);
+  terminal.addCmd("reboot", "", "Restarts the Pico", reboot);
+  terminal.addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
+  terminal.addCmd("exit", "", "Close the Terminal", exitTelnet);
+  terminal.addCmd("wifiscan", "", "Scans the Wifi for Networks", wifiScan);
+  terminal.addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
   setupSerialPort();
 }

@@ -33,6 +33,9 @@ public:
   void configure(OutputInterface* terminal);
   void setTerminalCommand(TerminalCommand* __terminalCommandPtr) { terminalCommandPtr = __terminalCommandPtr; };
   TerminalCommand* getTerminalCommand() { return terminalCommandPtr; };
+  inline operator TerminalCommand*() { return terminalCommandPtr; }
+  inline TerminalCommand* operator->() { return terminalCommandPtr; }
+  template <typename... Args> inline int addCmd(const Args&... args) { return terminalCommandPtr->addCmd(args...); }
   void setStream(Stream* __stream) {
     inputStream = __stream;
     outputStream = __stream;
@@ -85,6 +88,7 @@ public:
   void banner();
   void (*getBannerFunction())(OutputInterface*) { return bannerFunction; };
   void setBannerFunction(void (*function)(OutputInterface*)) { bannerFunction = function; };
+  void setBannerFunction(void (*function)(OutputInterface&)) { bannerFunction = reinterpret_cast<void(*)(OutputInterface*)>(function); };
 #endif
   void clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY

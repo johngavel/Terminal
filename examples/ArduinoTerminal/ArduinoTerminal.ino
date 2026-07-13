@@ -18,53 +18,53 @@ Terminal terminal(&Serial);
 // Functions must be in the form of:
 // void functionName(OutputInterface* terminal)
 
-// Reboot the Adruino from the Terminal
+// Reboot the Arduino from the Terminal
 void (*resetFunc)(void) = 0; // declare reset function at address 0
-void reboot(OutputInterface* terminal) {
+void reboot(OutputInterface& terminal) {
 #ifdef TERMINAL_LOGGING
-  terminal->println(WARNING, "Arduino Uno Rebooting.....");
+  terminal.println(WARNING, "Arduino Uno Rebooting.....");
 #else
-  terminal->println("Arduino Uno Rebooting.....");
+  terminal.println("Arduino Uno Rebooting.....");
 #endif
   delay(100);
   resetFunc();
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
-void slowCount(OutputInterface* terminal) {
+void slowCount(OutputInterface& terminal) {
   bool passed = false;
-  String value = terminal->readParameter(); // Read the Parameter from the command line
+  String value = terminal.readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
 #ifdef TERMINAL_LOGGING
-        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+        terminal.print(INFO, String(i + 1) + " "); // Output to the terminal
 #else
-        terminal->print(String(i + 1) + " "); // Output to the terminal
+        terminal.print(String(i + 1) + " "); // Output to the terminal
 #endif
         delay(1000);
       }
     } else {
 #ifdef TERMINAL_LOGGING
-      terminal->println(ERROR,
+      terminal.println(ERROR,
                         "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
 #else
-      terminal->println("Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+      terminal.println("Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
 #endif
     }
   } else
-    terminal->invalidParameter();
-  terminal->println();
+    terminal.invalidParameter();
+  terminal.println();
 #ifdef TERMINAL_LOGGING
-  terminal->println((passed) ? PASSED : FAILED,
+  terminal.println((passed) ? PASSED : FAILED,
                     "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
 #else
-  terminal->println(String((passed) ? "PASSED" : "FAILED") +
+  terminal.println(String((passed) ? "PASSED" : "FAILED") +
                     " - Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
 #endif
-  terminal->prompt(); // Prompt the user for the next command
+  terminal.prompt(); // Prompt the user for the next command
 }
 
 void setup() {
@@ -73,7 +73,7 @@ void setup() {
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
   // "help" and "?" - Help, listing of all the commands added to the Terminal
-  addStandardTerminalCommands(TERM_CMD);
+  addStandardTerminalCommands(terminal);
 
   // Add Program Specific Commands
   // reboot and slowCount defined above.
@@ -83,8 +83,8 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  TERM_CMD->addCmd("reboot", "", "Restarts the Arduino Uno", reboot);
-  TERM_CMD->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
+  terminal.addCmd("reboot", "", "Restarts the Arduino Uno", reboot);
+  terminal.addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
 #ifdef TERMINAL_BANNER
   // Print the banner for Startup - This banner can be overridden with "setBannerFunction"

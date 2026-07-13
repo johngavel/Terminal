@@ -13,65 +13,65 @@ Terminal terminal(&Serial1);
 // void functionName(OutputInterface* terminal)
 
 // Reboot the Adruino from the Terminal
-void reboot(OutputInterface* terminal) {
-  terminal->println(WARNING, "Pico Rebooting.....");
+void reboot(OutputInterface& terminal) {
+  terminal.println(WARNING, "Pico Rebooting.....");
   delay(100);
   rp2040.reboot();
 }
 
 // Reboots the Pico into Upload Code Mode
-void uploadPico(OutputInterface* terminal) {
-  terminal->println(WARNING, "Rebooting in USB Mode....");
+void uploadPico(OutputInterface& terminal) {
+  terminal.println(WARNING, "Rebooting in USB Mode....");
   delay(100);
   rp2040.rebootToBootloader();
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
-void slowCount(OutputInterface* terminal) {
+void slowCount(OutputInterface& terminal) {
   bool passed = false;
-  String value = terminal->readParameter(); // Read the Parameter from the command line
+  String value = terminal.readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
     int count = value.toInt();
     if ((count > 0) && (count <= 60)) {
       passed = true;
       for (int i = 0; i < count; i++) {
-        terminal->print(INFO, String(i + 1) + " "); // Output to the terminal
+        terminal.print(INFO, String(i + 1) + " "); // Output to the terminal
         delay(1000);
       }
     } else {
-      terminal->println(ERROR,
+      terminal.println(ERROR,
                         "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
-    terminal->invalidParameter();
-  terminal->println();
-  terminal->println((passed) ? PASSED : FAILED,
+    terminal.invalidParameter();
+  terminal.println();
+  terminal.println((passed) ? PASSED : FAILED,
                     "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
-  terminal->prompt();                       // Prompt the user for the next command
+  terminal.prompt();                       // Prompt the user for the next command
 }
 
 // Custom Banner - Added to the start of the Terminal and Help Command
-void banner(OutputInterface* terminal) {
-  terminal->println();
-  terminal->println(PROMPT, "Pico Example Program");
-  terminal->println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
-  terminal->println();
-  terminal->print(INFO, "Core is running at ");
-  terminal->print(INFO, String(rp2040.f_cpu() / 1000000));
-  terminal->println(INFO, " Mhz");
+void banner(OutputInterface& terminal) {
+  terminal.println();
+  terminal.println(PROMPT, "Pico Example Program");
+  terminal.println(INFO, "Build Date: " + String(__DATE__) + " Time: " + String(__TIME__));
+  terminal.println();
+  terminal.print(INFO, "Core is running at ");
+  terminal.print(INFO, String(rp2040.f_cpu() / 1000000));
+  terminal.println(INFO, " Mhz");
   int used = rp2040.getUsedHeap();
   int total = rp2040.getTotalHeap();
   int percentage = (used * 100) / total;
-  terminal->print(INFO, "RAM Memory Usage: ");
-  terminal->print(INFO, String(used));
-  terminal->print(INFO, "/");
-  terminal->print(INFO, String(total));
-  terminal->print(INFO, " --> ");
-  terminal->print(INFO, String(percentage));
-  terminal->println(INFO, "%");
-  terminal->print(INFO, "CPU Temperature: ");
-  terminal->print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
-  terminal->println(INFO, "°F.");
+  terminal.print(INFO, "RAM Memory Usage: ");
+  terminal.print(INFO, String(used));
+  terminal.print(INFO, "/");
+  terminal.print(INFO, String(total));
+  terminal.print(INFO, " --> ");
+  terminal.print(INFO, String(percentage));
+  terminal.println(INFO, "%");
+  terminal.print(INFO, "CPU Temperature: ");
+  terminal.print(INFO, String((9.0 / 5.0 * analogReadTemp()) + 32.0, 0));
+  terminal.println(INFO, "°F.");
 }
 
 void setup() {
@@ -83,7 +83,7 @@ void setup() {
   // Adds to standard commands to the terminal:
   // "history" - Listing of the last 10 commands given to the terminal.
   // "help" and "?" - Help, listing of all the commands added to the Terminal
-  addStandardTerminalCommands(TERM_CMD);
+  addStandardTerminalCommands(terminal);
 
   // Add Program Specific Commands
   // reboot and slowCount defined above.
@@ -93,9 +93,9 @@ void setup() {
   // 2nd = String that is a listing of all parameters in this command, only listed in help
   // 3rd = String that is a description of the command, only listed in help
   // 4th = function to be called when command is received on the Stream.
-  TERM_CMD->addCmd("reboot", "", "Restarts the Pico", reboot);
-  TERM_CMD->addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
-  TERM_CMD->addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
+  terminal.addCmd("reboot", "", "Restarts the Pico", reboot);
+  terminal.addCmd("upload", "", "Restarts the Pico in Upload Mode", uploadPico);
+  terminal.addCmd("slow", "[n]", "1 - 60 Seconds to Count.", slowCount);
 
   // Print the banner for Startup - This banner can be overridden with "setBannerFunction"
   // for a custom banner
