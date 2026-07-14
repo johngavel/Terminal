@@ -117,7 +117,11 @@ public:
     auto snap = snapshotSinks_();
     for (size_t i = 0; i < snap.count; ++i) {
       auto* w = snap.arr[i];
+#ifdef TERMINAL_LOGGING
       if (w) w->print(TRACE, line);
+#else
+      if (w) w->print(line);
+#endif
     }
   }
 

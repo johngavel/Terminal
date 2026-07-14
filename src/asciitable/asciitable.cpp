@@ -63,6 +63,10 @@ void AsciiTable::printData(String line0, String line1, String line2, String line
 
 void AsciiTable::printDone(String done) {
   terminal->println();
+#ifdef TERMINAL_LOGGING
   terminal->println(PASSED, done);
+#else
+  terminal->println(done);
+#endif
 }
 } // namespace ASCIITable
