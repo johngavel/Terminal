@@ -9,7 +9,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/johngavel/Terminal.svg?maxAge=3600)](https://github.com/johngavel/Terminal/releases)
 
-# Terminal v. 1.0.12
+# Terminal v. 1.0.13
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the ability to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
@@ -24,6 +24,14 @@ If you have any ideas, suggestions, or problems; please let me know in the Discu
 
 Written by John J. Gavel
 ## Release
+* 1.0.13 - Updated Version Numbers
+  * Added Terminal Debug - This allows the user to setup multiple terminals for debugging output, along with helper functions.
+  * latchdevel - pull requests
+    * Merge pull request #19 from latchdevel/fix/disabled-logging-build
+    * Merge pull request #18 from latchdevel/fix/disabled-banner-build
+    * Fix build errors when banner features are disabled
+    * Support type-less print when logging is enabled
+    * Fix build errors when logging features are disabled
 * 1.0.12 - Updated Version Numbers
   * Replaced Terminal Commands from a Singleton to a global. Allowing the user to create different Terminal Commands for each different Terminal or use the same one.
   * BREAKING - Changed the format of the Terminal Command Function. Instead of being passed the called terminal, they are now passed an "OutputInterface*". This change allowed the separation of the Terminal and the Terminal Commands. OutputInterface contains all of the methods that Terminal had so no other code change is necessary. (Maybe?!?).
