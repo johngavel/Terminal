@@ -43,7 +43,9 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
 }
 
 int TerminalCommand::addCmd(String command, String parameterDesc, String description, void (*function)(OutputInterface&)) {
-  return addCmd(command, parameterDesc, description, reinterpret_cast<void(*)(OutputInterface*)>(function));
+  void* anonPtr = (void*)function;
+  void (*cmdFunctionPtr)(OutputInterface*) = (void (*)(OutputInterface*))anonPtr;
+  return addCmd(command, parameterDesc, description, cmdFunctionPtr);
 }
 
 #ifndef ARDUINO_ARCH_AVR
