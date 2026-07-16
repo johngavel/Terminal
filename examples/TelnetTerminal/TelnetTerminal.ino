@@ -70,7 +70,7 @@ void uploadPico(OutputInterface& terminal) {
 
 // Exits the Telnet Session
 void exitTelnet(OutputInterface& terminal) {
-  if (terminal == &telnet) {
+  if (&terminal == &telnet) {
     terminal.println(WARNING, "Closing Telnet Session....");
     delay(100);
     client.stop();
@@ -121,7 +121,7 @@ void wifiScan(OutputInterface& terminal) {
 }
 
 // Slow Count - Example Command added to the Terminal, Slowing count up from the parameter given in the command
-void slowCount(OutputInterface* terminal) {
+void slowCount(OutputInterface& terminal) {
   bool passed = false;
   String value = terminal.readParameter(); // Read the Parameter from the command line
   if (value != NULL) {
