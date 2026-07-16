@@ -88,7 +88,7 @@ public:
   void banner();
   void (*getBannerFunction())(OutputInterface*) { return bannerFunction; };
   void setBannerFunction(void (*function)(OutputInterface*)) { bannerFunction = function; };
-  void setBannerFunction(void (*function)(OutputInterface&)) { bannerFunction = reinterpret_cast<void(*)(OutputInterface*)>(function); };
+  void setBannerFunction(void (*function)(OutputInterface&)) { void* anonPtr = (void*)function; bannerFunction = (void (*)(OutputInterface*))anonPtr; };
 #endif
   void clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY

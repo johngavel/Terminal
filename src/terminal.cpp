@@ -21,7 +21,8 @@ void Terminal::banner() {
     println("Arduino Program");
 #endif
   } else {
-    auto bannerFunctionRef = reinterpret_cast<void(*)(OutputInterface&)>(bannerFunction);
+    void* anonPtr = (void*)bannerFunction;
+    void (*bannerFunctionRef)(OutputInterface&) = (void(*)(OutputInterface&))anonPtr;
     bannerFunctionRef(*this);
   }
 }
