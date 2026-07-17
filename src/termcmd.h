@@ -33,8 +33,10 @@ class TerminalCommand {
 public:
   TerminalCommand();
   int addCmd(String command, String parameterDesc, String description, void function(OutputInterface*));
+  int addCmd(String command, String parameterDesc, String description, void (*function)(OutputInterface&));
 #ifndef ARDUINO_ARCH_AVR
   int addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface*)> handler);
+  int addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface&)> handler);
 #endif
   int getCmdCount() { return countCmd; };
   int findCmd(String command);

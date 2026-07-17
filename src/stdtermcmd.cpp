@@ -4,7 +4,7 @@
 */
 
 #include "stdtermcmd.h"
-
+#include "terminalclass.h"
 #include "output_interface.h"
 #include "termcmd.h"
 
@@ -70,13 +70,16 @@ void help(OutputInterface* terminal) {
   terminal->banner();
 #endif
 
-  const int count = TERM_CMD->getCmdCount();
+  // Downcast to fetch the TerminalCommand pointer from the calling Terminal object
+  TerminalCommand* term_cmd = static_cast<Terminal*>(terminal)->getTerminalCommand();
+
+  const int count = term_cmd->getCmdCount();
   size_t maxWidth = 0;
 
   // First pass: compute display width (clamped)
   for (int i = 0; i < count; ++i) {
-    const String cmd = TERM_CMD->getCmd(i);
-    const String param = TERM_CMD->getParameter(i);
+    const String cmd = term_cmd->getCmd(i);
+    const String param = term_cmd->getParameter(i);
     const bool hasParam = param.length() > 0;
 
     size_t width = cmd.length() + (hasParam ? (1 + param.length()) : 0);
@@ -86,9 +89,9 @@ void help(OutputInterface* terminal) {
 
   // Second pass: build and print
   for (int i = 0; i < count; ++i) {
-    const String cmd = TERM_CMD->getCmd(i);
-    const String param = TERM_CMD->getParameter(i);
-    const String desc = TERM_CMD->getDescription(i);
+    const String cmd = term_cmd->getCmd(i);
+    const String param = term_cmd->getParameter(i);
+    const String desc = term_cmd->getDescription(i);
 
     char lhs[kMaxLhsLen + 1];
     size_t pos = 0;
@@ -204,6 +207,10 @@ void sttyCommand(OutputInterface* terminal) {
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
 void diagCommand(OutputInterface* terminal) {
+
+  // Downcast to fetch the TerminalCommand pointer from the calling Terminal object
+  TerminalCommand* term_cmd = static_cast<Terminal*>(terminal)->getTerminalCommand();
+
   terminal->println();
 #ifdef TERMINAL_LOGGING
   terminal->println(PROMPT, "Terminal Diagnostics");
@@ -227,10 +234,10 @@ void diagCommand(OutputInterface* terminal) {
   terminal->println(HELP, "diag.");
 
   terminal->println(HELP, "Maximum Input String: ", String((int) MAX_INPUT_LINE));
-  terminal->println(HELP, "Current Number of Commands: ", String(TERM_CMD->getCmdCount()));
+  terminal->println(HELP, "Current Number of Commands: ", String(term_cmd->getCmdCount()));
   terminal->println(HELP, "Maximum Commands Allowed: ", String((int) MAX_TERM_CMD));
   terminal->println(HELP, "RAM Usage Terminal: ", String(sizeof(*terminal)) + " bytes");
-  terminal->println(HELP, "RAM Usage Commands: ", String(sizeof(*TERM_CMD)) + " bytes");
+  terminal->println(HELP, "RAM Usage Commands: ", String(sizeof(*term_cmd)) + " bytes");
   terminal->println();
   terminal->println(PASSED, "Terminal Diagnostics");
 #else
@@ -257,13 +264,13 @@ void diagCommand(OutputInterface* terminal) {
   terminal->print("Maximum Input String: ");
   terminal->println(String((int) MAX_INPUT_LINE));
   terminal->print("Current Number of Commands: ");
-  terminal->println(String(TERM_CMD->getCmdCount()));
+  terminal->println(String(term_cmd->getCmdCount()));
   terminal->print("Maximum Commands Allowed: ");
   terminal->println(String((int) MAX_TERM_CMD));
   terminal->print("RAM Usage Terminal: ");
   terminal->println(String(sizeof(*terminal)) + " bytes");
   terminal->print("RAM Usage Commands: ");
-  terminal->println(String(sizeof(*TERM_CMD)) + " bytes");
+  terminal->println(String(sizeof(*term_cmd)) + " bytes");
   terminal->println();
   terminal->println("Terminal Diagnostics");
 #endif

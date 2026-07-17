@@ -8,16 +8,16 @@
 Terminal terminal(&Serial);
 
 // Simple Hello World Example Command
-void hello(OutputInterface* terminal) {
-  terminal->println(INFO, "Hello World!");
-  terminal->prompt();
+void hello(OutputInterface& terminal) {
+  terminal.println(INFO, "Hello World!");
+  terminal.prompt();
 }
 
 void setup() {
   Serial.begin();   // Setup your serial line
   terminal.setup(); // Setup the Terminal
-  addStandardTerminalCommands(TERM_CMD);
-  TERM_CMD->addCmd("hello", "", "Prints Hello World!", hello);
+  addStandardTerminalCommands(terminal);
+  terminal.addCmd("hello", "", "Prints Hello World!", hello);
   terminal.banner();
   terminal.prompt();
 }
