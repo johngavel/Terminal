@@ -20,15 +20,24 @@ typedef enum { NO_PROCESSING, HELP_FUNCTION_CALLED, EMPTY_STRING, ERROR_NO_CMD_F
 
 class Terminal : public OutputInterface {
 public:
-  Terminal(Stream* __stream) : inputStream(__stream), outputStream(__stream) { initialize(); };
-  Terminal(Stream* __inputStream, Stream* __outputStream) : inputStream(__inputStream), outputStream(__outputStream) {
-    initialize();
-  };
+  Terminal(Stream* __stream, TerminalCommand* __termCmd = TERM_CMD)
+    : inputStream(__stream),
+      outputStream(__stream),
+      terminalCommandPtr(__termCmd)
+    {
+      initialize();
+    };
+  Terminal(Stream* __inputStream, Stream* __outputStream, TerminalCommand* __termCmd = TERM_CMD)
+    : inputStream(__inputStream),
+      outputStream(__outputStream),
+      terminalCommandPtr(__termCmd)
+    {
+      initialize();
+    };
   void initialize() {
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memset(tokenizer, 0, MAX_INPUT_LINE);
     setTokenizer(" ");
-    terminalCommandPtr = TERM_CMD;
   };
   void configure(OutputInterface* terminal);
   void setTerminalCommand(TerminalCommand* __terminalCommandPtr) { terminalCommandPtr = __terminalCommandPtr; };
