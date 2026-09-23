@@ -42,6 +42,12 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
   return returnInt;
 }
 
+int TerminalCommand::addCmd(String command, String parameterDesc, String description, void (*function)(OutputInterface&)) {
+  void* anonPtr = (void*)function;
+  void (*cmdFunctionPtr)(OutputInterface*) = (void (*)(OutputInterface*))anonPtr;
+  return addCmd(command, parameterDesc, description, cmdFunctionPtr);
+}
+
 #ifndef ARDUINO_ARCH_AVR
 int TerminalCommand::addCmd(String command, String parameterDesc, String description,
                             std::function<void(OutputInterface*)> handler) {
@@ -58,6 +64,12 @@ int TerminalCommand::addCmd(String command, String parameterDesc, String descrip
     }
   }
   return returnInt;
+}
+
+int TerminalCommand::addCmd(String command, String parameterDesc, String description, std::function<void(OutputInterface&)> handler) {
+  return addCmd(command, parameterDesc, description, std::function<void(OutputInterface*)>([handler](OutputInterface* t) {
+    if (t && handler) handler(*t);
+  }));
 }
 #endif
 
