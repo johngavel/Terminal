@@ -9,7 +9,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/johngavel/Terminal.svg?maxAge=3600)](https://github.com/johngavel/Terminal/releases)
 
-# Terminal v. 1.0.13
+# Terminal v. 1.0.14
 Terminal for Serial Ports, Telnet, and other Streams. Processing, Parsing, Executing, and Output Control for Terminals. Provides the ability to easily add commands to Terminals, Execute commands, and Parse and Tokenize the Input. 
 
 The Terminal handles left/right arrows for editing, up/down arrows for history, and tab for auto-complete.
@@ -24,6 +24,10 @@ If you have any ideas, suggestions, or problems; please let me know in the Discu
 
 Written by John J. Gavel
 ## Release
+* 1.0.14 - Updated Version Numbers
+  * latchdevel - pull requests
+    * Merge pull request #22 from latchdevel - Resolve PicoOTA static assertion build failure
+    * Merge pull request #21 from latchdevel - Refactor Global Singleton TERM_CMD with backward compatibility
 * 1.0.13 - Updated Version Numbers
   * Added Terminal Debug - This allows the user to setup multiple terminals for debugging output, along with helper functions.
   * latchdevel - pull requests
