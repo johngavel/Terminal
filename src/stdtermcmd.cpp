@@ -4,9 +4,10 @@
 */
 
 #include "stdtermcmd.h"
-#include "terminalclass.h"
+
 #include "output_interface.h"
 #include "termcmd.h"
+#include "terminalclass.h"
 
 namespace TerminalLibrary {
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HELP
@@ -207,7 +208,6 @@ void sttyCommand(OutputInterface* terminal) {
 
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_DIAGNOSTICS
 void diagCommand(OutputInterface* terminal) {
-
   // Downcast to fetch the TerminalCommand pointer from the calling Terminal object
   TerminalCommand* term_cmd = static_cast<Terminal*>(terminal)->getTerminalCommand();
 

@@ -49,7 +49,7 @@ void slowCount(OutputInterface& terminal) {
     } else {
 #ifdef TERMINAL_LOGGING
       terminal.println(ERROR,
-                        "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+                       "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
 #else
       terminal.println("Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
 #endif
@@ -59,10 +59,10 @@ void slowCount(OutputInterface& terminal) {
   terminal.println();
 #ifdef TERMINAL_LOGGING
   terminal.println((passed) ? PASSED : FAILED,
-                    "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+                   "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
 #else
   terminal.println(String((passed) ? "PASSED" : "FAILED") +
-                    " - Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+                   " - Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
 #endif
   terminal.prompt(); // Prompt the user for the next command
 }

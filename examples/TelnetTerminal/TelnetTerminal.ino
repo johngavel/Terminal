@@ -41,16 +41,16 @@ void wifiIFConfig(OutputInterface& terminal) {
   bool linked = WiFi.isConnected();
   terminal.println(INFO, "Network: " + WiFi.SSID() + ((linked) ? " Connected" : " Unconnected"));
   terminal.println(INFO, "  IP Address:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
-                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
+                             String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.subnetMask();
   terminal.println(INFO, "  Subnet Mask: " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
-                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
+                             String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.gatewayIP();
   terminal.println(INFO, "  Gateway:     " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
-                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
+                             String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   ipAddress = WiFi.dnsIP();
   terminal.println(INFO, "  DNS Server:  " + String(ipAddress[0]) + String(".") + String(ipAddress[1]) + String(".") +
-                              String(ipAddress[2]) + String(".") + String(ipAddress[3]));
+                             String(ipAddress[2]) + String(".") + String(ipAddress[3]));
   terminal.prompt();
 }
 
@@ -134,13 +134,13 @@ void slowCount(OutputInterface& terminal) {
       }
     } else {
       terminal.println(ERROR,
-                        "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+                       "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
     terminal.invalidParameter();
   terminal.println();
   terminal.println((passed) ? PASSED : FAILED,
-                    "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+                   "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
   terminal.prompt();                       // Prompt the user for the next command
 }
 /******* End Terminal Commands ***************/

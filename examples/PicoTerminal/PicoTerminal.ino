@@ -40,13 +40,13 @@ void slowCount(OutputInterface& terminal) {
       }
     } else {
       terminal.println(ERROR,
-                        "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
+                       "Parameter " + String(count) + " is not between 1 and 60!"); // Error Output to the Terminal
     }
   } else
     terminal.invalidParameter();
   terminal.println();
   terminal.println((passed) ? PASSED : FAILED,
-                    "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
+                   "Slow Count Complete"); // Indication to the Terminal that the command has passed or failed.
   terminal.prompt();                       // Prompt the user for the next command
 }
 

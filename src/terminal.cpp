@@ -21,8 +21,8 @@ void Terminal::banner() {
     println("Arduino Program");
 #endif
   } else {
-    void* anonPtr = (void*)bannerFunction;
-    void (*bannerFunctionRef)(OutputInterface&) = (void(*)(OutputInterface&))anonPtr;
+    void* anonPtr = (void*) bannerFunction;
+    void (*bannerFunctionRef)(OutputInterface&) = (void (*)(OutputInterface&)) anonPtr;
     bannerFunctionRef(*this);
   }
 }

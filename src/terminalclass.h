@@ -21,19 +21,13 @@ typedef enum { NO_PROCESSING, HELP_FUNCTION_CALLED, EMPTY_STRING, ERROR_NO_CMD_F
 class Terminal : public OutputInterface {
 public:
   Terminal(Stream* __stream, TerminalCommand* __termCmd = TERM_CMD)
-    : inputStream(__stream),
-      outputStream(__stream),
-      terminalCommandPtr(__termCmd)
-    {
-      initialize();
-    };
+      : inputStream(__stream), outputStream(__stream), terminalCommandPtr(__termCmd) {
+    initialize();
+  };
   Terminal(Stream* __inputStream, Stream* __outputStream, TerminalCommand* __termCmd = TERM_CMD)
-    : inputStream(__inputStream),
-      outputStream(__outputStream),
-      terminalCommandPtr(__termCmd)
-    {
-      initialize();
-    };
+      : inputStream(__inputStream), outputStream(__outputStream), terminalCommandPtr(__termCmd) {
+    initialize();
+  };
   void initialize() {
     memset(parameterParsing, 0, MAX_INPUT_LINE);
     memset(tokenizer, 0, MAX_INPUT_LINE);
@@ -99,7 +93,10 @@ public:
   void banner();
   void (*getBannerFunction())(OutputInterface*) { return bannerFunction; };
   void setBannerFunction(void (*function)(OutputInterface*)) { bannerFunction = function; };
-  void setBannerFunction(void (*function)(OutputInterface&)) { void* anonPtr = (void*)function; bannerFunction = (void (*)(OutputInterface*))anonPtr; };
+  void setBannerFunction(void (*function)(OutputInterface&)) {
+    void* anonPtr = (void*) function;
+    bannerFunction = (void (*)(OutputInterface*)) anonPtr;
+  };
 #endif
   void clearScreen();
 #ifdef TERMINAL_STANDARD_COMMANDS_TERMINAL_HISTORY
