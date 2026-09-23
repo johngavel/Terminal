@@ -27,7 +27,7 @@ jobs:
       - name: Compile Pico Library Examples
         uses: arduino/compile-sketches@v1
         with:
-          fqbn: rp2040:rp2040:rpipico
+          fqbn: rp2040:rp2040:rpipico:flash=2097152_1048576
           libraries: |
             - source-path: ./src
           sketch-paths: |
